@@ -597,6 +597,19 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .sti::before{content:"";position:absolute;left:4px;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--c)}
 .sti:active{background:var(--hl);transform:none}
 .stt{font-size:15px;font-weight:600;line-height:1.3}.sts{font-size:12px;color:var(--sub);font-variant-numeric:tabular-nums}
+.chips button svg,.chips a svg{width:16px;height:16px;color:var(--lapis);flex:none}
+.sec.sh{display:flex;align-items:center;gap:6px}
+.sec.sh svg{width:15px;height:15px;color:var(--sub)}
+.qe{cursor:pointer;border-radius:10px;transition:background-color .2s}
+.qe:active{background:var(--hl)}
+.mob.neutral,.mo.open .mob.neutral{background:var(--fill)}
+.cdot{display:inline-block;width:12px;height:12px;border-radius:6px;margin-right:10px;vertical-align:-1px;flex:none}
+.mob .cdot{margin:0;width:16px;height:16px;border-radius:8px}
+.pop.cals .stt{display:flex;align-items:center}
+.pop.cals .sti{flex-direction:row;justify-content:space-between;align-items:center;padding-left:10px}
+.pop.cals .sti::before{display:none}
+.ck2{color:var(--lapis);font-weight:700}
+.pop.cals{max-height:60vh;overflow:auto}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -756,7 +769,7 @@ const svcName = u => /zoom/i.test(u) ? "Zoom" : /teams/i.test(u) ? "Teams" : /me
 function relDay(s) { const t0 = new Date(); t0.setHours(0,0,0,0); const d0 = new Date(s); d0.setHours(0,0,0,0); const n = Math.round((d0 - t0) / 864e5);
   if (n === 0) { const m = Math.round((s - Date.now()) / 6e4); return m > 0 && m < 180 ? `あと${m >= 60 ? Math.floor(m/60) + "時間" + (m%60 ? m%60 + "分" : "") : m + "分"}` : m <= 0 ? "今日・始まっています" : "今日"; }
   return n === 1 ? "明日" : n === -1 ? "昨日" : n > 0 ? `${n}日後` : `${-n}日前`; }
-function openPop(i, editing) {
+function openPop(i, editing, focusField) {
   closePop(true); closeSheet(true);
   const e = D.events[i], s = pd(e.start), en = pd(e.end), col = e.color || "#2159bd";
   const last = new Date(en - 1), same = keyOf(s) === keyOf(last);
@@ -782,18 +795,18 @@ function openPop(i, editing) {
       <a class="r" href="${esc(link)}" target="_blank" rel="noopener">${ICO(ICN.video)}<span class="main"><div class="t lk">${svcName(link)}に参加</div><div class="s">${esc(link.replace(/^https:\/{2}/, "").slice(0, 40))}</div></span></a>
       ${e.eid && !e.allDay ? `<button class="r" data-join="1" ${canJoin ? "" : "disabled"}>${ICO(ICN.mac)}<span class="main"><div class="t lk">Mac で参加</div><div class="s">${canJoin ? "カメラ・マイクはオフ" : "開始30分前から"}</div></span></button>` : ""}</div>` : "";
   const view0 = `<div class="shd"><button class="x glass" aria-label="閉じる"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button>${e.rw && e.eid ? '<button class="ed glass" data-edit="1">編集</button>' : ""}</div>
-    <div class="tt" style="--c:${col}"><h2>${esc(e.title)}</h2><div>${when}</div>${e.allDay ? "" : `<div class="rel">${relDay(s)}</div>`}</div>
+    <div class="tt" style="--c:${col}"><h2 data-q="title">${esc(e.title)}</h2><div data-q="a">${when}</div>${e.allDay ? "" : `<div class="rel">${relDay(s)}</div>`}</div>
     ${mini}
     ${meetRows}
     ${e.loc || (e.url && e.url !== link) ? `<div class="grp">
-      ${e.loc ? `<div class="r">${ICO(ICN.pin)}<span class="main"><div class="t" style="white-space:normal;word-break:break-all">${linkify(e.loc)}</div></span></div>` : ""}
+      ${e.loc ? `<div class="r" data-q="loc">${ICO(ICN.pin)}<span class="main"><div class="t" style="white-space:normal;word-break:break-all">${linkify(e.loc)}</div></span></div>` : ""}
       ${e.url && e.url !== link ? `<a class="r" href="${esc(e.url)}" target="_blank" rel="noopener">${ICO(ICN.link)}<span class="main"><div class="t lk">${esc(e.url.replace(/^https?:\/{2}/, "").slice(0, 44))}</div></span></a>` : ""}</div>` : ""}
     ${co || m ? `<div class="grp">
       ${co ? `<button class="r" data-open-co="${esc(co.name)}">${ICO(ICN.co)}<span class="main"><div class="t">${esc(co.name)}${stgPill(co)}</div></span>${CH}</button>` : ""}
       ${m ? `<button class="r" data-open-meet="${m.id}">${ICO(ICN.doc)}<span class="main"><div class="t">議事録</div><div class="s">${esc(m.kind)}</div></span>${CH}</button>` : ""}</div>` : ""}
-    ${e.notes ? `<div class="sec" style="margin-left:4px">メモ</div><div class="grp"><div class="nt${e.notes.length > 260 ? " fold" : ""}" id="ntx">${linkify(e.notes)}</div>${e.notes.length > 260 ? '<button class="more" id="ntm">すべて表示</button>' : ""}</div>` : ""}
+    ${e.notes ? `<div class="sec" style="margin-left:4px">メモ</div><div class="grp" data-q="notes"><div class="nt${e.notes.length > 260 ? " fold" : ""}" id="ntx">${linkify(e.notes)}</div>${e.notes.length > 260 ? '<button class="more" id="ntm">すべて表示</button>' : ""}</div>` : ""}
     ${mails.length ? `<div class="sec" style="margin-left:4px">メール</div><div class="grp">${mails.map(x => `<a class="mail" ${mailHref(x)}><div class="h"><span>${esc(x.from)}</span><span>${pd(x.at).getMonth()+1}/${pd(x.at).getDate()}</span></div><div class="sbj">${esc(x.subject)}</div></a>`).join("")}</div>` : ""}
-    <div class="grp"><div class="r"><span class="main"><div class="t">カレンダー</div></span><span class="dot" style="background:${esc(col)}"></span><span style="color:var(--sub);font-size:15px">${esc(e.cal)}</span></div></div>
+    <div class="grp"><div class="r" data-q="cal"><span class="main"><div class="t">カレンダー</div></span><span class="dot" style="background:${esc(col)}"></span><span style="color:var(--sub);font-size:15px">${esc(e.cal)}</span>${CH}</div></div>
     ${e.rw && e.eid ? '<button class="delrow" id="evdel">予定を削除</button>' : ""}`;
   const ymd = d => keyOf(d), t2 = d => `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
   // 編集（純正）：丸い枠のアイコン → 押すとその丸から横へ広がって入力になり、決めるとまた丸へ縮む
@@ -808,7 +821,7 @@ function openPop(i, editing) {
         ${e.allDay ? "" : MO("d", ICN.today, "日付", ymd2(s), `<input name="d" type="date" value="${ymd(s)}" required>`)
           + MO("a", ICN.clock2, "開始", t2(s), `<input name="a" type="time" value="${t2(s)}" required>`)
           + MO("b", ICN.clock2, "終了", t2(en), `<input name="b" type="time" value="${t2(en)}" required>`)}
-        ${cals.length ? MO("cal", `<i class="cdot" style="background:${esc(curCal.color || col)}"></i>`, "カレンダー", esc(curCal.title || e.cal || ""), `<select name="cal">${cals.map(c => `<option value="${esc(c.id)}" ${c.title === e.cal ? "selected" : ""}>${esc(c.title)}</option>`).join("")}</select>`) : ""}
+        ${cals.length ? `<div class="mo" data-mo="cal" data-list="1"><button type="button" class="mob neutral" aria-label="カレンダー"><i class="cdot" style="background:${esc(curCal.color || col)}"></i></button><span class="mol">カレンダー</span><span class="mov">${esc(curCal.title || e.cal || "")}</span><input type="hidden" name="cal" value="${esc(curCal.id || "")}"></div>` : ""}
       </div>
       <div class="grp edf"><label style="align-items:flex-start"><textarea name="notes" maxlength="4000" placeholder="メモ">${esc(e.notes || "")}</textarea></label></div>
     </form>
@@ -826,12 +839,25 @@ function openPop(i, editing) {
     api.op({op: "join", eid: e.eid, start: e.start, url: link}).then(() => { t.textContent = "Mac で参加を頼みました"; })
       .catch(err => { jb.disabled = false; t.textContent = "Mac で参加"; toast(failMsg(err)); }); };
   if (q("[data-edit]")) q("[data-edit]").onclick = () => openPop(i, true);
+  // 詳細で押した項目をそのまま編集へ（題・時刻・場所・メモ・カレンダー）
+  if (!editing && e.rw && e.eid) sheetEl.querySelectorAll("[data-q]").forEach(x => { x.classList.add("qe"); x.onclick = ev => { if (ev.target.closest("a")) return; openPop(i, true, x.dataset.q); }; });
+  if (editing && focusField) setTimeout(() => { const mo = sheetEl.querySelector(`.mo[data-mo="${focusField}"]`);
+    if (mo) { (mo.dataset.list ? mo : mo.querySelector(".mob")).click(); return; }
+    const f = sheetEl.querySelector(`[name="${focusField}"]`); if (f) { f.focus(); f.setSelectionRange && f.setSelectionRange(f.value.length, f.value.length); } }, 380);
   if (q("#ntm")) q("#ntm").onclick = () => { q("#ntx").classList.remove("fold"); q("#ntm").remove(); };
   sheetEl.querySelectorAll("[data-sw]").forEach(b => b.onclick = () => { const k = +b.dataset.sw; if (k !== i) openPop(k); });
   const oc = q("[data-open-co]"); if (oc) oc.onclick = () => { closeSheet(); go({v: "company", c: oc.dataset.openCo}); };
   const b = q("[data-open-meet]"); if (b) b.onclick = () => { const id = b.dataset.openMeet; closeSheet(); go({v: "meet", id}); };
   // 丸い枠 → 広がって入力 → 決めると縮んで戻る
-  sheetEl.querySelectorAll(".mo").forEach(mo => {
+  sheetEl.querySelectorAll('.mo[data-list="1"]').forEach(mo => {
+    const inp = mo.querySelector("input"), val = mo.querySelector(".mov"), dot = mo.querySelector(".cdot");
+    const pick = () => { showPop(cals.map(c => `<button class="sti calpick" data-cid="${esc(c.id)}" style="--c:${esc(c.color)}"><span class="stt"><i class="cdot" style="background:${esc(c.color)}"></i>${esc(c.title)}</span>${c.id === inp.value ? '<b class="ck2">✓</b>' : ""}</button>`).join(""), mo.querySelector(".mov"));
+      popEl.classList.add("stack", "cals"); popEl.style.zIndex = 46; scrimEl.style.zIndex = 45;
+      popEl.querySelectorAll("[data-cid]").forEach(b => b.onclick = () => { const c = cals.find(x => x.id === b.dataset.cid); inp.value = c.id; val.textContent = c.title; dot.style.background = c.color;
+        dot.animate([{transform: "scale(.4)"}, {transform: "scale(1.25)"}, {transform: "scale(1)"}], {duration: 420, easing: "cubic-bezier(.3,1.4,.5,1)"}); closePop(); }); };
+    mo.onclick = pick;
+  });
+  sheetEl.querySelectorAll('.mo:not([data-list])').forEach(mo => {
     const inp = mo.querySelector("input,select"), val = mo.querySelector(".mov");
     const close = () => { if (!mo.classList.contains("open")) return; mo.classList.remove("open");
       const n = mo.dataset.mo, v = inp.value;
@@ -945,6 +971,7 @@ const ICN = {
   link: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M9 13l4-4M8 10.5l-2.5 2.5a3 3 0 0 0 4.2 4.2L12 15M14 11.5l2.5-2.5a3 3 0 0 0-4.2-4.2L10 7"/></svg>',
   memo: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="4" y="3" width="14" height="16" rx="2.5"/><path d="M7.5 8h7M7.5 11.5h7M7.5 15h4" stroke-linecap="round"/></svg>',
   pin: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M11 20s6.5-6 6.5-11a6.5 6.5 0 0 0-13 0c0 5 6.5 11 6.5 11z"/><circle cx="11" cy="9" r="2.3"/></svg>',
+  folder: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M2.5 6.5a2 2 0 0 1 2-2h4l2 2.2h7a2 2 0 0 1 2 2V16a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg>',
   clock2: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M11 6.5V11l3 2"/></svg>',
 };
 const MODES = [["one", "単一日"], ["multi", "複数日"], ["list", "リスト"], ["month", "月"]];
@@ -1280,7 +1307,7 @@ function closePal(now) {
 function palItems() {
   if (view.v === "company") {
     const c = D.companies.find(x => x.name === view.c) || {};
-    const secs = [["sx-ev", "日程", ICN.today], ["sx-dl", "締切", ICN.flag], ["sx-mt", "議事録", ICN.doc], ["sx-ml", "メール", ICN.mail], ["sx-fl", "資料", ICN.doc], ["sx-memo", "メモ", ICN.memo]]
+    const secs = [["sx-ev", "日程", ICN.today], ["sx-dl", "締切", ICN.flag], ["sx-ml", "メール", ICN.mail], ["sx-mt", "議事録", ICN.doc], ["sx-fl", "資料", ICN.folder], ["sx-memo", "メモ", ICN.memo]]
       .filter(([id]) => document.getElementById(id));
     return `<div class="pg">${secs.map(([id, l, ic]) => `<button class="pb" data-jump="${id}">${ic}${l}</button>`).join("")}</div>
       <div class="ph2">${esc(c.name || "")}</div>
@@ -1353,8 +1380,8 @@ function company(main) {
   const nx = liveNext(c);
   const dls = (D.deadlines || []).filter(x => x.co === c.name);
   const mails = c.mails || [], notes = c.notes || [], showAll = view.allMail, showPast = view.allPast;
-  const chips = [["sx-ev", "日程", up.length], ["sx-dl", "締切", dls.length], ["sx-mt", "議事録", ms.length], ["sx-ml", "メール", mails.length || notes.length], ["sx-fl", "資料", files.length], ["sx-memo", "メモ", 0]]
-    .filter(([id, , k]) => k || id === "sx-memo" || (id === "sx-ev" && past.length));
+  const chips = [["sx-ev", "日程", ICN.today, up.length || past.length], ["sx-dl", "締切", ICN.flag, dls.length], ["sx-ml", "メール", ICN.mail, mails.length || notes.length], ["sx-mt", "議事録", ICN.doc, ms.length], ["sx-fl", "資料", ICN.folder, files.length], ["sx-memo", "メモ", ICN.memo, 1]]
+    .filter(x => x[3]);
   // 状態は1行：次の締切・次の予定・マイページの知らせ・ログイン切れ・最後のメール
   const nextEv = up[0];
   const stat = [nx ? `<span class="nx">${md(nx)}（${WD[nx.getDay()]}）まで ${esc(c.next.label)}</span>` : "",
@@ -1364,18 +1391,18 @@ function company(main) {
     c.lastMail ? `<span>最後のメール ${md(pd(c.lastMail))}</span>` : ""].filter(Boolean).join("");
   main.innerHTML = `<div class="cpage"><h1 class="large">${esc(c.name)}${MUSE[c.name] ? SPARK : ""}</h1>${stgPill(c) ? `<div style="margin:-4px 4px 8px">${stgPill(c).replace('class="stg', 'style="font-size:13px;padding:4px 10px;margin:0" class="stg')}</div>` : ""}
     ${stat ? `<div class="stat">${stat}</div>` : ""}
-    <div class="chips" role="navigation" aria-label="この会社の中">${chips.map(([id, l, k]) => `<button data-jump="${id}">${l}${k ? `<b>${k}</b>` : ""}</button>`).join("")}${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">マイページ ↗</a>` : ""}</div>
-    ${up.length || past.length ? `<div class="sec" id="sx-ev">日程</div><div class="group">${up.map(e => evRow(e)).join("") || '<div class="r"><span class="main"><div class="s">これからの予定はありません</div></span></div>'}
+    <div class="chips" role="navigation" aria-label="この会社の中">${chips.map(([id, l, ic]) => `<button data-jump="${id}">${ic}${l}</button>`).join("")}${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${ICN.link}マイページ</a>` : ""}</div>
+    ${up.length || past.length ? `<div class="sec sh" id="sx-ev">${ICN.today}日程</div><div class="group">${up.map(e => evRow(e)).join("") || '<div class="r"><span class="main"><div class="s">これからの予定はありません</div></span></div>'}
       ${past.length ? (showPast ? past.map(e => evRow(e, true)).join("") : `<button class="more" id="allp">終わった予定 ${past.length}件</button>`) : ""}</div>` : ""}
-    ${dls.length ? `<div class="sec" id="sx-dl">締切</div><div class="group">${dls.map(x => { const d = pd(x.date), left = Math.round((d - t0) / 864e5);
+    ${dls.length ? `<div class="sec sh" id="sx-dl">${ICN.flag}締切</div><div class="group">${dls.map(x => { const d = pd(x.date), left = Math.round((d - t0) / 864e5);
         return `<div class="er"><span class="dd2"><b style="color:var(--ruby)">${md(d)}</b><span>${WD[d.getDay()]}曜</span></span><span class="main"><div class="t">${esc(x.label)}</div><div class="s">${esc(x.what || x.subject || "")}</div></span><span class="lf" style="color:var(--ruby)">${left === 0 ? "今日" : left === 1 ? "明日" : `あと${left}日`}</span></div>`; }).join("")}</div>` : ""}
-    ${ms.length ? `<div class="sec" id="sx-mt">議事録</div><div class="group">${ms.map(m => { const d = pd(m.date); return `<button class="er" data-meet="${m.id}"><span class="dd2${[0,6].includes(d.getDay()) ? " we" : ""}"><b>${md(d)}</b><span>${WD[d.getDay()]}曜</span></span><span class="main"><div class="t">${esc(m.kind)}</div><div class="s">${esc(m.title)}</div></span>${CH}</button>`; }).join("")}</div>` : ""}
-    ${notes.length ? `<div class="sec" id="sx-ml">メールの要点</div><div class="group tl">${notes.slice(0, showAll ? 30 : 6).map(x => `<div class="li"><span class="d">${md(pd(x.at))}</span><span style="flex:1;min-width:0"><div class="w">${esc(x.what)}${x.due ? `<span class="duec">${esc(x.due)}</span>` : ""}</div><div class="sj">${esc(x.subject)}</div></span></div>`).join("")}</div>` : ""}
+    ${notes.length ? `<div class="sec sh" id="sx-ml">${ICN.mail}メールの要点</div><div class="group tl">${notes.slice(0, showAll ? 30 : 6).map(x => `<div class="li"><span class="d">${md(pd(x.at))}</span><span style="flex:1;min-width:0"><div class="w">${esc(x.what)}${x.due ? `<span class="duec">${esc(x.due)}</span>` : ""}</div><div class="sj">${esc(x.subject)}</div></span></div>`).join("")}</div>` : ""}
     ${mails.length ? `<div class="sec"${notes.length ? "" : ' id="sx-ml"'}>関連のメール</div><div class="group">${mails.slice(0, showAll ? 15 : 3).map(m => `<a class="mail" ${mailHref(m)}><div class="h"><span>${esc(m.from)}</span><span>${md(pd(m.at))}</span></div><div class="sbj">${esc(m.subject)}</div><div class="sn">${esc(m.snippet)}</div></a>${m.app && m.url ? `<a class="mweb" href="${esc(m.url)}" target="_blank" rel="noopener">Safari で開く</a>` : ""}`).join("")}${!showAll && (mails.length > 3 || notes.length > 6) ? '<button class="more" id="allm">すべて表示</button>' : ""}</div>` : ""}
-    <div class="sec" id="sx-memo">メモ</div>
+    ${ms.length ? `<div class="sec sh" id="sx-mt">${ICN.doc}議事録</div><div class="group">${ms.map(m => { const d = pd(m.date); return `<button class="er" data-meet="${m.id}"><span class="dd2${[0,6].includes(d.getDay()) ? " we" : ""}"><b>${md(d)}</b><span>${WD[d.getDay()]}曜</span></span><span class="main"><div class="t">${esc(m.kind)}</div><div class="s">${esc(m.title)}</div></span>${CH}</button>`; }).join("")}</div>` : ""}
+    ${files.length ? `<div class="sec sh" id="sx-fl">${ICN.folder}資料</div><div class="group files">${files.map(f => `<a class="r" href="${esc(f.u)}" target="_blank" rel="noopener"><span class="main"><div class="t">${esc(f.n)}</div><div class="s">${f.muse ? "Muse・" : ""}${md(new Date(f.t))}</div></span>${CH}</a>`).join("")}</div>` : ""}
+    <div class="sec sh" id="sx-memo">${ICN.memo}メモ</div>
     <div class="memo"><textarea id="memo" placeholder="メモ">${esc(n.memo)}</textarea><div class="st2" id="memost">${c.memoAt ? md(pd(c.memoAt)) + " 保存" : ""}</div></div>
     ${muse ? `<div class="sec">Muse</div><div class="muse">${museHTML(muse)}</div>` : ""}
-    ${files.length ? `<div class="sec" id="sx-fl">資料</div><div class="group files">${files.map(f => `<a class="r" href="${esc(f.u)}" target="_blank" rel="noopener"><span class="main"><div class="t">${esc(f.n)}</div><div class="s">${f.muse ? "Muse・" : ""}${md(new Date(f.t))}</div></span>${CH}</a>`).join("")}</div>` : ""}
     <div class="upd" style="margin-bottom:90px">${D.checkedAt ? `メールの確認 ${esc(D.checkedAt.replace("T", " "))}` : ""}</div></div>`;
   main.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => { const el = document.getElementById(b.dataset.jump); if (el) el.scrollIntoView({behavior: "smooth", block: "start"}); });
   if ($("#allp")) $("#allp").onclick = () => { view = {...view, allPast: true}; const y = scrollY; render(); scrollTo(0, y); };
