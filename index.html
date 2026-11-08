@@ -1414,7 +1414,10 @@ async function refresh(first) {
   }
   return m;
 }
-refresh(true);
+if (!GAS && !API && /github\.io$/.test(location.hostname)) {
+  // 鍵の無いリンクで開いた＝データの代わりに「見つかりません」のページを読んでしまう。何をすればいいかを出す。
+  $("#main").innerHTML = '<div class="err">鍵の付いたリンクで開いてください（Mac の Claude が渡したリンクを、最後の「#k=…」まで全部そのまま開く）。</div>';
+} else refresh(true);
 setTimeout(() => { if (!D && /読み込み中/.test($("#main").textContent)) $("#main").innerHTML = '<div class="err">読み込みに時間がかかっています。開き直してください（Mac の Google ドライブが止まっていないかも確かめます）</div>'; }, 30000);
 setInterval(() => { if (!document.hidden) refresh(false); }, 20000);
 document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(false); });
