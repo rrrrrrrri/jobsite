@@ -568,6 +568,35 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 /* 重なった予定：押した予定を前へ・前の予定を薄く */
 .nev.dim{opacity:.28}
 .nev.front{z-index:40!important;box-shadow:0 0 0 2px var(--c),0 6px 18px rgba(0,0,0,.5)}
+/* 丸い枠のアイコンから広がる入力（新しい電池表示の作法） */
+.mos{padding:6px 0}
+.mo{position:relative;display:flex;align-items:center;gap:12px;min-height:52px;padding:0 14px}
+.mo + .mo::before{content:"";position:absolute;top:0;left:62px;right:0;height:.5px;background:var(--sep)}
+.mob{width:36px;height:36px;border-radius:18px;display:grid;place-items:center;background:var(--fill);color:var(--lapis);flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);transition:transform .2s var(--ease)}
+.mob svg{width:19px;height:19px}.mob:active{transform:scale(.9)}
+.mob .cdot{width:14px;height:14px;border-radius:7px;display:block}
+.mol{font-size:16px;flex:1;color:var(--label)}
+.mov{font-size:16px;color:var(--sub);max-width:55%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .2s}
+.moi{position:absolute;left:14px;top:8px;bottom:8px;width:36px;border-radius:18px;background:#3a3a3c;overflow:hidden;opacity:0;pointer-events:none;
+  transition:width .5s var(--spring),opacity .18s,border-radius .5s var(--spring);display:flex;align-items:center;padding-left:44px}
+.mo.open .moi{width:calc(100% - 28px);opacity:1;pointer-events:auto;border-radius:14px}
+.mo.open .mov,.mo.open .mol{opacity:0}
+.moi input,.moi select{flex:1;min-width:0;height:100%;border:0;background:none;color:var(--label);font:inherit;font-size:16px;outline:none;color-scheme:dark;padding-right:12px}
+.mo.open .mob{position:relative;z-index:2;background:var(--lapis);color:#fff}
+.delrow{display:block;width:100%;margin:14px 0 8px;min-height:50px;border-radius:14px;background:#2c2c2e;color:#ff453a;font-size:17px;text-align:center}
+/* 確認の札 */
+.cfm{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:41;transform:translateY(120%);transition:transform .42s var(--spring)}
+.cfm.on{transform:none}
+.cfm .cg{background:rgba(44,44,46,.96);border-radius:14px;overflow:hidden;margin-bottom:8px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.cfm .cm{font-size:13px;color:var(--sub);text-align:center;padding:14px 16px}
+.cfm .cd{display:block;width:100%;min-height:56px;border-top:.5px solid var(--sep);color:#ff453a;font-size:19px;text-align:center}
+.cfm .cc{display:block;width:100%;min-height:56px;border-radius:14px;background:#2c2c2e;color:var(--lapis);font-size:19px;font-weight:600;text-align:center}
+/* 重なった予定の小さな一覧 */
+.pop.stack{padding:6px;width:min(260px,calc(100vw - 24px))}
+.sti{display:flex;flex-direction:column;align-items:flex-start;width:100%;padding:9px 10px 9px 14px;border-radius:10px;position:relative;text-align:left}
+.sti::before{content:"";position:absolute;left:4px;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--c)}
+.sti:active{background:var(--hl);transform:none}
+.stt{font-size:15px;font-weight:600;line-height:1.3}.sts{font-size:12px;color:var(--sub);font-variant-numeric:tabular-nums}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -653,7 +682,7 @@ const backName = () => ({home: "就活", company: stack.at(-1)?.c, tasks: "タ�
 function bind(r) {
   r.querySelectorAll("[data-meet]").forEach(b => b.onclick = e => { e.stopPropagation(); go({v: "meet", id: b.dataset.meet}); });
   r.querySelectorAll("[data-co]").forEach(b => b.onclick = () => go({v: "company", c: b.dataset.co}));
-  r.querySelectorAll("[data-ev]").forEach(b => b.onclick = e => { e.stopPropagation(); openPop(+b.dataset.ev); frontEv(b); });
+  r.querySelectorAll("[data-ev]").forEach(b => b.onclick = e => { e.stopPropagation(); if (b.closest(".tg") && !b.closest(".sheet") && stackPop(b)) return; openPop(+b.dataset.ev); frontEv(b); });
 }
 function render() {
   const main = $("#main"), a = anim; anim = "";
@@ -679,6 +708,29 @@ function closePop(now) {
 }
 const CLK = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="5" cy="5" r="4"/><path d="M5 2.6V5l1.6 1" stroke-linecap="round"/></svg>';
 let sheetEl = null, sheetBg = null;
+// 純正の確認の札（下から出る・赤い字の操作とキャンセル）
+function confirmSheet(msg, label, fn) {
+  const bg = document.createElement("div"); bg.className = "scrim"; bg.style.zIndex = 40;
+  const el = document.createElement("div"); el.className = "cfm";
+  el.innerHTML = `<div class="cg"><div class="cm">${esc(msg)}</div><button class="cd">${esc(label)}</button></div><button class="cc">キャンセル</button>`;
+  document.body.append(bg, el); requestAnimationFrame(() => { bg.classList.add("on"); el.classList.add("on"); });
+  const close = () => { el.classList.remove("on"); bg.classList.remove("on"); setTimeout(() => { el.remove(); bg.remove(); }, 320); };
+  bg.onclick = el.querySelector(".cc").onclick = close;
+  el.querySelector(".cd").onclick = () => { close(); fn(); };
+}
+// 重なった予定（純正）：押すとまずその時間の予定の小さな一覧。1件押すと詳細へ
+function stackPop(b) {
+  const r = b.getBoundingClientRect(), list = [b];
+  b.parentElement.querySelectorAll(".nev").forEach(x => { if (x === b) return; const o = x.getBoundingClientRect();
+    if (o.left < r.right - 2 && o.right > r.left + 2 && o.top < r.bottom - 2 && o.bottom > r.top + 2) list.push(x); });
+  if (list.length < 2) return false;
+  const evs = list.map(x => ({i: +x.dataset.ev, e: D.events[+x.dataset.ev]})).sort((p, q) => p.e.start.localeCompare(q.e.start));
+  showPop(evs.map(({i, e}) => `<button class="sti" data-sti="${i}" style="--c:${esc(e.color || "#2159bd")}"><span class="stt">${esc(e.title)}</span><span class="sts">${hm(pd(e.start))}–${hm(pd(e.end))}</span></button>`).join(""), b);
+  popEl.classList.add("stack");
+  popEl.querySelectorAll("[data-sti]").forEach(x => x.onclick = () => { const k = +x.dataset.sti; closePop(true);
+    const el = document.querySelector(`.tg .nev[data-ev="${k}"]`); openPop(k); if (el) frontEv(el); });
+  return true;
+}
 // 重なった予定：押した予定を前に出し、上に重なっていた予定は薄くする（シートを閉じると戻る）
 function frontEv(b) {
   clearFront(); if (!b.classList.contains("nev")) return;
@@ -741,18 +793,26 @@ function openPop(i, editing) {
       ${m ? `<button class="r" data-open-meet="${m.id}">${ICO(ICN.doc)}<span class="main"><div class="t">議事録</div><div class="s">${esc(m.kind)}</div></span>${CH}</button>` : ""}</div>` : ""}
     ${e.notes ? `<div class="sec" style="margin-left:4px">メモ</div><div class="grp"><div class="nt${e.notes.length > 260 ? " fold" : ""}" id="ntx">${linkify(e.notes)}</div>${e.notes.length > 260 ? '<button class="more" id="ntm">すべて表示</button>' : ""}</div>` : ""}
     ${mails.length ? `<div class="sec" style="margin-left:4px">メール</div><div class="grp">${mails.map(x => `<a class="mail" ${mailHref(x)}><div class="h"><span>${esc(x.from)}</span><span>${pd(x.at).getMonth()+1}/${pd(x.at).getDate()}</span></div><div class="sbj">${esc(x.subject)}</div></a>`).join("")}</div>` : ""}
-    <div class="grp"><div class="r"><span class="main"><div class="t">カレンダー</div></span><span class="dot" style="background:${esc(col)}"></span><span style="color:var(--sub);font-size:15px">${esc(e.cal)}</span></div></div>`;
+    <div class="grp"><div class="r"><span class="main"><div class="t">カレンダー</div></span><span class="dot" style="background:${esc(col)}"></span><span style="color:var(--sub);font-size:15px">${esc(e.cal)}</span></div></div>
+    ${e.rw && e.eid ? '<button class="delrow" id="evdel">予定を削除</button>' : ""}`;
   const ymd = d => keyOf(d), t2 = d => `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+  // 編集（純正）：丸い枠のアイコン → 押すとその丸から横へ広がって入力になり、決めるとまた丸へ縮む
+  const cals = D.cals || [], curCal = cals.find(c => c.title === e.cal) || {};
+  const MO = (name, ic, label, val, input) => `<div class="mo" data-mo="${name}"><button type="button" class="mob" aria-label="${label}">${ic}</button><span class="mol">${label}</span><span class="mov">${val}</span><div class="moi">${input}</div></div>`;
+  const ymd2 = d => `${d.getMonth()+1}月${d.getDate()}日（${WD[d.getDay()]}）`;
   const edit0 = `<div class="shd"><button class="cx" id="edc">キャンセル</button><h3>予定を編集</h3><button class="dn" id="eds">完了</button></div>
-    <form class="grp edf" id="edf" style="margin-top:8px">
-      <label><input name="title" value="${esc(e.title)}" maxlength="200" required placeholder="タイトル" style="font-size:17px"></label>
-      <label><input name="loc" value="${esc(e.loc || "")}" maxlength="500" placeholder="場所またはビデオ通話"></label>
+    <form id="edf" class="edf2">
+      <div class="grp edf"><label><input name="title" value="${esc(e.title)}" maxlength="200" required placeholder="タイトル" style="font-size:17px"></label></div>
+      <div class="grp mos">
+        ${MO("loc", ICN.pin, "場所", esc(e.loc || "なし"), `<input name="loc" value="${esc(e.loc || "")}" maxlength="500" placeholder="場所またはビデオ通話" enterkeyhint="done">`)}
+        ${e.allDay ? "" : MO("d", ICN.today, "日付", ymd2(s), `<input name="d" type="date" value="${ymd(s)}" required>`)
+          + MO("a", ICN.clock2, "開始", t2(s), `<input name="a" type="time" value="${t2(s)}" required>`)
+          + MO("b", ICN.clock2, "終了", t2(en), `<input name="b" type="time" value="${t2(en)}" required>`)}
+        ${cals.length ? MO("cal", `<i class="cdot" style="background:${esc(curCal.color || col)}"></i>`, "カレンダー", esc(curCal.title || e.cal || ""), `<select name="cal">${cals.map(c => `<option value="${esc(c.id)}" ${c.title === e.cal ? "selected" : ""}>${esc(c.title)}</option>`).join("")}</select>`) : ""}
+      </div>
+      <div class="grp edf"><label style="align-items:flex-start"><textarea name="notes" maxlength="4000" placeholder="メモ">${esc(e.notes || "")}</textarea></label></div>
     </form>
-    ${e.allDay ? "" : `<div class="grp edf">
-      <label><span style="width:auto;color:var(--label)">日付</span><input name="d" form="edf" type="date" value="${ymd(s)}" required style="text-align:right"></label>
-      <label><span style="width:auto;color:var(--label)">開始</span><input name="a" form="edf" type="time" value="${t2(s)}" required style="text-align:right"></label>
-      <label><span style="width:auto;color:var(--label)">終了</span><input name="b" form="edf" type="time" value="${t2(en)}" required style="text-align:right"></label></div>`}
-    <div class="grp edf"><label style="align-items:flex-start"><textarea name="notes" form="edf" maxlength="4000" placeholder="メモ">${esc(e.notes || "")}</textarea></label></div>`;
+    <button class="delrow" id="evdel">予定を削除</button>`;
   sheetBg = document.createElement("div"); sheetBg.className = "sheetbg";
   sheetEl = document.createElement("div"); sheetEl.className = "sheet"; sheetEl.setAttribute("role", "dialog");
   sheetEl.innerHTML = `<div class="grab"></div>${editing ? edit0 : view0}`;
@@ -770,6 +830,27 @@ function openPop(i, editing) {
   sheetEl.querySelectorAll("[data-sw]").forEach(b => b.onclick = () => { const k = +b.dataset.sw; if (k !== i) openPop(k); });
   const oc = q("[data-open-co]"); if (oc) oc.onclick = () => { closeSheet(); go({v: "company", c: oc.dataset.openCo}); };
   const b = q("[data-open-meet]"); if (b) b.onclick = () => { const id = b.dataset.openMeet; closeSheet(); go({v: "meet", id}); };
+  // 丸い枠 → 広がって入力 → 決めると縮んで戻る
+  sheetEl.querySelectorAll(".mo").forEach(mo => {
+    const inp = mo.querySelector("input,select"), val = mo.querySelector(".mov");
+    const close = () => { if (!mo.classList.contains("open")) return; mo.classList.remove("open");
+      const n = mo.dataset.mo, v = inp.value;
+      if (n === "d" && v) { const d = pd(v); val.textContent = ymd2(d); }
+      else if (n === "cal") { const c = cals.find(c => c.id === v); val.textContent = c ? c.title : ""; const dot = mo.querySelector(".cdot"); if (dot && c) dot.style.background = c.color; }
+      else val.textContent = v || "なし"; };
+    mo.querySelector(".mob").onclick = mo.querySelector(".mol").onclick = mo.querySelector(".mov").onclick = () => {
+      sheetEl.querySelectorAll(".mo.open").forEach(x => x !== mo && x.querySelector("input,select").blur());
+      mo.classList.add("open"); setTimeout(() => { inp.focus(); if (inp.showPicker && inp.type !== "text") try { inp.showPicker(); } catch (x) {} }, 260); };
+    inp.addEventListener("change", () => setTimeout(close, 120));
+    inp.addEventListener("blur", () => setTimeout(close, 120));
+    inp.addEventListener("keydown", ev => { if (ev.key === "Enter") { ev.preventDefault(); inp.blur(); } });
+  });
+  // 予定を削除（純正：下から確認の札）
+  const dl = q("#evdel");
+  if (dl) dl.onclick = () => confirmSheet("この予定を削除してもよろしいですか？", "予定を削除", async () => {
+    try { await api.op({op: "evdel", eid: e.eid, start: e.start});
+      D.events[i] = {...e, title: e.title, deleted: true}; D.events.splice(i, 1, {...e, start: "1970-01-01T00:00", end: "1970-01-01T00:00"}); closeSheet(); render(); toast("予定を削除しました");
+    } catch (err) { toast(failMsg(err)); } });
   if (editing) {
     q("#edc").onclick = () => openPop(i);
     q("#eds").onclick = async () => {
@@ -781,6 +862,7 @@ function openPop(i, editing) {
         if (ns !== e.start || ne !== e.end) { o.ns = ns; o.ne = ne; } }
       if ((v.loc || "") !== (e.loc || "")) o.loc = v.loc;
       if ((v.notes || "") !== (e.notes || "")) o.notes = v.notes;
+      if (v.cal && v.cal !== curCal.id) o.cal = v.cal;
       if (Object.keys(o).length <= 3) { openPop(i); return; }
       const btn = q("#eds"); btn.disabled = true;
       try { await api.op(o);
@@ -863,6 +945,7 @@ const ICN = {
   link: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M9 13l4-4M8 10.5l-2.5 2.5a3 3 0 0 0 4.2 4.2L12 15M14 11.5l2.5-2.5a3 3 0 0 0-4.2-4.2L10 7"/></svg>',
   memo: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="4" y="3" width="14" height="16" rx="2.5"/><path d="M7.5 8h7M7.5 11.5h7M7.5 15h4" stroke-linecap="round"/></svg>',
   pin: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M11 20s6.5-6 6.5-11a6.5 6.5 0 0 0-13 0c0 5 6.5 11 6.5 11z"/><circle cx="11" cy="9" r="2.3"/></svg>',
+  clock2: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M11 6.5V11l3 2"/></svg>',
 };
 const MODES = [["one", "単一日"], ["multi", "複数日"], ["list", "リスト"], ["month", "月"]];
 function startDay() { const t = new Date(); t.setHours(0,0,0,0); t.setDate(t.getDate() + offset); return t; }
