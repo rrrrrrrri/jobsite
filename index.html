@@ -616,6 +616,11 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .mo.open .mob{animation:moPop .45s var(--spring)}
 @keyframes moPop{0%{transform:scale(.85)}60%{transform:scale(1.08)}100%{transform:none}}
 .delrow:active,.ed:active,.cx:active,.dn:active{transform:scale(.97);opacity:.8}
+.moi.moc{gap:6px;overflow-x:auto;scrollbar-width:none;padding-right:8px;-webkit-overflow-scrolling:touch}
+.moi.moc::-webkit-scrollbar{display:none}
+.chp{flex:none;height:30px;padding:0 12px;border-radius:15px;background:rgba(255,255,255,.08);color:var(--label);font-size:14px;font-weight:500;white-space:nowrap;transition:background-color .2s,transform .2s var(--spring)}
+.chp.on{background:var(--lapis);color:#fff;font-weight:600}
+.chp:active{transform:scale(.92)}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -808,6 +813,10 @@ function openPop(i, editing, focusField) {
     ${e.loc || (e.url && e.url !== link) ? `<div class="grp">
       ${e.loc ? `<div class="r" data-q="loc">${ICO(ICN.pin)}<span class="main"><div class="t" style="white-space:normal;word-break:break-all">${linkify(e.loc)}</div></span></div>` : ""}
       ${e.url && e.url !== link ? `<a class="r" href="${esc(e.url)}" target="_blank" rel="noopener">${ICO(ICN.link)}<span class="main"><div class="t lk">${esc(e.url.replace(/^https?:\/{2}/, "").slice(0, 44))}</div></span></a>` : ""}</div>` : ""}
+    ${e.tt || (e.al && e.al.length) || e.rr ? `<div class="grp">
+      ${e.tt ? `<div class="r" data-q="tt">${ICO(ICN.car)}<span class="main"><div class="t">移動時間</div></span><span style="color:var(--sub)">${(TT.find(o => o[0] === e.tt) || [0, e.tt + "分"])[1]}</span></div>` : ""}
+      ${e.al && e.al.length ? `<div class="r" data-q="al">${ICO(ICN.bell)}<span class="main"><div class="t">通知</div></span><span style="color:var(--sub)">${(AL.find(o => o[0] === e.al[0]) || [0, e.al[0] + "分前"])[1]}</span></div>` : ""}
+      ${e.rr ? `<div class="r" data-q="rr">${ICO(ICN.rep)}<span class="main"><div class="t">繰り返し</div></span><span style="color:var(--sub)">${(RR.find(o => o[0] === e.rr) || ["", ""])[1]}</span></div>` : ""}</div>` : ""}
     ${co || m ? `<div class="grp">
       ${co ? `<button class="r" data-open-co="${esc(co.name)}">${ICO(ICN.co)}<span class="main"><div class="t">${esc(co.name)}${stgPill(co)}</div></span>${CH}</button>` : ""}
       ${m ? `<button class="r" data-open-meet="${m.id}">${ICO(ICN.doc)}<span class="main"><div class="t">議事録</div><div class="s">${esc(m.kind)}</div></span>${CH}</button>` : ""}</div>` : ""}
@@ -820,6 +829,12 @@ function openPop(i, editing, focusField) {
   const cals = D.cals || [], curCal = cals.find(c => c.title === e.cal) || {};
   const MO = (name, ic, label, val, input) => `<div class="mo" data-mo="${name}"><button type="button" class="mob" aria-label="${label}">${ic}</button><span class="mol">${label}</span><span class="mov">${val}</span><div class="moi">${input}</div></div>`;
   const ymd2 = d => `${d.getMonth()+1}月${d.getDate()}日（${WD[d.getDay()]}）`;
+  // 純正と同じ選択肢（丸い枠から横へ広がって選ぶ）
+  const TT = [[0, "なし"], [5, "5分"], [15, "15分"], [30, "30分"], [60, "1時間"], [90, "1時間30分"], [120, "2時間"]];
+  const AL = [[-1, "なし"], [0, "予定の時刻"], [5, "5分前"], [10, "10分前"], [15, "15分前"], [30, "30分前"], [60, "1時間前"], [120, "2時間前"], [1440, "1日前"], [2880, "2日前"]];
+  const RR = [["none", "しない"], ["daily", "毎日"], ["weekly", "毎週"], ["monthly", "毎月"], ["yearly", "毎年"]];
+  const MOC = (name, ic, label, opts, cur) => { const c = opts.find(o => String(o[0]) === cur) || opts[0];
+    return `<div class="mo" data-mo="${name}" data-choice="1"><button type="button" class="mob" aria-label="${label}">${ic}</button><span class="mol">${label}</span><span class="mov">${c[1]}</span><input type="hidden" name="${name}" value="${esc(String(c[0]))}"><div class="moi moc">${opts.map(o => `<button type="button" class="chp${String(o[0]) === String(c[0]) ? " on" : ""}" data-v="${esc(String(o[0]))}">${o[1]}</button>`).join("")}</div></div>`; };
   const edit0 = `<div class="shd"><button class="cx" id="edc">キャンセル</button><h3>予定を編集</h3><button class="dn" id="eds">完了</button></div>
     <form id="edf" class="edf2">
       <div class="grp edf"><label><input name="title" value="${esc(e.title)}" maxlength="200" required placeholder="タイトル" style="font-size:17px"></label></div>
@@ -829,6 +844,9 @@ function openPop(i, editing, focusField) {
           + MO("a", ICN.clock2, "開始", t2(s), `<input name="a" type="time" value="${t2(s)}" required>`)
           + MO("b", ICN.clock2, "終了", t2(en), `<input name="b" type="time" value="${t2(en)}" required>`)}
         ${cals.length ? `<div class="mo" data-mo="cal" data-list="1"><button type="button" class="mob neutral" aria-label="カレンダー"><i class="cdot" style="background:${esc(curCal.color || col)}"></i></button><span class="mol">カレンダー</span><span class="mov">${esc(curCal.title || e.cal || "")}</span><input type="hidden" name="cal" value="${esc(curCal.id || "")}"></div>` : ""}
+        ${e.allDay ? "" : MOC("tt", ICN.car, "移動時間", TT, String(e.tt || 0))
+          + MOC("al", ICN.bell, "通知", AL, String(e.al && e.al.length ? e.al[0] : -1))}
+        ${MOC("rr", ICN.rep, "繰り返し", RR, e.rr || "none")}
       </div>
       <div class="grp edf"><label style="align-items:flex-start"><textarea name="notes" maxlength="4000" placeholder="メモ">${esc(e.notes || "")}</textarea></label></div>
     </form>
@@ -866,7 +884,16 @@ function openPop(i, editing, focusField) {
         dot.animate([{transform: "scale(.4)"}, {transform: "scale(1.25)"}, {transform: "scale(1)"}], {duration: 420, easing: "cubic-bezier(.3,1.4,.5,1)"}); closePop(); }); };
     mo.onclick = pick;
   });
-  sheetEl.querySelectorAll('.mo:not([data-list])').forEach(mo => {
+  sheetEl.querySelectorAll('.mo[data-choice="1"]').forEach(mo => {
+    const inp = mo.querySelector("input"), val = mo.querySelector(".mov"), box = mo.querySelector(".moi");
+    const open = () => { sheetEl.querySelectorAll(".mo.open").forEach(x => x !== mo && x.classList.remove("open")); mo.classList.add("open");
+      const on = box.querySelector(".chp.on"); if (on) setTimeout(() => on.scrollIntoView({inline: "center", block: "nearest", behavior: "smooth"}), 280); };
+    mo.querySelector(".mob").onclick = ev => { ev.stopPropagation(); mo.classList.contains("open") ? mo.classList.remove("open") : open(); };
+    mo.querySelector(".mol").onclick = mo.querySelector(".mov").onclick = open;
+    box.querySelectorAll(".chp").forEach(b => b.onclick = ev => { ev.stopPropagation(); box.querySelectorAll(".chp").forEach(x => x.classList.toggle("on", x === b));
+      inp.value = b.dataset.v; val.textContent = b.textContent; setTimeout(() => mo.classList.remove("open"), 160); });
+  });
+  sheetEl.querySelectorAll('.mo:not([data-list]):not([data-choice])').forEach(mo => {
     const inp = mo.querySelector("input,select"), val = mo.querySelector(".mov");
     const close = () => { if (!mo.classList.contains("open")) return; mo.classList.remove("open");
       const n = mo.dataset.mo, v = inp.value;
@@ -898,6 +925,9 @@ function openPop(i, editing, focusField) {
       if ((v.loc || "") !== (e.loc || "")) o.loc = v.loc;
       if ((v.notes || "") !== (e.notes || "")) o.notes = v.notes;
       if (v.cal && v.cal !== curCal.id) o.cal = v.cal;
+      if (v.tt !== undefined && +v.tt !== (e.tt || 0)) o.tt = +v.tt;
+      if (v.al !== undefined && +v.al !== (e.al && e.al.length ? e.al[0] : -1)) o.al = +v.al < 0 ? [] : [+v.al];
+      if (v.rr !== undefined && v.rr !== (e.rr || "none")) o.rr = v.rr;
       if (Object.keys(o).length <= 3) { openPop(i); return; }
       const btn = q("#eds"); btn.disabled = true;
       try { await api.op(o);
@@ -920,7 +950,7 @@ function applyPendEv() {
     // 繰り返しの予定は回ごとに同じ目印＝元の開始か直した開始で回を当てる
     const p = pendEv[id], e = D.events.find(x => x.eid === p.eid && (x.start === p.start || x.start === p.ns));
     if (!e || Date.now() - p.at > 864e5 * 3) { delete pendEv[id]; continue; }
-    const want = {title: p.title, start: p.ns, end: p.ne, loc: p.loc, notes: p.notes};
+    const want = {title: p.title, start: p.ns, end: p.ne, loc: p.loc, notes: p.notes, tt: p.tt, rr: p.rr};
     const done = Object.entries(want).every(([k, v]) => v === undefined || (e[k] || "") === v);
     if (done) { delete pendEv[id]; continue; }   // Mac が書いた物が届いた
     for (const [k, v] of Object.entries(want)) if (v !== undefined) e[k] = v;
@@ -981,6 +1011,9 @@ const ICN = {
   memo: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="4" y="3" width="14" height="16" rx="2.5"/><path d="M7.5 8h7M7.5 11.5h7M7.5 15h4" stroke-linecap="round"/></svg>',
   pin: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M11 20s6.5-6 6.5-11a6.5 6.5 0 0 0-13 0c0 5 6.5 11 6.5 11z"/><circle cx="11" cy="9" r="2.3"/></svg>',
   folder: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M2.5 6.5a2 2 0 0 1 2-2h4l2 2.2h7a2 2 0 0 1 2 2V16a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg>',
+  car: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 12.5l1.6-4.6A2 2 0 0 1 7.5 6.5h7a2 2 0 0 1 1.9 1.4L18 12.5v4a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1v-1h-7v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M4 12.5h14"/><circle cx="7.3" cy="14.3" r=".9" fill="currentColor"/><circle cx="14.7" cy="14.3" r=".9" fill="currentColor"/></svg>',
+  bell: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M6 15.5V10a5 5 0 0 1 10 0v5.5l1.5 1.5h-13z"/><path d="M9.3 19a2 2 0 0 0 3.4 0" stroke-linecap="round"/></svg>',
+  rep: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a6 6 0 0 1 10.5-4L17 8.5M17 4v4.5h-4.5M18 12a6 6 0 0 1-10.5 4L5 13.5M5 18v-4.5h4.5"/></svg>',
   clock2: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M11 6.5V11l3 2"/></svg>',
 };
 const MODES = [["one", "単一日"], ["multi", "複数日"], ["list", "リスト"], ["month", "月"]];
