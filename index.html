@@ -317,7 +317,7 @@ button:active,a.r:active{transform:scale(.97)}
 .menu svg{width:19px;height:19px;color:var(--sub)}
 /* 月（純正：大きな月名・日付の下に色の細い棒） */
 .nmon h2{font-size:34px;font-weight:700;margin:4px 16px 6px;letter-spacing:.2px}
-.nmon .row7{display:grid;grid-template-columns:repeat(7,1fr);padding:0 4px}
+.nmon .row7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:0 4px}
 .nmon .wl{font-size:11px;color:var(--sub);text-align:center;padding-bottom:4px}
 .nmon .c{height:56px;display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:6px;border-top:.5px solid var(--sep)}
 .nmon .c.e{border-top-color:transparent}
@@ -325,7 +325,7 @@ button:active,a.r:active{transform:scale(.97)}
 .nmon .c.we span{color:var(--sub)}
 .nmon .c.t span{background:var(--red);color:#fff;font-weight:700}
 .nmon .c i{display:flex;gap:2px;height:4px}
-.nmon .c{height:auto;min-height:74px;align-items:stretch;gap:1px;padding:3px 1px 2px;border-radius:0;transition:background-color .2s}
+.nmon .c{min-width:0;overflow:hidden;height:auto;min-height:74px;align-items:stretch;gap:1px;padding:3px 1px 2px;border-radius:0;transition:background-color .2s}
 .nmon .c span{align-self:center;width:24px;height:24px;line-height:24px;font-size:14px;font-weight:600;border-radius:12px}
 .nmon .c.sel{background:rgba(255,255,255,.1);border-radius:10px}
 .nmon .c i{display:flex;flex-direction:column;gap:1px;height:auto;width:100%;min-width:0}
@@ -334,7 +334,7 @@ button:active,a.r:active{transform:scale(.97)}
 .nmon .c i em{font-size:9px;line-height:11px;color:var(--sub);font-style:normal;text-align:center}
 .mlist{padding:10px 8px 120px}
 .mlh{font-size:17px;font-weight:700;margin:4px 6px 8px}
-.mle{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:7px 12px;margin-bottom:6px;border-radius:12px;background:#1c1c1e;text-align:left;transition:transform .15s,background-color .15s}
+.mle{color:var(--label);display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:7px 12px;margin-bottom:6px;border-radius:12px;background:#1c1c1e;text-align:left;transition:transform .15s,background-color .15s}
 .mle:active{transform:scale(.98);background:#2c2c2e}
 .mle .mt{flex:none;width:44px;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;line-height:1.2}
 .mle .mt small{font-size:11px;color:var(--sub);font-weight:500}
