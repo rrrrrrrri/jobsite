@@ -962,7 +962,7 @@ function showPop(html, anchor) {
   scrimEl = document.createElement("div"); scrimEl.className = "scrim";
   popEl = document.createElement("div"); popEl.className = "pop"; popEl.setAttribute("role", "dialog");
   popEl.innerHTML = `<span class="arrow"></span>${html}`;
-  document.body.append(scrimEl, popEl);
+  document.body.append(scrimEl, popEl); popY = scrollY; popAt = Date.now();
   // 置き場所：予定の下に入れば下、入らなければ上。横は画面の内側へ寄せ、矢印は予定の中央を指す
   const r = anchor.getBoundingClientRect(), W = popEl.offsetWidth, H = popEl.offsetHeight, vw = innerWidth, vh = innerHeight;
   const cx = r.left + r.width / 2, below = r.bottom + 10 + H < vh - 12 || r.top - 10 - H < 12;
@@ -981,7 +981,9 @@ function showPop(html, anchor) {
 //   アプリの番号が無い古いデータはウェブの1通表示へ。
 function mailHref(m) { const u = m.app || m.url; return u ? `href="${esc(u)}" target="_blank" rel="noopener"` : ""; }
 function linkify(t) { return esc(t).replace(/https?:\/{2}[^\s<]+/g, u => `<a href="${u}" target="_blank" rel="noopener" style="color:var(--lapis)">${u.replace(/^https?:\/{2}/, "").slice(0, 40)}</a>`); }
-addEventListener("scroll", () => closePop(), {passive: true});
+// iPhone は押しただけで数px動く・アドレス欄の伸び縮みでも scroll が来る＝出た直後と小さな動きでは閉じない
+let popY = 0, popAt = 0;
+addEventListener("scroll", () => { if (popEl && (Date.now() - popAt < 450 || Math.abs(scrollY - popY) < 24)) return; closePop(); }, {passive: true});
 
 /* ── ホーム：純正カレンダーの作り（上にガラスの札・週の帯・時間割／リスト／月）＋下に企業2列 ── */
 // 時間の幅は 8〜22時で固定（予定で大きさが変わらない）。その外の予定は端に寄せて見せる。
