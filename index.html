@@ -670,6 +670,54 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .okdock{position:sticky;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;justify-content:flex-end;pointer-events:none;margin-top:-56px;height:56px;z-index:3}
 .okb{pointer-events:auto;width:56px;height:56px;border-radius:28px;background:#fff;color:#000;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.45);transition:transform .2s var(--spring)}
 .okb svg{width:24px;height:24px}.okb:active{transform:scale(.88)}.okb:disabled{opacity:.5}
+.msearch{margin:0 16px 8px}.msearch input{width:100%;height:38px;border:0;border-radius:10px;background:var(--fill);color:var(--label);font:inherit;font-size:16px;padding:0 12px;outline:none}
+.mrow{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;text-align:left;min-height:60px}
+.mrow+.mrow{border-top:.5px solid var(--sep)}.mrow:active{background:var(--hl)}
+.mday{flex:none;width:34px;display:flex;flex-direction:column;align-items:center;line-height:1.1}.mday b{font-size:20px;font-variant-numeric:tabular-nums}.mday small{font-size:11px;color:var(--sub)}
+.mtx{flex:1;min-width:0;display:flex;flex-direction:column}.mtx b{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mtx small{font-size:12.5px;color:var(--sub)}
+.msum{font-size:13px;color:var(--sub);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px}
+/* ── ➕ 新しい予定（Mac の AddEventSheet の並び）── */
+.as{padding:0 2px}
+.ashd{display:flex;align-items:center;gap:8px;margin:2px 0 14px}
+.apaste{flex:1;min-width:0;display:flex;align-items:center;gap:8px;height:44px;padding:0 6px 0 12px;border-radius:14px;background:#0f0f10;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);color:var(--klapisL)}
+.apaste svg{width:18px;height:18px;flex:none}
+.apaste input{flex:1;min-width:0;border:0;background:none;color:var(--label);font:inherit;font-size:15px;outline:none}.apaste input::placeholder{color:var(--sub)}
+.aimg{flex:none;width:34px;height:34px;display:grid;place-items:center;color:var(--klapisL)}.aimg svg{width:22px;height:22px}
+.atent{flex:none;display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:18px;background:#fff;color:#000;font-weight:700;font-size:15px}
+.atent i{width:16px;height:16px;border-radius:8px;background:#000;position:relative}.atent i::after{content:"";position:absolute;left:4px;top:5px;width:7px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg)}
+.atent.tent{background:rgba(255,255,255,.12);color:var(--label)}.atent.tent i{background:transparent;box-shadow:inset 0 0 0 1.5px var(--sub)}.atent.tent i::after{display:none}
+.atask{flex:none;display:flex;align-items:center;gap:5px;height:36px;padding:0 10px;border-radius:18px;background:rgba(33,90,189,.18);color:var(--klapisL);font-size:13px;font-weight:600}.atask svg{width:16px;height:16px}
+.ax{flex:none;width:30px;height:30px;border-radius:15px;background:rgba(255,255,255,.12);color:var(--sub);font-size:14px;font-weight:700}
+@media (max-width:380px){.atask span{display:none}.atask{padding:0 9px}}
+.aread{display:flex;align-items:center;gap:10px;margin:-6px 0 10px;padding:10px 12px;border-radius:12px;background:var(--card,#2c2c2e);font-size:14px}.aread.err{color:#ff9f0a}
+.attl{display:flex;align-items:center;gap:12px;margin:0 4px 12px}
+.adot{flex:none;width:16px;height:16px;border-radius:8px}
+.attl input{flex:1;min-width:0;border:0;background:none;color:var(--label);font:700 30px -apple-system,"Hiragino Sans",sans-serif;outline:none}.attl input::placeholder{color:#5a5a5e}
+.ahr{height:.5px;background:var(--sep);margin:0 -14px 16px}
+.achips{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.achips .atime{flex:1 1 0;min-width:0;overflow:hidden}.achips .abr{flex-basis:100%;height:0}
+@media (max-width:400px){.ach{font-size:16px;padding:0 12px}.ach small{display:none}}
+.ach{display:flex;align-items:center;gap:8px;height:50px;padding:0 14px;border-radius:14px;background:rgba(255,255,255,.07);color:var(--label);font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ach svg{width:19px;height:19px;flex:none}.ach small{font-size:12px;color:var(--sub);font-weight:500}
+.adate{background:rgba(33,90,189,.2);color:var(--klapisL)}.ach.on{box-shadow:inset 0 0 0 1.5px var(--klapisL)}
+.atime svg{color:var(--sub)}
+.aic{width:50px;height:50px;border-radius:14px;background:rgba(255,255,255,.07);display:grid;place-items:center;color:var(--klapisL)}.aic svg{width:20px;height:20px}
+.aic.set,.arep.set{background:rgba(33,90,189,.24)}
+.ahide{background:transparent!important}.ahide #kdrow,.ahide #ktm{display:none}
+.aother{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:18px;background:rgba(33,90,189,.18);color:var(--klapisL);font-size:14px;font-weight:600;margin:2px 0 8px}.aother svg{width:17px;height:17px}
+.amore{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.amore:empty{display:none}
+.amchip{height:30px;padding:0 10px;border-radius:15px;background:rgba(255,255,255,.1);color:var(--label);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}.amchip i{font-style:normal;color:var(--sub);font-size:11px}
+.aloc{width:100%;height:50px;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:var(--label);font:inherit;font-size:17px;padding:0 16px;outline:none;margin:6px 0 14px}.aloc::placeholder{color:var(--sub)}
+.aph{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.aplus{width:52px;height:52px;border-radius:26px;background:rgba(33,90,189,.18);color:var(--klapisL);display:grid;place-items:center}.aplus svg{width:22px;height:22px}
+.apt{position:relative;width:52px;height:52px;border-radius:12px;overflow:hidden;background:#3a3a3c}.apt img{width:100%;height:100%;object-fit:cover}
+.alab{font-size:13px;color:var(--sub);font-weight:600;margin:0 2px 6px}
+.anotes{width:100%;min-height:150px;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:var(--label);font:inherit;font-size:16px;padding:12px 14px;outline:none;resize:none;margin-bottom:14px}
+.arep{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-radius:12px;color:var(--label);font-size:17px;font-weight:700;margin-bottom:6px}.arep svg:first-child{width:21px;height:21px}
+.adef{display:flex;align-items:center;gap:10px;color:var(--klapisL);font-size:15px;font-weight:600;margin:8px 2px 18px}
+.afoot{position:sticky;bottom:0;display:flex;justify-content:space-between;align-items:center;margin:0 -14px;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:.5px solid var(--sep)}
+.acancel{height:42px;padding:0 18px;border-radius:12px;background:rgba(255,255,255,.1);color:var(--label);font-size:17px;font-weight:600}
+.aadd{height:42px;padding:0 22px;border-radius:12px;background:#fff;color:#000;font-size:17px;font-weight:700}.aadd:disabled{opacity:.5}
 /* ── 📷11-09 写真・動画・トレイ ── */
 .mph,.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:0 0 10px}
 .mph .mt,.mgrid .mt{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#3a3a3c;display:block;width:auto;padding:0}
@@ -860,7 +908,7 @@ function bind(r) {
 function render() {
   const main = $("#main"), a = anim; anim = "";
   closePal(true); closeCos(true);
-  ({home, company, meet, tasks, event, search, tray})[view.v](main);
+  ({home, company, meet, tasks, event, search, tray, minutes})[view.v](main);
   ensureFab();
   if (a) { const el = view.v === "home" && ["in-next","in-prev","in-flip"].includes(a) ? main.querySelector(".pane") : main;
     if (el) { el.classList.remove("in-push","in-pop","in-next","in-prev","in-flip"); void el.offsetWidth; el.classList.add(a); } }
@@ -944,6 +992,33 @@ function quickCal(i, row) {
     catch (err) { toast(failMsg(err)); if (dot) dot.style.background = e.color; if (lab) lab.textContent = e.cal; }
   });
 }
+/* ── 📝11-09 議事録タブ：この Mac で文字起こし・議事録ができた会は全部（Mac が保存すると1分ほどで出る）。押すと会の中身 ── */
+function minutes(main) {
+  bar("議事録", backName());
+  const all = D.minutes || [], q = (view.q || "").trim();
+  const list = q ? all.filter(m => (m.title + " " + (m.sum || "")).includes(q)) : all;
+  const groups = []; let last = "";
+  for (const m of list) { const d = pd(m.date), k = `${d.getFullYear()}年${d.getMonth() + 1}月`; if (k !== last) { groups.push({k, items: []}); last = k; } groups[groups.length - 1].items.push(m); }
+  main.innerHTML = `<h1 class="large">議事録</h1>
+    <div class="msearch"><input id="mq" type="search" placeholder="議事録を探す" value="${esc(q)}" enterkeyhint="search"></div>
+    ${groups.map(g => `<div class="sec">${g.k}</div><div class="group">${g.items.map(m => { const d = pd(m.date);
+      return `<button class="mrow" data-meet="${esc(m.id)}"><span class="mday"><b>${d.getDate()}</b><small>${WD[d.getDay()]}</small></span><span class="mtx"><b>${esc(m.title)}</b><small>${hm(d)}・${Math.max(1, Math.round(m.dur / 60))}分${m.has ? "" : "・文字起こしだけ"}</small>${m.sum ? `<span class="msum">${esc(m.sum)}</span>` : ""}</span>${CH}</button>`; }).join("")}</div>`).join("")}
+    ${!list.length ? `<p class="empty">${q ? "見つかりません" : "まだ議事録がありません（Mac で文字起こしが終わると出ます）"}</p>` : ""}
+    <div style="height:110px"></div>`;
+  const i = $("#mq"); i.oninput = () => { view.q = i.value; clearTimeout(minutes.t); minutes.t = setTimeout(() => { const pos = i.selectionStart; minutes(main); const j = $("#mq"); j.focus(); j.setSelectionRange(pos, pos); }, 250); };
+  bind(main);
+}
+/* ── 🤏11-09 2本指でつまむ（ホームのカレンダー）：縮める＝日数が増える（単一日 → 複数日 → 月）・広げる＝逆 ── */
+(() => {
+  const ORDER = ["one", "multi", "month"]; let d0 = 0, done = false;
+  const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  addEventListener("touchstart", e => { if (e.touches.length === 2 && view.v === "home" && !sheetEl && !palEl) { d0 = dist(e.touches); done = false; } }, {passive: true});
+  addEventListener("touchmove", e => { if (e.touches.length !== 2 || !d0 || done) return; const r = dist(e.touches) / d0;
+    const pane = document.querySelector("#main .pane"); if (pane) pane.style.transform = `scale(${Math.max(.9, Math.min(1.1, r))})`;
+    if (r < .72 || r > 1.38) { done = true; const k = Math.max(0, ORDER.indexOf(mode === "list" ? "multi" : mode)), n = Math.min(ORDER.length - 1, Math.max(0, k + (r < 1 ? 1 : -1)));
+      if (pane) pane.style.transform = ""; if (ORDER[n] !== mode) { if (navigator.vibrate) navigator.vibrate(8); setMode(ORDER[n], "in-flip"); } } }, {passive: true});
+  addEventListener("touchend", e => { if (e.touches.length < 2) { const pane = document.querySelector("#main .pane"); if (pane) { pane.style.transition = "transform .22s cubic-bezier(.22,.61,.36,1)"; pane.style.transform = ""; setTimeout(() => pane.style.transition = "", 240); } d0 = 0; } }, {passive: true});
+})();
 /* ── 📷11-09 写真・動画（写真から予定・予定の写真・トレイ）：Docs/jobsite-media-tray-design-2026-11-09.md ──
    上げ方：7MB ずつ base64 で窓口へ（窓口は Drive に置くだけ）→ Mac が組み立てる。写真から予定は 2560px の JPEG に縮めてから。
    ⚠️AI はここでも窓口でも呼ばない（読むのは Mac の中だけ）。Gemini の鍵はどこにも書かない。 */
@@ -1169,6 +1244,7 @@ function kReadout() {
   a.classList.toggle("on", !!open && !KS.end); b.classList.toggle("on", !!open && KS.end);
   kq("#ktm").classList.toggle("ad", !!(KS.ad || KS.d2));
   kq("#kdlab").innerHTML = kText(); kSync();
+  if (window.kHook) window.kHook();
 }
 function kClock() {
   const dial = kq("#kdial"); if (!dial) return;
@@ -1275,7 +1351,110 @@ function kBindChoices() {
       r.querySelector("input").value = b.dataset.kv; r.querySelector(".kvl").textContent = b.textContent; r.classList.toggle("set", b !== x.querySelector(".kc")); setTimeout(kCloseX, 180); }); });
 }
 
+/* ── ➕11-09 新しい予定：Mac 本体の「予定の追加」（AddEventSheet）と同じ並び ──
+   上：文章を貼ると自動で入ります（画像でも）｜確／仮｜タスクに｜✕
+   題（色の点＝カレンダー）→ 日付の札・時刻の札「19:00 → 21:15（2時間15分）」・移動時間・通知 → ほかの日にも → 場所 → ＋（写真）→ メモ → 繰り返し → この種別の既定にする → キャンセル／追加
+   日付と時刻の札を押すと、Mac と同じ月の盤・時計が札の下に開く（上の物は動かない）。 */
+const AKINDS = ["説明会", "面接", "インターン", "座談会", "選考", "セミナー", "授業", "バイト", "面談", "試験"];
+const akind = t => AKINDS.find(k => (t || "").includes(k)) || "";
+const adefs = () => store.get("evDefaults", {});
+function addHTML(e, TT, AL, RR) {
+  const cals = D.cals || [], c0 = cals.find(c => c.title === e.cal) || cals[0] || {};
+  const chip = (name, opts, cur) => `<div class="kxp" data-ax="${name}"><div><div class="kchs">${opts.map(o => `<button type="button" class="kc${String(o[0]) === String(cur) ? " on" : ""}" data-av="${esc(String(o[0]))}">${o[1]}</button>`).join("")}</div></div></div><input type="hidden" name="${name}" value="${esc(String(cur))}">`;
+  return `<form id="edf" class="edf2 ke as">
+    <div class="ashd">
+      <label class="apaste">${ICN.spark}<input id="apt" placeholder="文章を貼ると自動で入ります" autocomplete="off" enterkeyhint="done"><button type="button" class="aimg" id="aimg" aria-label="画像から">${ICB.photo}</button></label>
+      <button type="button" class="atent" id="atent" aria-pressed="true"><i></i><span>確</span></button>
+      <button type="button" class="atask" id="atask">${ICN.task}<span>タスクに</span></button>
+      <button type="button" class="ax" id="edc" aria-label="閉じる">✕</button>
+    </div>
+    <div class="aread" id="aread" hidden><span class="mdots"><i></i><i></i><i></i></span><span id="art"></span></div>
+    <div class="attl"><button type="button" class="adot" id="acal" style="background:${esc(c0.color || "#ff375f")}" aria-label="カレンダー"></button><input name="title" value="${esc(e.title)}" maxlength="200" required placeholder="タイトル" autocomplete="off"></div>
+    <input type="hidden" name="cal" value="${esc(c0.id || "")}"><input type="hidden" name="tent" value="">
+    <div class="ahr"></div>
+    <div class="achips"><button type="button" class="ach adate" id="adate">${ICB.d}<span id="adl"></span></button><i class="abr"></i><button type="button" class="ach atime" id="atime">${ICB.a}<span id="atl"></span></button>
+      <button type="button" class="aic" id="att" aria-label="移動時間"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h11M6.5 20.5h11M7.5 3.5c0 4.2 4.5 5.6 4.5 8.5s-4.5 4.3-4.5 8.5M16.5 3.5c0 4.2-4.5 5.6-4.5 8.5s4.5 4.3 4.5 8.5"/><path d="M9.6 18.6h4.8L12 16.2z" fill="currentColor"/></svg></button><button type="button" class="aic" id="aal" aria-label="通知">${ICB.al}</button></div>
+    <div class="kgrp ahide">${kTimeHTML()}</div>
+    ${chip("tt", TT, e.tt || 0)}${chip("al", AL, 15)}
+    <button type="button" class="aother" id="aother">${ICB.d}<span>ほかの日にも</span></button><div class="amore" id="amore"></div>
+    <input class="aloc" name="loc" value="${esc(e.loc || "")}" maxlength="500" placeholder="場所" autocomplete="off">
+    <div class="aph" id="aph"><button type="button" class="aplus" id="aplus" aria-label="写真を付ける">${ICB.plus}</button></div>
+    <div class="alab">メモ</div><textarea class="anotes" name="notes" maxlength="4000">${esc(e.notes || "")}</textarea>
+    <button type="button" class="arep" id="arep">${ICB.rr}<span id="arl">繰り返し</span><svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 4.5l3 3 3-3"/></svg></button>
+    ${chip("rr", RR, "none")}
+    <button type="button" class="adef" id="adef"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span>この種別の既定にする</span></button>
+    <div class="afoot"><button type="button" class="acancel" id="acx">キャンセル</button><button type="button" class="aadd" id="eds">追加</button></div>
+  </form>`;
+}
+function addBind(e, i, TT, AL, RR) {
+  const q = s => sheetEl.querySelector(s), f = q("#edf");
+  const label = (o, v) => (o.find(x => String(x[0]) === String(v)) || [0, ""])[1];
+  // 日付と時刻の札（Mac と同じ書き方）
+  window.kHook = () => { if (!q("#adl")) return; const d = KS.d, dd = `${d.getMonth() + 1}月${d.getDate()}日(${WD[d.getDay()]})`;
+    q("#adl").textContent = KS.d2 ? `${d.getMonth() + 1}/${d.getDate()} → ${KS.d2.getMonth() + 1}/${KS.d2.getDate()}` : dd;
+    const m = kDur(); q("#atl").innerHTML = KS.ad || KS.d2 ? "終日" : `${kp2(KS.sh)}:${kp2(KS.sm)} → ${kp2(KS.eh)}:${kp2(KS.em)} <small>(${m >= 60 ? Math.floor(m / 60) + "時間" : ""}${m % 60 ? m % 60 + "分" : ""})</small>`;
+    q("#adate").classList.toggle("on", !!q("#kxdate.on")); q("#atime").classList.toggle("on", !!q("#kxclk.on")); };
+  q("#adate").onclick = () => { kOpenX("kxdate"); kHook(); };
+  q("#atime").onclick = () => { if (KS.ad || KS.d2) { KS.ad = false; KS.d2 = null; } KS.end = false; KS.stage = "h"; KS.pm = KPM(KS.sh); kOpenX("kxclk"); kClock(); kHook(); };
+  // 移動時間・通知・繰り返し：丸い札が下に開く（押すと決まって閉じる）
+  const chips = (btn, name, lab) => { const x = q(`[data-ax="${name}"]`), inp = f.querySelector(`input[name="${name}"]`);
+    const paint = () => { const none = ["0", "-1", "none"].includes(inp.value); btn.classList.toggle("set", !none); if (lab) lab.textContent = none ? "繰り返し" : label(name === "rr" ? RR : [], inp.value); };
+    btn.onclick = () => { const was = x.classList.contains("on"); kCloseX(); sheetEl.querySelectorAll("[data-ax].on").forEach(y => y.classList.remove("on")); if (!was) x.classList.add("on"); };
+    x.querySelectorAll(".kc").forEach(b => b.onclick = () => { x.querySelectorAll(".kc").forEach(y => y.classList.toggle("on", y === b)); ktap(b); inp.value = b.dataset.av; paint(); setTimeout(() => x.classList.remove("on"), 180); });
+    paint(); };
+  chips(q("#att"), "tt"); chips(q("#aal"), "al"); chips(q("#arep"), "rr", q("#arl"));
+  // 確／仮
+  q("#atent").onclick = () => { const b = q("#atent"), tent = b.getAttribute("aria-pressed") === "true"; b.setAttribute("aria-pressed", tent ? "false" : "true"); b.classList.toggle("tent", tent); b.querySelector("span").textContent = tent ? "仮" : "確"; f.querySelector('[name="tent"]').value = tent ? "1" : ""; ktap(b); };
+  // カレンダー（色の点）
+  q("#acal").onclick = () => { const cals = D.cals || []; if (!cals.length) return; const inp = f.querySelector('[name="cal"]');
+    showPop(cals.map(c => `<button class="sti calpick" data-cid="${esc(c.id)}"><span class="stt"><i class="cdot" style="background:${esc(c.color)}"></i>${esc(c.title)}</span>${c.id === inp.value ? '<b class="ck2">✓</b>' : ""}</button>`).join(""), q("#acal"));
+    popEl.classList.add("stack", "cals"); popEl.style.zIndex = 46; scrimEl.style.zIndex = 45;
+    popEl.querySelectorAll("[data-cid]").forEach(b => b.onclick = () => { const c = cals.find(x => x.id === b.dataset.cid); inp.value = c.id; q("#acal").style.background = c.color; ktap(q("#acal")); closePop(); }); };
+  // タスクに（題をタスクにして閉じる）
+  q("#atask").onclick = async () => { const t = f.querySelector('[name="title"]').value.trim(); if (!t) { toast("題を入れてください"); return; }
+    try { await api.op({op: "add", text: t, key: rid()}); D.events.splice(i, 1); closeSheet(); toast("タスクにしました"); } catch (err) { toast(failMsg(err)); } };
+  // ほかの日にも（同じ時刻で別の日にも作る）
+  const more = e._more = e._more || [];
+  const drawMore = () => { q("#amore").innerHTML = more.map((d, k) => `<button type="button" class="amchip" data-mk="${k}">${d.getMonth() + 1}/${d.getDate()}(${WD[d.getDay()]})<i>✕</i></button>`).join("");
+    q("#amore").querySelectorAll("[data-mk]").forEach(b => b.onclick = () => { more.splice(+b.dataset.mk, 1); drawMore(); }); };
+  q("#aother").onclick = () => { const inp = document.createElement("input"); inp.type = "date"; inp.style.cssText = "position:fixed;opacity:0;left:0;top:0"; document.body.append(inp);
+    inp.onchange = () => { if (inp.value) { const d = pd(inp.value + "T00:00"); if (!more.some(x => +x === +d) && +d !== +KS.d) { more.push(d); more.sort((a, b) => a - b); drawMore(); } } inp.remove(); };
+    inp.onblur = () => setTimeout(() => inp.remove(), 300); inp.focus(); try { inp.showPicker(); } catch (x) { inp.click(); } };
+  // ＋＝写真を付ける（予定ができたらその予定へ。読み取りはしない）
+  const media = e._media = e._media || [];
+  const drawPh = () => { q("#aph").querySelectorAll(".apt").forEach(x => x.remove()); media.forEach(m => q("#aplus").insertAdjacentHTML("beforebegin", `<div class="apt"><img alt="" src="${esc(m.url || "")}">${m.p < 1 ? `<div class="mprog">${ringSVG(m.p || 0)}</div>` : ""}</div>`)); };
+  q("#aplus").onclick = async () => { const files = (await pickFiles("image/*,video/*", true)).slice(0, 8 - media.length);
+    for (const fl of files) { const m = {id: rid(), url: URL.createObjectURL(fl), p: 0}; media.push(m); drawPh();
+      sendFile("up", fl, {noread: true}, p => { m.p = p; drawPh(); }, m.id).catch(err => { media.splice(media.indexOf(m), 1); drawPh(); toast(failMsg(err)); }); } };
+  drawPh();
+  // 文章を貼ると自動で入ります（読むのは Mac の中）／画像から
+  const fill = it => { if (!it) return; const ti = f.querySelector('[name="title"]'); if (it.title) ti.value = it.title;
+    if (it.ns) { const s = pd(it.ns), en = pd(it.ne || it.ns); kInit(s, en, !!it.allDay); if (it.allDay) KS.ad = true; kReadout(); }
+    if (it.loc) f.querySelector('[name="loc"]').value = it.loc; if (it.brief) { const n = f.querySelector('[name="notes"]'); n.value = n.value ? n.value + "\n" + it.brief : it.brief; }
+    ["title", "loc", "notes"].forEach(n => f.querySelector(`[name="${n}"]`).animate([{background: "rgba(33,90,189,.25)"}, {background: "transparent"}], {duration: 900})); };
+  const wait = async (id, say) => { const r = q("#aread"); r.hidden = false; const t0 = Date.now();
+    while (sheetEl && Date.now() - t0 < 15 * 60e3) { let g = null; try { g = await api.res(id); } catch (x) {} if (g) { g = typeof g === "string" ? JSON.parse(g) : g;
+        if (g.items && g.items.length) { r.hidden = true; fill(g.items[0]); toast(g.items.length > 1 ? `${g.items.length}件読めました（1件目を入れました）` : "読めました"); }
+        else { r.classList.add("err"); q("#art").textContent = g.status === "quota" ? "AI の上限です。Mac が1時間ごとに読み直します" : "予定が見つかりませんでした"; } return; }
+      q("#art").textContent = Date.now() - t0 > 90e3 ? `Mac 待ち（Mac を最後に見たのは ${macSeen()}）` : say; await new Promise(z => setTimeout(z, 3500)); } };
+  const pt = q("#apt"); let sent = "";
+  const read = async () => { const t = pt.value.trim(); if (t.length < 8 || t === sent) return; sent = t; const id = rid();
+    try { await api.op({op: "readtext", id, text: t.slice(0, 6000)}); pt.value = ""; pt.placeholder = "読んでいます…"; await wait(id, "Mac が読んでいます"); pt.placeholder = "文章を貼ると自動で入ります"; } catch (err) { sent = ""; toast(failMsg(err)); } };
+  pt.addEventListener("paste", () => setTimeout(read, 50)); pt.addEventListener("keydown", ev => { if (ev.key === "Enter") { ev.preventDefault(); read(); } }); pt.addEventListener("blur", read);
+  q("#aimg").onclick = async () => { const [fl] = await pickFiles("image/*", false); if (!fl) return; const id = rid(), r = q("#aread"); r.hidden = false; q("#art").textContent = "Drive へ上げています";
+    try { await sendFile("up", fl, null, null, id); media.push({id, url: URL.createObjectURL(fl), p: 1}); drawPh(); await wait(id, "Mac が読んでいます"); } catch (err) { r.hidden = true; toast(failMsg(err)); } };
+  // この種別の既定にする（題の種別ごとに 長さ・移動時間・通知 を覚える＝次からその種別の題を入れると入る）
+  q("#adef").onclick = () => { const t = f.querySelector('[name="title"]').value, k = akind(t); if (!k) { toast("題に種別（説明会・面接など）を入れてください"); return; }
+    const d = adefs(); d[k] = {dur: kDur(), tt: +f.querySelector('[name="tt"]').value, al: +f.querySelector('[name="al"]').value}; store.set("evDefaults", d); ktap(q("#adef")); toast(`「${k}」の既定にしました`); };
+  f.querySelector('[name="title"]').addEventListener("change", ev => { const k = akind(ev.target.value), d = adefs()[k]; if (!d) return;
+    const e2 = KS.sh * 60 + KS.sm + d.dur; KS.eh = Math.floor(e2 / 60) % 24; KS.em = e2 % 60; kReadout();
+    for (const n of ["tt", "al"]) { const x = q(`[data-ax="${n}"]`), b = x && [...x.querySelectorAll(".kc")].find(y => y.dataset.av === String(d[n])); if (b) b.click(); } });
+  q("#acx").onclick = () => q("#edc").click();
+  kHook();
+}
+
 function openPop(i, editing, focusField) {
+  window.kHook = null;
   const wasOpen = !!sheetEl, keepY = wasOpen ? sheetEl.scrollTop : 0;
   closePop(true); closeSheet(true);
   const e = D.events[i], s = pd(e.start), en = pd(e.end), col = e.color || "#2159bd";
@@ -1342,7 +1521,7 @@ function openPop(i, editing, focusField) {
     ${e._new ? "" : '<button class="delrow" id="evdel">予定を削除</button>'}<div class="okdock"><button class="okb" id="eds" aria-label="保存">${ICB.ok}</button></div>`;
   sheetBg = document.createElement("div"); sheetBg.className = "sheetbg";
   sheetEl = document.createElement("div"); sheetEl.className = "sheet" + (editing ? " kfull" : ""); sheetEl.setAttribute("role", "dialog");
-  sheetEl.innerHTML = `<div class="grab"></div>${editing ? edit0 : view0}`;
+  sheetEl.innerHTML = `<div class="grab"></div>${editing ? (e._new ? addHTML(e, TT, AL, RR) : edit0) : view0}`;
   document.body.append(sheetBg, sheetEl);
   // 詳細⇔編集・別の予定へは、シートは出したまま中身だけ滑らかに入れ替える（純正と同じ）
   if (wasOpen || editing) { sheetEl.style.transition = "none"; sheetBg.style.transition = "none"; sheetEl.classList.add("on", "swap"); sheetBg.classList.add("on");
@@ -1379,7 +1558,7 @@ function openPop(i, editing, focusField) {
     editDirty = () => sheetEl && q("#edf") && snap() !== s0;
     const leave = () => { if (e._new) { D.events.splice(i, 1); closeSheet(); } else openPop(i); };
     q("#edc").onclick = () => editDirty() ? confirmSheet("変更を破棄してもよろしいですか？", "変更内容を破棄", leave, "編集を続ける") : leave();
-    kBind(); kBindChoices();
+    kBind(); kBindChoices(); if (e._new) addBind(e, i, TT, AL, RR);
     q("#eds").onclick = async () => {
       const f = q("#edf"); if (!f.reportValidity()) return;
       const v = Object.fromEntries(new FormData(f)), allDay = v.ad === "1";
@@ -1389,10 +1568,15 @@ function openPop(i, editing, focusField) {
       const al = +v.al < 0 ? [] : [+v.al];
       if (e._new) {
         const o = {op: "evadd", key: e._key, title: v.title.trim(), ns, ne, loc: v.loc || "", notes: v.notes || "", al, tt: +v.tt, rr: v.rr};
-        if (allDay) o.allDay = true; if (v.cal) o.cal = v.cal; if (e._media && e._media.length) o.media = e._media.map(x => x.id);
+        if (allDay) o.allDay = true; if (v.cal) o.cal = v.cal; if (v.tent) o.tent = true;
+        if (e._media && e._media.length) { if (e._media.some(x => x.p < 1)) { toast("写真を送っています。少し待ってください"); return; } o.media = e._media.map(x => x.id); }
         const btn = q("#eds"); btn.disabled = true;
-        try { await api.op(o); Object.assign(e, {title: o.title, start: ns, end: ne, allDay, loc: o.loc, notes: o.notes, _new: false, _pending: true});
-          closeSheet(); render(); toast("予定を作りました（Mac が登録します）"); } catch (err) { btn.disabled = false; toast(failMsg(err)); }
+        try { await api.op(o);
+          // ほかの日にも：同じ時刻・長さで別の日にも（1日ずつ別の頼み）
+          const shift = d => { const a = pd(ns), b = pd(ne), k = kday0(d) - kday0(a), f2 = x => `${kymd(x)}T${kp2(x.getHours())}:${kp2(x.getMinutes())}`; return [f2(new Date(+a + k)), f2(new Date(+b + k))]; };
+          for (const d of (e._more || [])) { const [n1, n2] = shift(d); await api.op({...o, key: rid(), ns: n1, ne: n2, media: undefined}); }
+          Object.assign(e, {title: o.title, start: ns, end: ne, allDay, loc: o.loc, notes: o.notes, _new: false, _pending: true});
+          closeSheet(); render(); toast(`予定を作りました${(e._more || []).length ? `（ほか${e._more.length}日）` : ""}（Mac が登録します）`); } catch (err) { btn.disabled = false; toast(failMsg(err)); }
         return;
       }
       const o = {op: "evedit", eid: e.eid, start: e.start};
@@ -1880,15 +2064,14 @@ function palItems() {
   return `<div class="pg">
       <button class="pb" data-pal="today">${ICN.today}今日</button>
       <button class="pb" data-pal="cos">${ICN.co}企業</button>
-      <button class="pb" data-pal="tasks">${ICN.task}タスク${open ? ` ${open}` : ""}</button>
-      <button class="pb" data-pal="add">${ICN.plus}タスクを足す</button>
+      <button class="pb" data-pal="minutes">${ICN.doc}議事録</button>
       <button class="pb" data-pal="newev">${ICB.plus}新しい予定</button>
       <button class="pb" data-pal="photo">${ICB.photo}写真から予定</button>
       <button class="pb" data-pal="tray">${ICB.tray}トレイ${(D.tray || []).length ? ` ${(D.tray || []).length}` : ""}</button>
       <button class="pb" data-pal="search">${ICN.search}検索</button>
       <button class="pb" data-pal="muse">${ICN.spark}Muse</button></div>
     <div class="ph2">表示</div>
-    <div class="pg">${MODES.map(([k, l]) => `<button class="pb${view.v === "home" && mode === k ? " on" : ""}" data-m="${k}">${ICN[k]}${l}</button>`).join("")}</div>`;
+    <div class="pg">${MODES.filter(([k]) => k !== "month").map(([k, l]) => `<button class="pb${view.v === "home" && mode === k ? " on" : ""}" data-m="${k}">${ICN[k]}${l}</button>`).join("")}</div>`;
 }
 function openPal() {
   if (palEl) { closePal(); return; }
@@ -1908,7 +2091,8 @@ function openPal() {
     else if (k === "search") go({v: "search", q: ""});
     else if (k === "newev") newEvent();
     else if (k === "photo") photoToEvent();
-    else if (k === "tray") go({v: "tray"}); });
+    else if (k === "tray") go({v: "tray"});
+    else if (k === "minutes") go({v: "minutes", q: ""}); });
 }
 function ensureFab() {
   let f = $("#fab");
@@ -2051,14 +2235,14 @@ function event(main) {
 
 /* ── 会 ── */
 async function meet(main) {
-  const sum = D.meets.find(m => m.id === view.id); bar(sum ? sum.company : "", backName());
+  const sum = D.meets.find(m => m.id === view.id); bar(sum ? sum.company : "議事録", backName());
   main.innerHTML = '<p class="empty">読み込み中</p>';
   let m = meetCache[view.id];
   if (!m) { try { const t = await api.meet(view.id); m = t && JSON.parse(t); if (m) meetCache[view.id] = m; } catch (e) {} }
   if (!m) { main.innerHTML = '<div class="err">この会はまだドライブに上がっていません。少し待って開き直してください。</div>'; return; }
   if (view.v !== "meet" || view.id !== m.id) return;
   const tab = view.tab || "key", d = pd(m.date);
-  const head = `<h1 class="large">${esc(m.kind)}</h1><div class="meta">${esc(m.company || "")}　${d.getMonth()+1}月${d.getDate()}日（${WD[d.getDay()]}）${hm(d)}・${dur(m.dur)}</div>
+  const head = `<h1 class="large">${esc(m.kind || m.title)}</h1><div class="meta">${esc(m.company || "")}　${d.getMonth()+1}月${d.getDate()}日（${WD[d.getDay()]}）${hm(d)}・${dur(m.dur)}</div>
     <div class="seg" role="tablist"><span class="pill" style="width:calc((100% - 4px)/3);transform:translateX(${({key: 0, text: 100, photo: 200})[view.prevTab || tab]}%)"></span>${[["key","要点"],["text","本文"],["photo","写真"]].map(([k, l]) => `<button role="tab" data-tab="${k}" aria-selected="${k === tab}">${l}</button>`).join("")}</div>`;
   let body = "";
   if (tab === "key") {
