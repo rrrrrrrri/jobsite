@@ -640,13 +640,13 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .chp:active{transform:scale(.92)}
 /* ── 編集の板（案10）── */
 .brd{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;background:none!important;padding:0!important;overflow:visible!important}
-.brd .mo{--k:var(--lapis);flex-direction:column;justify-content:center;gap:3px;min-height:100px;padding:12px 4px 10px;background:#1c1c1e;border-radius:20px;text-align:center;will-change:transform}
+.brd .mo{--k:var(--lapis);flex-direction:column;justify-content:center;gap:3px;min-height:100px;padding:12px 4px 10px;background:#2c2c2e;border-radius:20px;text-align:center;will-change:transform}
 .brd .mo::before{display:none!important}
 .brd .mo.w{grid-column:span 2;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;row-gap:0;align-content:center;justify-content:stretch;text-align:left;padding:10px 12px;min-height:76px}
 .brd .mo.w .mob{grid-row:1/3}
 .brd .mo.w .mov{order:0;grid-column:2;grid-row:1;font-size:21px;font-weight:600;max-width:none;font-variant-numeric:tabular-nums;letter-spacing:-.2px}
 .brd .mo.w .mol{grid-column:2;grid-row:2;font-size:12px;margin:0}
-.brd .mo[data-mo="d"] .mov,.brd .mo[data-mo="rr"] .mov{font-size:17px}
+.brd .mo[data-mo="d"] .mov,.brd .mo[data-mo="rr"] .mov{font-size:16px;letter-spacing:-.3px}
 .brd .mol{order:3;flex:none;font-size:11.5px;color:var(--sub);margin-top:1px}
 .brd .mov{order:2;font-size:13px;font-weight:600;color:var(--label);max-width:100%}
 .brd .mob{width:44px;height:44px;border-radius:22px;align-self:center;background:color-mix(in srgb,var(--k) 20%,transparent);color:var(--k);box-shadow:inset 0 0 0 2px var(--k);transition:background-color .3s,box-shadow .3s,color .3s,transform .2s var(--ease)}
@@ -660,7 +660,7 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .brd .mo:active{transform:scale(.97)}
 .brd .mo.open{grid-column:1/-1;display:flex;flex-direction:row;min-height:66px;padding:0 12px}
 .brd .mo.open .mob{background:var(--k);color:#fff;box-shadow:none}
-.brd .moi{left:12px;top:11px;bottom:11px;width:44px;border-radius:22px;background:#2c2c2e}
+.brd .moi{left:12px;top:11px;bottom:11px;width:44px;border-radius:22px;background:#3a3a3c}
 .brd .mo.open .moi{width:calc(100% - 24px);border-radius:22px;padding-left:52px}
 .brd .mo.open .moi{display:flex;align-items:center;gap:6px}
 .brd .chp.on{background:var(--k)}
@@ -893,7 +893,7 @@ function openPop(i, editing, focusField) {
   const cals = D.cals || [], curCal = cals.find(c => c.title === e.cal) || {};
   const WIDE = {d: 1, a: 1, b: 1, rr: 1};
   const MO = (name, ic, label, val, input) => `<div class="mo${WIDE[name] ? " w" : ""}" data-mo="${name}"><button type="button" class="mob" aria-label="${label}">${ICB[name] || ic}</button><span class="mol">${label}</span><span class="mov">${val}</span><div class="moi">${input}</div></div>`;
-  const ymd2 = d => `${d.getMonth()+1}月${d.getDate()}日（${WD[d.getDay()]}）`;
+  const ymd2 = d => `${d.getMonth()+1}月${d.getDate()}日(${WD[d.getDay()]})`;
   // 純正と同じ選択肢（丸い枠から横へ広がって選ぶ）
   const TT = [[0, "なし"], [5, "5分"], [15, "15分"], [30, "30分"], [60, "1時間"], [90, "1時間30分"], [120, "2時間"]];
   const AL = [[-1, "なし"], [0, "予定の時刻"], [5, "5分前"], [10, "10分前"], [15, "15分前"], [30, "30分前"], [60, "1時間前"], [120, "2時間前"], [1440, "1日前"], [2880, "2日前"]];
