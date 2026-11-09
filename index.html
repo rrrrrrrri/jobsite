@@ -1069,7 +1069,12 @@ function viewAtt(i, k, src) {
   document.body.append(v); requestAnimationFrame(() => v.classList.add("on"));
   const close = () => { v.classList.remove("on"); setTimeout(() => v.remove(), 260); };
   v.querySelector(".mvx").onclick = close; v.onclick = ev => { if (ev.target === v) close(); };
-  let y0 = null; v.addEventListener("touchstart", ev => y0 = ev.touches[0].clientY, {passive: true}); v.addEventListener("touchend", ev => { if (y0 !== null && ev.changedTouches[0].clientY - y0 > 90) close(); y0 = null; });
+  // 下へはらうと閉じる・左右になぞると前後の写真へ（純正の写真と同じ）
+  let y0 = null, x0 = null; v.addEventListener("touchstart", ev => { y0 = ev.touches[0].clientY; x0 = ev.touches[0].clientX; }, {passive: true});
+  v.addEventListener("touchend", ev => { if (y0 === null) return; const dy = ev.changedTouches[0].clientY - y0, dx = ev.changedTouches[0].clientX - x0; y0 = x0 = null;
+    if (dy > 90 && Math.abs(dy) > Math.abs(dx)) return close();
+    if (Math.abs(dx) > 60) { const n = k + (dx < 0 ? 1 : -1), list = e.att || []; if (n < 0 || n >= list.length) return;
+      v.remove(); const im = document.querySelector(`#mgrid [data-ai="${n}"] img`); viewAtt(i, n, im && im.src); } });
   v.querySelector(".mvdel").onclick = () => confirmSheet("この写真を予定から削除しますか？", "削除", async () => {
     try { await api.op({op: "attdel", eid: e.eid, name: a.n}); e.att = (e.att || []).filter(x => x !== a); close(); refreshAtt(i); toast("削除しました"); } catch (err) { toast(failMsg(err)); } });
 }
