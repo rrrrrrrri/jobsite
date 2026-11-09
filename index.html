@@ -670,6 +670,106 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .okdock{position:sticky;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;justify-content:flex-end;pointer-events:none;margin-top:-56px;height:56px;z-index:3}
 .okb{pointer-events:auto;width:56px;height:56px;border-radius:28px;background:#fff;color:#000;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.45);transition:transform .2s var(--spring)}
 .okb svg{width:24px;height:24px}.okb:active{transform:scale(.88)}.okb:disabled{opacity:.5}
+/* ── 📷11-09 写真・動画・トレイ ── */
+.mph,.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:0 0 10px}
+.mph .mt,.mgrid .mt{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#3a3a3c;display:block;width:auto;padding:0}
+.mph .mt img,.mgrid .mt img{width:100%;height:100%;object-fit:cover;display:block}
+.mgrid .madd{display:grid;place-items:center;color:var(--sub);background:transparent;border:1.5px dashed rgba(255,255,255,.18)}.mgrid .madd svg{width:26px;height:26px}
+.mbadge{position:absolute;left:6px;bottom:6px;font-size:11px;font-weight:600;background:rgba(0,0,0,.55);color:#fff;padding:2px 6px;border-radius:6px}
+.mfake{width:100%;height:100%;display:grid;place-items:center;color:#aeaeb2;font-size:12px;background:linear-gradient(135deg,#4a4a4e,#2a2a2e)}
+.mprog{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.35);transition:opacity .22s cubic-bezier(.22,.61,.36,1)}.mprog.done{opacity:0}
+.mring{width:30px;height:30px}.mring.sm{width:14px;height:14px;vertical-align:-2px;margin-right:4px}.mring circle{transition:stroke-dasharray .14s linear}
+.mread{display:flex;align-items:center;gap:10px;background:var(--card,#2c2c2e);border-radius:12px;padding:12px 14px;margin-top:6px;animation:mIn .22s cubic-bezier(.22,.61,.36,1) both}.mread.err{color:#ff9f0a}
+.mdots i{display:inline-block;width:6px;height:6px;border-radius:3px;background:var(--sub);margin-right:3px;animation:mdt 1.2s infinite}.mdots i:nth-child(2){animation-delay:.2s}.mdots i:nth-child(3){animation-delay:.4s}
+@keyframes mdt{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes mIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.mcands{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.mcand{background:var(--card,#2c2c2e);border-radius:14px;padding:12px 14px;animation:mIn .28s cubic-bezier(.22,.61,.36,1) both}
+.mcand b{display:block;font-size:16px}.mw{color:var(--sub);font-size:13px;margin-top:2px;font-variant-numeric:tabular-nums}.mbr{color:#d1d1d6;font-size:13px;margin-top:6px;white-space:pre-line}
+.mbtn{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;height:44px;margin-top:10px;border-radius:12px;background:#fff;color:#000;font-size:16px;font-weight:600;transition:transform .14s cubic-bezier(.22,.61,.36,1)}.mbtn:active{transform:scale(.97)}
+.mbtn.sub{background:rgba(255,255,255,.1);color:var(--label)}
+.mview{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,0);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:background-color .22s cubic-bezier(.22,.61,.36,1)}
+.mview.on{background:rgba(0,0,0,.92)}.mview img{max-width:100%;max-height:78vh;object-fit:contain;opacity:0;transform:scale(.96);transition:opacity .22s cubic-bezier(.22,.61,.36,1),transform .22s cubic-bezier(.22,.61,.36,1)}.mview.on img{opacity:1;transform:none}
+.mvbar{position:absolute;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;padding:0 16px;color:var(--sub);font-size:12px}.mvbar span{flex:1}
+.mvbar button{height:38px;padding:0 16px;border-radius:19px;background:rgba(255,255,255,.12);color:#fff;font-size:15px}.mvbar .mvdel{color:#ff453a}
+.tdrop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:calc(100% - 32px);margin:4px 16px 0;height:120px;border-radius:16px;border:1.5px dashed rgba(255,255,255,.2);color:var(--sub);background:rgba(255,255,255,.03);font-size:15px;transition:background-color .22s cubic-bezier(.22,.61,.36,1),border-color .22s,color .22s}
+.tdrop svg{width:28px;height:28px}.tdrop.hot{background:rgba(33,90,189,.14);border-color:rgba(112,163,250,.7);color:#70a3fa}.tdrop:active{transform:scale(.98)}
+.tlist{margin:10px 16px 0;display:flex;flex-direction:column;gap:8px}
+.tiw{display:grid;grid-template-rows:1fr;transition:grid-template-rows .28s cubic-bezier(.22,.61,.36,1),opacity .22s;animation:mIn .28s cubic-bezier(.22,.61,.36,1) both}.tiw>div{position:relative;min-height:0}.tiw.gone{grid-template-rows:0fr;opacity:0}
+.ti2{position:relative;z-index:1;display:flex;align-items:center;gap:12px;background:var(--card,#2c2c2e);border-radius:14px;padding:8px;touch-action:pan-y;transition:transform .22s cubic-bezier(.22,.61,.36,1)}.ti2.drag{transition:none}
+.tdel{position:absolute;right:0;top:0;bottom:0;width:0;border-radius:14px;background:#ff453a;color:#fff;font-size:13px;font-weight:600;display:grid;place-items:center;overflow:hidden;white-space:nowrap}
+.tth{position:relative;flex:none;width:56px;height:56px;border-radius:10px;overflow:hidden;background:#3a3a3c}.tth img{width:100%;height:100%;object-fit:cover;display:block}
+.ttx{flex:1;min-width:0}.ttx b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ttx small{display:flex;align-items:center;gap:6px;color:var(--sub);font-size:12.5px;margin-top:2px}
+.tst{display:inline-flex;align-items:center;gap:4px}.tst svg{width:13px;height:13px}.tst.ok{color:#d1d1d6}.tst.ok svg{animation:mpop .22s cubic-bezier(.3,1.15,.55,1)}.tst.err{color:#ff9f0a}
+@keyframes mpop{0%{transform:scale(.4);opacity:0}100%{transform:none;opacity:1}}
+.tleft{margin-left:auto;font-variant-numeric:tabular-nums}
+.tempty{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--sub);padding:28px 0 8px;font-size:14px}.tempty svg{width:30px;height:30px}
+.trule{margin:12px 20px 120px;color:var(--sub);font-size:12.5px;line-height:1.55}
+/* ── 🕘11-09 予定の編集：日付の盤と時計（Mac 本体の部品の写し）。動きは easeOut・300ms 未満・弾み 0.15 以下 ── */
+:root{--klapis:#215abd;--klapisL:#70a3fa;--klapisD:#122e80;--kruby:#c06a78;--kout:cubic-bezier(.22,.61,.36,1);--kspring:cubic-bezier(.3,1.15,.55,1)}
+.ke button{transition:transform .14s var(--kout),opacity .14s var(--kout),background-color .22s var(--kout),color .22s var(--kout)}
+.ke button:active:not(:disabled){transform:scale(.96);opacity:.88}
+.ktick{animation:ktick .22s var(--kspring)}@keyframes ktick{0%{transform:scale(.9)}100%{transform:none}}
+/* 編集のシートは最初から上まで＝時計や月の盤が開いても上の物は動かない（中で下へ伸びるだけ） */
+.sheet.kfull{height:calc(100dvh - 16px - env(safe-area-inset-top,0px));max-height:none}
+.kgrp{padding:0!important;overflow:hidden}
+.krow{position:relative;display:flex;align-items:center;gap:12px;min-height:48px;padding:0 14px;cursor:pointer}
+.krow+.krow::before,.kxp+.krow::before,.kxp+.ktm::before,.krow+.ktm::before{content:"";position:absolute;left:50px;right:0;top:0;height:.5px;background:var(--sep)}
+.kic{width:24px;display:grid;place-items:center;color:var(--sub);flex:none}.kic svg{width:20px;height:20px}
+.klb{flex:1;min-width:0;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kvl{font-size:16px;color:var(--sub);white-space:nowrap}.krow.set .kvl{color:var(--label)}
+.kin{flex:1;min-width:0;border:0;background:none;color:var(--label);font:inherit;font-size:16px;outline:none;height:46px}
+.kin::placeholder{color:var(--sub)}
+.krt{white-space:nowrap;display:inline-block;font-size:12px;color:var(--klapisL);margin-left:8px;animation:ktick .22s var(--kspring)}
+.ktm{position:relative;display:flex;align-items:center;justify-content:space-between;height:70px;padding:0 14px}
+.kseg{height:52px;min-width:clamp(100px,31vw,116px);padding:0 10px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:clamp(26px,8vw,30px);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.5px;color:var(--label)}
+.kseg.on{background:rgba(33,90,189,.18);color:var(--klapisL)}
+.kseg i{font-style:normal;padding:0 1px;border-radius:6px;transition:background-color .22s var(--kout)}.kseg i.on{background:rgba(33,90,189,.28)}
+.kar{color:var(--sub);display:grid}.kar svg{width:22px;height:22px}
+.ktm .kseg,.ktm .kar{transition:opacity .22s var(--kout)}.ktm.ad .kseg,.ktm.ad .kar{opacity:.28;pointer-events:none}
+.kxp{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s var(--kout)}
+.kxp>div{overflow:hidden;min-height:0}
+.kxp>div>*{opacity:0;transform:translateY(-6px);transition:opacity .22s var(--kout),transform .22s var(--kout)}
+.kxp.on{grid-template-rows:1fr}.kxp.on>div>*{opacity:1;transform:none;transition-delay:.04s}
+.kclk{padding:4px 0 14px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.kdial{position:relative;width:min(264px,calc(100vw - 64px));aspect-ratio:1;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);touch-action:none}
+.knode{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:500;color:var(--sub);background:rgba(255,255,255,.04);font-variant-numeric:tabular-nums}
+.knode.now{box-shadow:inset 0 0 0 1.5px rgba(112,163,250,.85)}
+.knode.on{background:var(--klapisD);color:#fff;font-weight:700;box-shadow:inset 0 0 0 1.5px var(--klapis)}
+.kdial.min .knode{font-size:14px;font-weight:600}
+.khand{position:absolute;left:50%;top:50%;width:2px;height:var(--hl,100px);margin-left:-1px;background:var(--klapisL);transform-origin:50% 0;border-radius:1px;transition:transform .28s var(--kout);pointer-events:none}
+.khand::after{content:"";position:absolute;left:50%;bottom:-3px;width:6px;height:6px;margin-left:-3px;border-radius:3px;background:var(--klapisL)}
+.khand.drag{transition:none}
+.kface{position:absolute;inset:0;transition:opacity .14s var(--kout),transform .14s var(--kout)}.kface.out{opacity:0;transform:scale(.96);pointer-events:none}
+.khub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;gap:6px}
+.khub button{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.06)}.khub svg{width:16px;height:16px}
+.ksun{color:rgba(192,106,120,.7)}.ksun.on{background:var(--kruby)!important;color:#fff}.kmoon{color:rgba(112,163,250,.7)}.kmoon.on{background:var(--klapis)!important;color:#fff}
+.kqr{display:flex;gap:6px}.kqr button{height:30px;padding:0 11px;border-radius:15px;background:rgba(33,90,189,.14);color:var(--klapisL);font-size:13px;font-weight:600}.kqr button.on{background:rgba(33,90,189,.32)}
+.kdp{padding:2px 12px 14px}
+.kdch{display:flex;gap:6px;margin-bottom:10px}.kdch button{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;height:32px;border-radius:16px;background:rgba(255,255,255,.08);font-size:13px;font-weight:600;color:var(--label)}
+.kdch button.arm{background:rgba(33,90,189,.24);color:var(--klapisL)}
+.kmh{display:flex;align-items:center;justify-content:space-between;margin:0 2px 6px}.kmh b{font-size:17px}.kmh button{width:34px;height:34px;border-radius:17px;color:var(--klapisL);font-size:20px}
+.kg7{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;touch-action:pan-y;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.kg7.ranging{touch-action:none}
+.kw{font-size:11px;color:var(--sub);padding:2px 0 4px}.kw.arm{animation:karm 1s ease-in-out infinite alternate;color:var(--klapisL);border-radius:6px}
+@keyframes karm{from{background:rgba(33,90,189,.05)}to{background:rgba(33,90,189,.3)}}
+.kd{position:relative;height:38px;display:grid;place-items:center;font-size:16px;font-variant-numeric:tabular-nums;color:var(--label)}
+.kd span{position:relative;width:34px;height:34px;line-height:34px;border-radius:17px;transition:background-color .14s var(--kout),color .14s var(--kout),transform .22s var(--kspring)}
+.kd.we{color:var(--kruby)}.kd.wed{color:var(--klapisL)}.kd.out{opacity:.3}
+.kd.td span{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
+.kd.sel span,.kd.rs span,.kd.re span{background:var(--klapis);color:#fff;font-weight:700}
+.kd::before{content:"";position:absolute;left:-1px;right:-1px;top:3px;bottom:3px;background:rgba(33,90,189,.28);opacity:0;transform:scaleX(.3);transition:opacity .14s var(--kout),transform .22s var(--kout)}
+.kd.rng::before{opacity:1;transform:none}.kd.rs::before{left:50%}.kd.re::before{right:50%}.kd.rs.re::before{display:none}
+.kd:nth-child(7n+8)::before{border-radius:10px 0 0 10px}.kd:nth-child(7n+14)::before{border-radius:0 10px 10px 0}
+.kd.ev::after{content:"";position:absolute;bottom:1px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:2px;background:var(--sub)}
+.kd.press span{transform:scale(1.14)}.kg7.hold .kd:not(.rng){opacity:.55;transition:opacity .22s var(--kout)}
+.kchs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 14px 12px;overscroll-behavior-x:contain}.kchs::-webkit-scrollbar{display:none}
+.kc{flex:none;height:32px;padding:0 13px;border-radius:16px;background:rgba(255,255,255,.08);font-size:14px;font-weight:500;color:var(--label)}
+.kc.on{background:#fff;color:#000;font-weight:600}
+.kph{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:0 0 10px}.kph .kt{aspect-ratio:1;border-radius:10px;overflow:hidden;background:#3a3a3c}.kph img{width:100%;height:100%;object-fit:cover;display:block}
+@media (prefers-reduced-motion: reduce){.ke *,.ke *::before{animation:none!important;transition-property:opacity,background-color,color!important;transition-duration:.12s!important}.khand{transition:none!important}.ke button:active:not(:disabled){transform:none}}
+@media (max-width:340px){.ktm{padding:0 8px}.kdp{padding:2px 6px 12px}.kdch button{font-size:12px}}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -760,7 +860,7 @@ function bind(r) {
 function render() {
   const main = $("#main"), a = anim; anim = "";
   closePal(true); closeCos(true);
-  ({home, company, meet, tasks, event, search})[view.v](main);
+  ({home, company, meet, tasks, event, search, tray})[view.v](main);
   ensureFab();
   if (a) { const el = view.v === "home" && ["in-next","in-prev","in-flip"].includes(a) ? main.querySelector(".pane") : main;
     if (el) { el.classList.remove("in-push","in-pop","in-next","in-prev","in-flip"); void el.offsetWidth; el.classList.add(a); } }
@@ -844,10 +944,339 @@ function quickCal(i, row) {
     catch (err) { toast(failMsg(err)); if (dot) dot.style.background = e.color; if (lab) lab.textContent = e.cal; }
   });
 }
+/* ── 📷11-09 写真・動画（写真から予定・予定の写真・トレイ）：Docs/jobsite-media-tray-design-2026-11-09.md ──
+   上げ方：7MB ずつ base64 で窓口へ（窓口は Drive に置くだけ）→ Mac が組み立てる。写真から予定は 2560px の JPEG に縮めてから。
+   ⚠️AI はここでも窓口でも呼ばない（読むのは Mac の中だけ）。Gemini の鍵はどこにも書かない。 */
+const MCH = 7 * 1024 * 1024, MMAX = 200 * 1024 * 1024;
+const rid = () => Array.from(crypto.getRandomValues(new Uint8Array(10)), b => (b % 36).toString(36)).join("");
+const upRemote = u => fetch(CONF.u, {method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify({k: CONF.k, up: u})}).then(r => r.json()).then(j => { if (!j.ok) throw new Error(j.error || "送れませんでした"); return j.data; });
+api.up = u => GAS ? call("upload", u) : API ? upRemote(u) : Promise.reject(new Error("窓口がありません"));
+api.res = id => GAS ? call("getRes", id) : API ? remote({fn: "res", id}) : Promise.resolve(null);
+const b64Of = blob => new Promise((ok, ng) => { const r = new FileReader(); r.onload = () => ok(String(r.result).split(",")[1] || ""); r.onerror = () => ng(r.error); r.readAsDataURL(blob); });
+async function shrink(file, max = 2560) {
+  try { const bm = await createImageBitmap(file), k = Math.min(1, max / Math.max(bm.width, bm.height));
+    const c = document.createElement("canvas"); c.width = Math.round(bm.width * k); c.height = Math.round(bm.height * k); c.getContext("2d").drawImage(bm, 0, 0, c.width, c.height);
+    return await new Promise(ok => c.toBlob(b => ok(b || file), "image/jpeg", .86)); } catch (e) { return file; }
+}
+/** 送る（切れ端ごとに3回まで送り直す）。onProg(0..1)。戻り値＝番号 */
+async function sendFile(kind, file, extra, onProg, id) {
+  id = id || rid();
+  const isImg = (file.type || "").startsWith("image/"), blob = kind === "up" && isImg ? await shrink(file) : file;
+  if (blob.size > MMAX) throw new Error(`200MB までです（${Math.round(blob.size / 1048576)}MB）`);
+  const mime = blob.type || file.type || (isImg ? "image/jpeg" : "video/quicktime");
+  if (!/^(image|video)\//.test(mime)) throw new Error("写真か動画だけです");
+  const total = Math.max(1, Math.ceil(blob.size / MCH));
+  const name = (kind === "up" && isImg ? (file.name || "photo").replace(/\.\w+$/, "") + ".jpg" : (file.name || (isImg ? "photo.jpg" : "video.mov")));
+  for (let p = 0; p < total; p++) {
+    const b64 = await b64Of(blob.slice(p * MCH, (p + 1) * MCH));
+    let tries = 0;
+    for (;;) { try { await api.up({kind, id, part: p, total, name, mime, size: blob.size, b64, ...(extra || {})}); break; }
+      catch (e) { if (++tries >= 3) throw e; await new Promise(r => setTimeout(r, 900 * tries)); } }
+    onProg && onProg((p + 1) / total);
+  }
+  return id;
+}
+const pickFiles = (accept, multiple) => new Promise(ok => { const i = document.createElement("input"); i.type = "file"; i.accept = accept; i.multiple = !!multiple;
+  i.onchange = () => ok([...(i.files || [])]); i.click(); });
+const macSeen = () => { const u = D && D.updatedAt && pd(D.updatedAt); return u ? `${u.getHours()}:${String(u.getMinutes()).padStart(2, "0")}` : "—"; };
+const ringSVG = p => `<svg class="mring" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="3"/><circle cx="18" cy="18" r="15" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="${(p * 94.2).toFixed(1)} 95" transform="rotate(-90 18 18)"/></svg>`;
+
+/* 空のシート（写真から予定など）。予定のシートと同じ出入り・はらって閉じる */
+function openPlain(html, onClose) {
+  closePop(true); closeSheet(true);
+  sheetBg = document.createElement("div"); sheetBg.className = "sheetbg";
+  sheetEl = document.createElement("div"); sheetEl.className = "sheet"; sheetEl.setAttribute("role", "dialog");
+  sheetEl.innerHTML = `<div class="grab"></div>${html}`;
+  document.body.append(sheetBg, sheetEl);
+  requestAnimationFrame(() => requestAnimationFrame(() => { sheetEl && sheetEl.classList.add("on"); sheetBg && sheetBg.classList.add("on"); }));
+  sheetBg.onclick = () => { closeSheet(); onClose && onClose(); };
+  return sheetEl;
+}
+
+/* 新しい予定（空・写真の候補から）。編集のシートをそのまま使う＝保存は evadd */
+function newEvent(pre) {
+  const now = new Date(), s = pre && pre.ns ? pd(pre.ns) : new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1), en = pre && pre.ne ? pd(pre.ne) : new Date(+s + 36e5);
+  const f = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}T${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  D.events.push({title: (pre && pre.title) || "", start: f(s), end: f(en), allDay: !!(pre && pre.allDay), loc: (pre && pre.loc) || "", notes: (pre && pre.brief) || "",
+    color: "#8e8e93", cal: "", rw: true, _new: true, _key: rid(), _media: (pre && pre.media) || []});
+  openPop(D.events.length - 1, true);
+  setTimeout(() => { const t = sheetEl && sheetEl.querySelector('[name="title"]'); if (t && !t.value) t.focus(); }, 380);
+}
+
+/* 写真から予定：選ぶ → 上げる → Mac が読む → 候補 → 押すと時計つきの編集 */
+async function photoToEvent() {
+  const files = (await pickFiles("image/*", true)).slice(0, 4); if (!files.length) return;
+  const shots = files.map(f => ({f, url: URL.createObjectURL(f), id: rid(), p: 0}));
+  const el = openPlain(`<div class="shd"><span style="width:60px"></span><h3>写真から予定</h3><button class="cx" id="phx">閉じる</button></div>
+    <div class="mph" id="mph">${shots.map(x => `<div class="mt" data-id="${x.id}"><img alt="" src="${x.url}"><div class="mprog">${ringSVG(0)}</div></div>`).join("")}</div>
+    <div class="mread" id="mread"><span class="mdots"><i></i><i></i><i></i></span><span id="mrt">Drive へ上げています</span></div><div class="mcands" id="mcd"></div>`);
+  let alive = true; el.querySelector("#phx").onclick = () => { alive = false; closeSheet(); };
+  const say = (t, err) => { const r = el.querySelector("#mread"); r.classList.toggle("err", !!err); el.querySelector("#mrt").textContent = t; };
+  try {
+    for (const x of shots) await sendFile("up", x.f, null, p => { const t = el.querySelector(`[data-id="${x.id}"] .mprog`); if (t) { t.innerHTML = ringSVG(p); if (p >= 1) t.classList.add("done"); } }, x.id);
+  } catch (e) { say(`止まりました：${failMsg(e)}`, true); return; }
+  say("Mac が読んでいます");
+  const t0 = Date.now(), got = {};
+  while (alive && sheetEl === el && Date.now() - t0 < 15 * 60e3) {
+    for (const x of shots) if (!got[x.id]) { try { const r = await api.res(x.id); if (r) got[x.id] = typeof r === "string" ? JSON.parse(r) : r; } catch (e) {} }
+    if (shots.every(x => got[x.id])) break;
+    if (Date.now() - t0 > 90e3) say(`Mac 待ち（Mac を最後に見たのは ${macSeen()}）。Mac が開くと読みます`);
+    await new Promise(r => setTimeout(r, 4000));
+  }
+  if (!alive || sheetEl !== el) return;
+  const media = shots.map(x => ({id: x.id, url: x.url}));
+  const items = shots.flatMap(x => (got[x.id] && got[x.id].items) || []);
+  const cd = el.querySelector("#mcd");
+  if (!items.length) {
+    say(shots.some(x => got[x.id]) ? "予定が見つかりませんでした" : "まだ読めていません（Mac が開くと読みます）", true);
+    cd.innerHTML = `<button class="mbtn" id="mempty">空の予定で作る</button>`; cd.querySelector("#mempty").onclick = () => newEvent({media}); return;
+  }
+  el.querySelector("#mread").remove();
+  const fmt = it => { const s = pd(it.ns), e = pd(it.ne); return it.allDay ? `${s.getMonth() + 1}月${s.getDate()}日(${WD[s.getDay()]})　終日` : `${s.getMonth() + 1}月${s.getDate()}日(${WD[s.getDay()]})　${hm(s)} → ${hm(e)}`; };
+  cd.innerHTML = items.map((it, k) => `<div class="mcand" style="animation-delay:${k * 60}ms"><b>${esc(it.title)}</b><div class="mw">${fmt(it)}</div>${it.loc ? `<div class="mw">${esc(it.loc)}</div>` : ""}${it.brief ? `<div class="mbr">${esc(it.brief).slice(0, 300)}</div>` : ""}<button class="mbtn" data-ci="${k}">この予定を作る</button></div>`).join("")
+    + `<button class="mbtn sub" id="mempty">空の予定で作る</button>`;
+  cd.querySelectorAll("[data-ci]").forEach(b => b.onclick = () => newEvent({...items[+b.dataset.ci], media}));
+  cd.querySelector("#mempty").onclick = () => newEvent({media});
+}
+
+/* 予定の写真・動画（詳細の段）。台帳にある物（Mac が書き出す att）＋送っている途中の物 */
+let pendAtt = store.get("pendAtt", {});   // {eid: [{id, name, at, p, err}]}
+function attHTML(e) {
+  if (!e.eid || !e.rw) return "";
+  const have = e.att || [], pend = (pendAtt[e.eid] || []).filter(x => !have.some(a => a.n.startsWith(x.id + "-")) && Date.now() - x.at < 864e5 * 3);
+  return `<div class="sec" style="margin-left:4px">写真と動画</div><div class="mgrid" id="mgrid">
+    ${have.map((a, k) => `<button class="mt" data-ai="${k}"><img alt="" data-th="${esc(a.th)}">${a.v ? '<span class="mbadge">▶</span>' : ""}</button>`).join("")}
+    ${pend.map(x => `<div class="mt pend"><div class="mfake">${x.err ? "止まりました" : x.p < 1 ? ringSVG(x.p || 0) : ""}</div><span class="mbadge">${x.err ? "押すと続き" : x.p < 1 ? "送っています" : "Mac 待ち"}</span></div>`).join("")}
+    <button class="mt madd" id="madd" aria-label="写真・動画を付ける">${ICB.plus}</button></div>`;
+}
+function bindAtt(i) {
+  const e = D.events[i], g = sheetEl && sheetEl.querySelector("#mgrid"); if (!g) return;
+  g.querySelectorAll("img[data-th]").forEach(im => api.img(im.dataset.th).then(u => { if (u) im.src = u; }).catch(() => {}));
+  g.querySelectorAll("[data-ai]").forEach(b => b.onclick = () => viewAtt(i, +b.dataset.ai, b.querySelector("img").src));
+  g.querySelector("#madd").onclick = async () => {
+    const files = await pickFiles("image/*,video/*", true); if (!files.length) return;
+    for (const f of files) { const x = {id: rid(), name: f.name, at: Date.now(), p: 0}; (pendAtt[e.eid] = pendAtt[e.eid] || []).push(x); store.set("pendAtt", pendAtt); refreshAtt(i);
+      sendFile("att", f, {eid: e.eid, start: e.start}, p => { x.p = p; store.set("pendAtt", pendAtt); refreshAtt(i); }, x.id)
+        .catch(err => { x.err = true; store.set("pendAtt", pendAtt); refreshAtt(i); toast(failMsg(err)); }); }
+  };
+}
+function refreshAtt(i) { const g = sheetEl && sheetEl.querySelector("#mgrid"); if (!g) return; const t = document.createElement("div"); t.innerHTML = attHTML(D.events[i]); g.replaceWith(t.querySelector("#mgrid")); bindAtt(i); }
+function viewAtt(i, k, src) {
+  const e = D.events[i], a = (e.att || [])[k]; if (!a) return;
+  const v = document.createElement("div"); v.className = "mview";
+  v.innerHTML = `<img alt="" src="${src || ""}"><div class="mvbar"><span>${a.v ? "動画（Mac の予定の資料で再生できます）" : ""}</span><button class="mvdel">削除</button><button class="mvx">閉じる</button></div>`;
+  document.body.append(v); requestAnimationFrame(() => v.classList.add("on"));
+  const close = () => { v.classList.remove("on"); setTimeout(() => v.remove(), 260); };
+  v.querySelector(".mvx").onclick = close; v.onclick = ev => { if (ev.target === v) close(); };
+  let y0 = null; v.addEventListener("touchstart", ev => y0 = ev.touches[0].clientY, {passive: true}); v.addEventListener("touchend", ev => { if (y0 !== null && ev.changedTouches[0].clientY - y0 > 90) close(); y0 = null; });
+  v.querySelector(".mvdel").onclick = () => confirmSheet("この写真を予定から削除しますか？", "削除", async () => {
+    try { await api.op({op: "attdel", eid: e.eid, name: a.n}); e.att = (e.att || []).filter(x => x !== a); close(); refreshAtt(i); toast("削除しました"); } catch (err) { toast(failMsg(err)); } });
+}
+
+/* トレイ（Mac のノッチのトレイへ）。本体と同じ：入った時刻から24時間・60件まで */
+let pendTray = store.get("pendTray", []), trayGone = store.get("trayGone", {});
+function tray(main) {
+  bar("トレイ", backName());
+  const now = Date.now();
+  pendTray = pendTray.filter(x => now - x.at < 864e5 && !(D.tray || []).some(t => t.n.startsWith(x.id + "-"))); store.set("pendTray", pendTray);
+  for (const k in trayGone) if (now - trayGone[k] > 864e5 * 2) delete trayGone[k]; store.set("trayGone", trayGone);
+  const items = (D.tray || []).filter(t => !trayGone[t.n]);
+  main.innerHTML = `<h1 class="large">トレイ</h1>
+    <button class="tdrop" id="tdz">${ICB.tray}<span>写真・動画を入れる</span></button>
+    <div class="tlist" id="tlist">
+      ${pendTray.map(x => `<div class="tiw"><div><div class="ti2" data-pend="${x.id}"><div class="tth"><div class="mfake">${x.err ? "!" : ""}</div></div><div class="ttx"><b>${esc(x.name)}</b><small>${x.err ? `<span class="tst err">止まりました・押すと続き</span>` : x.p < 1 ? `<span class="tst">${ringSVG(x.p || 0).replace('class="mring"', 'class="mring sm"')}送っています ${Math.round((x.p || 0) * 100)}%</span>` : `<span class="tst">${ICB.mac}Mac 待ち（Mac を最後に見たのは ${macSeen()}）</span>`}</small></div></div></div></div>`).join("")}
+      ${items.map(t => `<div class="tiw"><div><div class="ti2" data-tn="${esc(t.n)}"><div class="tth"><img alt="" data-th="${esc(t.th)}">${t.v ? '<span class="mbadge">▶</span>' : ""}</div><div class="ttx"><b>${esc(t.n.replace(/^[a-z0-9]+-/, ""))}</b><small><span class="tst ok">${ICB.check}Mac に届きました</span><span class="tleft">あと ${Math.max(0, t.left)}時間</span></small></div></div></div></div>`).join("")}
+    </div>
+    ${!pendTray.length && !items.length ? `<div class="tempty">${ICB.tray}<span>トレイは空です</span></div>` : ""}
+    <p class="trule">Mac のトレイと同じ：入った時刻から24時間で消えます（60件まで）。予定に付けた写真は消えません。</p>`;
+  main.querySelectorAll("img[data-th]").forEach(im => api.img(im.dataset.th).then(u => { if (u) im.src = u; }).catch(() => {}));
+  $("#tdz").onclick = async () => {
+    const files = await pickFiles("image/*,video/*", true); if (!files.length) return;
+    $("#tdz").classList.add("hot"); setTimeout(() => $("#tdz") && $("#tdz").classList.remove("hot"), 260);
+    for (const f of files) { const x = {id: rid(), name: f.name, at: Date.now(), p: 0}; pendTray.unshift(x); store.set("pendTray", pendTray); if (view.v === "tray") tray(main);
+      sendFile("tray", f, null, p => { x.p = p; store.set("pendTray", pendTray); const el = $(`[data-pend="${x.id}"] small`); if (el && view.v === "tray") el.innerHTML = p < 1 ? `<span class="tst">${ringSVG(p).replace('class="mring"', 'class="mring sm"')}送っています ${Math.round(p * 100)}%</span>` : `<span class="tst">${ICB.mac}Mac 待ち（Mac を最後に見たのは ${macSeen()}）</span>`; }, x.id)
+        .catch(err => { x.err = true; store.set("pendTray", pendTray); if (view.v === "tray") tray(main); toast(failMsg(err)); }); }
+  };
+  // 左へはらうと削除（指に付いて動き・赤い「削除」が下から見える・80px を越えて離すと消える）
+  main.querySelectorAll(".tiw").forEach(w => { const t = w.querySelector(".ti2"), box = w.firstElementChild; let x0 = null, dx = 0;
+    box.insertAdjacentHTML("afterbegin", '<span class="tdel">削除</span>'); const del = box.querySelector(".tdel");
+    t.onpointerdown = e => { x0 = e.clientX; dx = 0; t.classList.add("drag"); };
+    t.onpointermove = e => { if (x0 === null) return; dx = Math.min(0, e.clientX - x0); if (dx < -6) { t.style.transform = `translateX(${dx < -120 ? -120 + (dx + 120) * .4 : dx}px)`; del.style.width = Math.min(-dx + 14, 180) + "px"; } };
+    t.onpointerup = t.onpointercancel = async () => { if (x0 === null) return; x0 = null; t.classList.remove("drag");
+      if (dx < -80) { t.style.transform = "translateX(-110%)"; if (navigator.vibrate) navigator.vibrate(8);
+        const n = t.dataset.tn, pid = t.dataset.pend;
+        setTimeout(() => { w.classList.add("gone"); setTimeout(() => w.remove(), 300); }, 160);
+        if (pid) { pendTray = pendTray.filter(x => x.id !== pid); store.set("pendTray", pendTray); }
+        if (n) { trayGone[n] = Date.now(); store.set("trayGone", trayGone); try { await api.op({op: "traydel", name: n}); toast("削除しました（Mac のトレイからも）"); } catch (err) { delete trayGone[n]; store.set("trayGone", trayGone); toast(failMsg(err)); } }
+      } else { t.style.transform = ""; del.style.transition = "width .22s cubic-bezier(.22,.61,.36,1)"; del.style.width = "0"; setTimeout(() => del.style.transition = "", 240); }
+      if (Math.abs(dx) < 6 && t.dataset.pend) { const x = pendTray.find(y => y.id === t.dataset.pend); if (x && x.err) toast("もう一度入れてください（写真を選び直す）"); } }; });
+}
+
+/* ── 🕘11-09 予定の編集の時刻と日付（Mac 本体の ClockStartEndPicker／CalendarDatePanel をスマホ用に・Docs/jobsite-media-tray-design）──
+   時計：輪に12の節（太陽＝午前 12→1..11／月＝午後 24→13..23）。時を押す→針が回って分へ→開始が決まると自動で終了へ。
+   日付：明日／翌々日は1回・来週／来来週は曜日を押す・⭐長押し（0.45秒）のままなぞると複数日（終日）。
+   ⚠️どちらも行の真下に開く＝上の物は動かない。動きは easeOut・300ms 未満。値は隠し欄（d, a, b, d2, ad）へ書く＝保存は今までの1つの道。 */
+const KS = {d: null, d2: null, sh: 0, sm: 0, eh: 0, em: 0, ad: false, end: false, stage: "h", pm: false, gen: 0, hd: null, y: 0, m: 0, arm: 0};
+const kq = s => sheetEl && sheetEl.querySelector(s);
+const kp2 = n => String(n).padStart(2, "0");
+const kday0 = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+const kymd = d => `${d.getFullYear()}-${kp2(d.getMonth() + 1)}-${kp2(d.getDate())}`;
+const kLab = d => `${d.getMonth() + 1}月${d.getDate()}日(${WD[d.getDay()]})`;
+const ktap = el => { if (!el) return; el.classList.remove("ktick"); void el.offsetWidth; el.classList.add("ktick"); if (navigator.vibrate) navigator.vibrate(6); };
+const KPM = h => h === 0 || h >= 13;
+const kHourValue = n => KS.pm ? (n === 0 ? 0 : n + 12) : (n === 0 ? 12 : n);
+const kHourLabel = n => KS.pm ? (n === 0 ? "24" : String(n + 12)) : (n === 0 ? "12" : String(n));
+const kCurH = () => KS.end ? KS.eh : KS.sh, kCurM = () => KS.end ? KS.em : KS.sm;
+const kDur = () => { const d = (KS.eh * 60 + KS.em) - (KS.sh * 60 + KS.sm); return d > 0 ? d : d + 1440; };
+const kChip = m => m % 60 === 0 ? `+${m / 60}時間` : m > 60 && m % 30 === 0 ? `+${Math.floor(m / 60)}.5時間` : `+${m}分`;
+function kInit(s, en, allDay) {
+  Object.assign(KS, {d: kday0(s), d2: null, sh: s.getHours(), sm: s.getMinutes(), eh: en.getHours(), em: en.getMinutes(), ad: !!allDay, end: false, stage: "h", gen: 0, hd: null, y: s.getFullYear(), m: s.getMonth(), arm: 0});
+  if (allDay) { const last = kday0(new Date(en - 1)); KS.sh = 9; KS.sm = 0; KS.eh = 10; KS.em = 0; if (+last !== +KS.d) KS.d2 = last; }
+  KS.pm = KPM(KS.sh);
+}
+function kSync() {
+  const set = (n, v) => { const i = kq(`input[name="${n}"]`); if (i) i.value = v; };
+  set("d", kymd(KS.d)); set("a", `${kp2(KS.sh)}:${kp2(KS.sm)}`); set("b", `${kp2(KS.eh)}:${kp2(KS.em)}`);
+  set("d2", KS.d2 ? kymd(KS.d2) : ""); set("ad", KS.ad || KS.d2 ? "1" : "");
+}
+function kText() {
+  if (!KS.d2) return kLab(KS.d) + (KS.ad ? '<span class="krt">終日</span>' : "");
+  const n = Math.round((KS.d2 - KS.d) / 864e5) + 1, sl = d => `${d.getMonth() + 1}/${d.getDate()}${innerWidth < 360 ? "" : `(${WD[d.getDay()]})`}`;
+  return `${sl(KS.d)} → ${sl(KS.d2)}<span class="krt">終日・${n}日間</span>`;
+}
+function kTimeHTML() {
+  return `<div class="krow" id="kdrow"><span class="kic">${ICB.d}</span><span class="klb" id="kdlab"></span></div>
+    <div class="kxp" id="kxdate"><div><div class="kdp"><div class="kdch">${["明日", "翌々日", "来週", "来来週"].map((t, k) => `<button type="button" data-kc="${k}">${t}</button>`).join("")}</div>
+      <div class="kmh"><button type="button" data-kmv="-1" aria-label="前の月">‹</button><b id="kmlab"></b><button type="button" data-kmv="1" aria-label="次の月">›</button></div><div class="kg7" id="kg7"></div></div></div></div>
+    <div class="ktm" id="ktm"><button type="button" class="kseg" id="ksa" aria-label="開始"></button><span class="kar">${ICB.arrow}</span><button type="button" class="kseg" id="ksb" aria-label="終了"></button></div>
+    <div class="kxp" id="kxclk"><div><div class="kclk"><div class="kdial" id="kdial"><div class="khand" id="khand"></div><div class="kface" id="kface"></div>
+      <div class="khub"><button type="button" class="ksun" id="ksun" aria-label="午前">${ICB.sun}</button><button type="button" class="kmoon" id="kmoon" aria-label="午後">${ICB.moon}</button></div></div>
+      <div class="kqr">${[30, 60, 90, 120].map(m => `<button type="button" data-kq="${m}">${kChip(m)}</button>`).join("")}</div></div></div></div>
+    <input type="hidden" name="d"><input type="hidden" name="a"><input type="hidden" name="b"><input type="hidden" name="d2"><input type="hidden" name="ad">`;
+}
+function kReadout() {
+  const a = kq("#ksa"), b = kq("#ksb"); if (!a) return;
+  const open = kq("#kxclk")?.classList.contains("on");
+  a.innerHTML = `<i class="${open && !KS.end && KS.stage === "h" ? "on" : ""}" data-j="h0">${kp2(KS.sh)}</i>:<i class="${open && !KS.end && KS.stage === "m" ? "on" : ""}" data-j="m0">${kp2(KS.sm)}</i>`;
+  b.innerHTML = `<i class="${open && KS.end && KS.stage === "h" ? "on" : ""}" data-j="h1">${kp2(KS.eh)}</i>:<i class="${open && KS.end && KS.stage === "m" ? "on" : ""}" data-j="m1">${kp2(KS.em)}</i>`;
+  a.classList.toggle("on", !!open && !KS.end); b.classList.toggle("on", !!open && KS.end);
+  kq("#ktm").classList.toggle("ad", !!(KS.ad || KS.d2));
+  kq("#kdlab").innerHTML = kText(); kSync();
+}
+function kClock() {
+  const dial = kq("#kdial"); if (!dial) return;
+  const face = kq("#kface"), c = dial.clientWidth / 2 || 132, R = c - 28, nowH = new Date().getHours();
+  dial.style.setProperty("--hl", (R - 4) + "px"); dial.classList.toggle("min", KS.stage === "m");
+  const pos = i => { const a = i / 12 * 2 * Math.PI - Math.PI / 2; return `left:${c + R * Math.cos(a)}px;top:${c + R * Math.sin(a)}px`; };
+  face.innerHTML = KS.stage === "h"
+    ? Array.from({length: 12}, (_, n) => { const v = kHourValue(n); return `<button type="button" class="knode${kCurH() === v ? " on" : ""}${nowH === v && kCurH() !== v ? " now" : ""}" style="${pos(n)}" data-kh="${v}">${kHourLabel(n)}</button>`; }).join("")
+    : Array.from({length: 12}, (_, k) => `<button type="button" class="knode${kCurM() === k * 5 ? " on" : ""}" style="${pos(k)}" data-km="${k * 5}">${kp2(k * 5)}</button>`).join("");
+  const tgt = (KS.stage === "h" ? (kCurH() % 12) * 30 : kCurM() * 6) + 180;
+  if (KS.hd === null) KS.hd = tgt; else KS.hd += ((tgt - KS.hd) % 360 + 540) % 360 - 180;   // 一番近い向きへ回る
+  kq("#khand").style.transform = `rotate(${KS.hd}deg)`;
+  kq("#ksun").classList.toggle("on", !KS.pm); kq("#kmoon").classList.toggle("on", KS.pm);
+  sheetEl.querySelectorAll("[data-kq]").forEach(b => b.classList.toggle("on", kDur() === +b.dataset.kq));
+  face.querySelectorAll("[data-kh]").forEach(b => b.onclick = () => kSelH(+b.dataset.kh));
+  face.querySelectorAll("[data-km]").forEach(b => b.onclick = () => kSelM(+b.dataset.km));
+  kReadout();
+}
+function kFace(fn) { const f = kq("#kface"); if (!f) return; f.classList.add("out"); setTimeout(() => { fn(); kClock(); f.style.transition = "none"; f.style.transform = "scale(1.04)"; void f.offsetWidth; f.style.transition = ""; f.style.transform = ""; f.classList.remove("out"); }, 140); }
+const kSetH = h => { if (KS.end) KS.eh = h; else KS.sh = h; };
+const kSetM = m => { if (KS.end) KS.em = m; else KS.sm = m; };
+function kSelH(h) { kSetH(h); kClock(); ktap(kq(`[data-kh="${h}"]`)); const g = ++KS.gen; setTimeout(() => { if (g === KS.gen) kFace(() => KS.stage = "m"); }, 280); }
+function kSelM(m) { kSetM(m); kClock(); ktap(kq(`[data-km="${m}"]`)); const g = ++KS.gen;
+  setTimeout(() => { if (g !== KS.gen) return;
+    if (!KS.end) { const s0 = KS.sh * 60 + KS.sm; if (KS.eh * 60 + KS.em <= s0) { const e = s0 + 60; KS.eh = Math.floor(e / 60) % 24; KS.em = e % 60; } kFace(() => { KS.end = true; KS.stage = "h"; KS.pm = KPM(KS.eh); }); }
+    else kCloseX(); }, 260); }
+function kSetPM(pm) { if (pm === KS.pm) return; const h = kCurH(); KS.pm = pm; if (KPM(h) !== pm) kSetH(pm ? (h === 12 ? 0 : h + 12) : (h === 0 ? 12 : h - 12)); kFace(() => {}); ktap(kq(pm ? "#kmoon" : "#ksun")); }
+function kCloseX() { sheetEl && sheetEl.querySelectorAll(".kxp.on").forEach(x => x.classList.remove("on")); kReadout(); }
+function kOpenX(id) { const x = kq("#" + id), was = x.classList.contains("on"); kCloseX(); if (!was) { x.classList.add("on"); if (id === "kxclk") { KS.hd = null; requestAnimationFrame(kClock); } if (id === "kxdate") { KS.y = KS.d.getFullYear(); KS.m = KS.d.getMonth(); kDate(); } } kReadout(); }
+function kDate() {
+  const g = kq("#kg7"); if (!g) return;
+  kq("#kmlab").textContent = `${KS.y}年${KS.m + 1}月`;
+  const first = new Date(KS.y, KS.m, 1), st = new Date(first); st.setDate(1 - first.getDay());
+  const today = kday0(new Date()), evd = new Set((D.events || []).map(e => (e.start || "").slice(0, 10)));
+  let h = [...WD].map((w, k) => `<div class="kw${KS.arm ? " arm" : ""}" data-kwd="${k}">${w}</div>`).join("");
+  for (let k = 0; k < 42; k++) { const d = new Date(st); d.setDate(st.getDate() + k); const c = ["kd"];
+    if (d.getMonth() !== KS.m) c.push("out"); if (d.getDay() === 0 || d.getDay() === 6) c.push("we"); else if (d.getDay() === 3) c.push("wed");
+    if (+d === +today) c.push("td"); if (evd.has(kymd(d))) c.push("ev");
+    h += `<button type="button" class="${c.join(" ")}" data-kymd="${d.getFullYear()}-${d.getMonth()}-${d.getDate()}"><span>${d.getDate()}</span></button>`; }
+  g.innerHTML = h; kMark();
+  g.querySelectorAll("[data-kymd]").forEach(b => b.onclick = () => { if (g.dataset.skip) return; const [y, m, d] = b.dataset.kymd.split("-").map(Number); kPick(new Date(y, m, d)); });
+  g.querySelectorAll("[data-kwd]").forEach(w => w.onclick = () => { if (!KS.arm) return; const t = kday0(new Date()), s = new Date(t); s.setDate(t.getDate() - t.getDay() + 7 * KS.arm + +w.dataset.kwd); KS.arm = 0; kPick(s); });
+  sheetEl.querySelectorAll("[data-kc]").forEach(b => b.classList.toggle("arm", KS.arm && +b.dataset.kc === KS.arm + 1));
+}
+function kMark() {
+  const g = kq("#kg7"); if (!g) return; const d0 = +KS.d, d2 = KS.d2 ? +KS.d2 : null;
+  g.querySelectorAll("[data-kymd]").forEach(b => { const [Y, M, Dd] = b.dataset.kymd.split("-").map(Number), t = +new Date(Y, M, Dd);
+    b.classList.toggle("rng", !!d2 && t >= d0 && t <= d2); b.classList.toggle("rs", !!d2 && t === d0); b.classList.toggle("re", !!d2 && t === d2); b.classList.toggle("sel", !d2 && t === d0); });
+  kReadout();
+}
+function kSlide(dir) { const g = kq("#kg7"); kDate(); g.animate([{opacity: 0, transform: `translateX(${dir * 28}px)`}, {opacity: 1, transform: "none"}], {duration: 220, easing: "cubic-bezier(.22,.61,.36,1)"}); }
+function kPick(d) { const keepAd = KS.ad && !KS.d2; KS.d2 = null; KS.ad = keepAd; KS.d = kday0(d); const moved = KS.y !== d.getFullYear() || KS.m !== d.getMonth(), dir = (d.getFullYear() * 12 + d.getMonth()) > (KS.y * 12 + KS.m) ? 1 : -1;
+  KS.y = d.getFullYear(); KS.m = d.getMonth(); moved ? kSlide(dir) : kMark(); ktap(kq(`[data-kymd="${d.getFullYear()}-${d.getMonth()}-${d.getDate()}"] span`)); setTimeout(kCloseX, 200); }
+function kBind() {
+  kq("#kdrow").onclick = () => kOpenX("kxdate");
+  const seg = (end) => ev => { const j = ev.target.dataset.j; if (KS.ad || KS.d2) return; KS.end = end; KS.stage = j && j[0] === "m" ? "m" : "h"; KS.pm = KPM(end ? KS.eh : KS.sh); if (!kq("#kxclk").classList.contains("on")) kOpenX("kxclk"); kClock(); };
+  kq("#ksa").onclick = seg(false); kq("#ksb").onclick = seg(true);
+  kq("#ksun").onclick = () => kSetPM(false); kq("#kmoon").onclick = () => kSetPM(true);
+  sheetEl.querySelectorAll("[data-kq]").forEach(b => b.onclick = () => { const e = KS.sh * 60 + KS.sm + +b.dataset.kq; KS.eh = Math.floor(e / 60) % 24; KS.em = e % 60; KS.gen++; KS.end = true; KS.stage = "h"; KS.pm = KPM(KS.eh); kClock(); ktap(b); });
+  // 針をなぞる（時は12に止まる・分は1分刻み）。中央のボタンの所から始めた時は無視
+  const dial = kq("#kdial"); let drag = false;
+  const at = ev => { const r = dial.getBoundingClientRect(), x = ev.clientX - r.left - r.width / 2, y = ev.clientY - r.top - r.height / 2; return {d: Math.hypot(x, y), deg: (Math.atan2(y, x) * 180 / Math.PI + 90 + 360) % 360}; };
+  const mv = ev => { if (!drag) return; const p = at(ev);
+    if (KS.stage === "h") { const v = kHourValue(Math.round(p.deg / 30) % 12); if (v !== kCurH()) { kSetH(v); kClock(); if (navigator.vibrate) navigator.vibrate(3); } }
+    else { const m = Math.round(p.deg / 6) % 60; if (m !== kCurM()) { kSetM(m); kClock(); } } };
+  dial.onpointerdown = ev => { if (at(ev).d < 56) return; drag = true; kq("#khand").classList.add("drag"); try { dial.setPointerCapture(ev.pointerId); } catch (x) {} mv(ev); };
+  dial.onpointermove = mv;
+  dial.onpointerup = ev => { if (!drag) return; drag = false; kq("#khand").classList.remove("drag"); if (ev.target.closest("[data-kh],[data-km]")) return; KS.stage === "h" ? kSelH(kCurH()) : kSelM(kCurM()); };
+  // 日付
+  sheetEl.querySelectorAll("[data-kc]").forEach(b => b.onclick = () => { const k = +b.dataset.kc, t = kday0(new Date());
+    if (k < 2) { t.setDate(t.getDate() + k + 1); kPick(t); } else { KS.arm = KS.arm === k - 1 ? 0 : k - 1; kDate(); } });
+  sheetEl.querySelectorAll("[data-kmv]").forEach(b => b.onclick = () => { const dir = +b.dataset.kmv; KS.m += dir; if (KS.m < 0) { KS.m = 11; KS.y--; } if (KS.m > 11) { KS.m = 0; KS.y++; } kSlide(dir); });
+  // ⭐長押し（0.45秒）のままなぞると複数日（終日）。端に0.5秒置くと月をまたぐ
+  const g = kq("#kg7"); let lp = null, rng = null, sx = 0, sy = 0, edgeT = null, edgeAt = 0;
+  const cellAt = (x, y) => { const el = document.elementFromPoint(x, y), b = el && el.closest("[data-kymd]"); if (!b) return null; const [Y, M, Dd] = b.dataset.kymd.split("-").map(Number); return new Date(Y, M, Dd); };
+  const paint = (a, b) => { const [lo, hi] = +a <= +b ? [a, b] : [b, a]; KS.d = lo; KS.d2 = +lo === +hi ? null : hi; kMark(); };
+  g.addEventListener("pointerdown", e => { const d0 = cellAt(e.clientX, e.clientY); if (!d0) return; sx = e.clientX; sy = e.clientY; const cell = e.target.closest("[data-kymd]"); clearTimeout(lp);
+    lp = setTimeout(() => { rng = {a: d0, b: d0}; g.dataset.used = "1"; g.classList.add("ranging", "hold"); if (navigator.vibrate) navigator.vibrate(10); cell && cell.classList.add("press"); paint(d0, d0); }, 450); });
+  g.addEventListener("pointermove", e => { if (!rng) { if (Math.hypot(e.clientX - sx, e.clientY - sy) > 8) clearTimeout(lp); return; }
+    const gr = g.getBoundingClientRect(), side = e.clientX > gr.right - 14 ? 1 : e.clientX < gr.left + 14 ? -1 : 0;
+    if (side && !edgeT && Date.now() - edgeAt > 700) edgeT = setTimeout(() => { edgeT = null; edgeAt = Date.now(); KS.m += side; if (KS.m < 0) { KS.m = 11; KS.y--; } if (KS.m > 11) { KS.m = 0; KS.y++; } kSlide(side); g.classList.add("ranging", "hold"); }, 500);
+    if (!side && edgeT) { clearTimeout(edgeT); edgeT = null; }
+    const d = cellAt(e.clientX, e.clientY); if (d && +d !== +rng.b) { rng.b = d; paint(rng.a, d); if (navigator.vibrate) navigator.vibrate(4); } });
+  g.addEventListener("touchmove", e => { if (rng) e.preventDefault(); }, {passive: false});
+  const end = () => { clearTimeout(lp); clearTimeout(edgeT); edgeT = null; if (!rng) return; rng = null; g.classList.remove("ranging", "hold"); g.querySelectorAll(".press").forEach(x => x.classList.remove("press"));
+    g.dataset.skip = "1"; setTimeout(() => delete g.dataset.skip, 60); if (KS.d2) KS.ad = true; kReadout(); setTimeout(kCloseX, KS.d2 ? 600 : 250); };
+  g.addEventListener("pointerup", end); g.addEventListener("pointercancel", end);
+  g.addEventListener("contextmenu", e => e.preventDefault());
+  let x0 = null;
+  g.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; g.dataset.used = ""; }, {passive: true});
+  g.addEventListener("touchend", e => { if (x0 === null || g.dataset.used) { x0 = null; return; } const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 50) sheetEl.querySelector(`[data-kmv="${dx < 0 ? 1 : -1}"]`).click(); });
+  kReadout();
+}
+/* 下に開く選び（移動時間・通知・繰り返し）：行の下に丸い札が開く。上の行は動かない */
+function kChoiceRows(rows) {
+  return rows.map(([name, ic, label, opts, cur]) => { const c = opts.find(o => String(o[0]) === String(cur)) || opts[0];
+    return `<div class="krow kch${String(c[0]) === String(opts[0][0]) ? "" : " set"}" data-kr="${name}"><span class="kic">${ic}</span><span class="klb">${label}</span><span class="kvl">${c[1]}</span><input type="hidden" name="${name}" value="${esc(String(c[0]))}"></div>
+      <div class="kxp" data-kx="${name}"><div><div class="kchs">${opts.map(o => `<button type="button" class="kc${String(o[0]) === String(c[0]) ? " on" : ""}" data-kv="${esc(String(o[0]))}">${o[1]}</button>`).join("")}</div></div></div>`; }).join("");
+}
+function kBindChoices() {
+  sheetEl.querySelectorAll(".krow.kch").forEach(r => { const n = r.dataset.kr, x = sheetEl.querySelector(`[data-kx="${n}"]`);
+    r.onclick = () => { const was = x.classList.contains("on"); kCloseX(); if (!was) { x.classList.add("on"); const on = x.querySelector(".kc.on"); if (on) setTimeout(() => on.scrollIntoView({inline: "center", block: "nearest", behavior: "smooth"}), 200); } };
+    x.querySelectorAll(".kc").forEach(b => b.onclick = () => { x.querySelectorAll(".kc").forEach(y => y.classList.toggle("on", y === b)); ktap(b);
+      r.querySelector("input").value = b.dataset.kv; r.querySelector(".kvl").textContent = b.textContent; r.classList.toggle("set", b !== x.querySelector(".kc")); setTimeout(kCloseX, 180); }); });
+}
+
 function openPop(i, editing, focusField) {
   const wasOpen = !!sheetEl, keepY = wasOpen ? sheetEl.scrollTop : 0;
   closePop(true); closeSheet(true);
   const e = D.events[i], s = pd(e.start), en = pd(e.end), col = e.color || "#2159bd";
+  // ⚠️11-09 詳細（view0）でも使う＝先に置く（後ろにあると通知・移動時間のある予定を開いた時に止まっていた）
+  const TT = [[0, "なし"], [5, "5分"], [15, "15分"], [30, "30分"], [60, "1時間"], [90, "1時間30分"], [120, "2時間"]];
+  const AL = [[-1, "なし"], [0, "予定の時刻"], [5, "5分前"], [10, "10分前"], [15, "15分前"], [30, "30分前"], [60, "1時間前"], [120, "2時間前"], [1440, "1日前"], [2880, "2日前"]];
+  const RR = [["none", "しない"], ["daily", "毎日"], ["weekly", "毎週"], ["monthly", "毎月"], ["yearly", "毎年"]];
+
   const last = new Date(en - 1), same = keyOf(s) === keyOf(last);
   const day = d => `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${"日月火水木金土"[d.getDay()]}）`;
   const when = e.allDay ? (same ? `${day(s)}<br>終日` : `${day(s)}〜<br>${day(last)}　終日`) : (same ? `${day(s)}<br>${hm(s)}〜${hm(en)}（${dur((en - s) / 1000)}）` : `${day(s)} ${hm(s)}〜<br>${day(en)} ${hm(en)}`);
@@ -884,6 +1313,7 @@ function openPop(i, editing, focusField) {
     ${co || m ? `<div class="grp">
       ${co ? `<button class="r" data-open-co="${esc(co.name)}">${ICO(ICN.co)}<span class="main"><div class="t">${esc(co.name)}${stgPill(co)}</div></span>${CH}</button>` : ""}
       ${m ? `<button class="r" data-open-meet="${m.id}">${ICO(ICN.doc)}<span class="main"><div class="t">議事録</div><div class="s">${esc(m.kind)}</div></span>${CH}</button>` : ""}</div>` : ""}
+    ${attHTML(e)}
     ${e.notes ? `<div class="sec" style="margin-left:4px">メモ</div><div class="grp" data-q="notes"><div class="nt${e.notes.length > 260 ? " fold" : ""}" id="ntx">${linkify(e.notes)}</div>${e.notes.length > 260 ? '<button class="more" id="ntm">すべて表示</button>' : ""}</div>` : ""}
     ${mails.length ? `<div class="sec" style="margin-left:4px">メール</div><div class="grp">${mails.map(x => `<a class="mail" ${mailHref(x)}><div class="h"><span>${esc(x.from)}</span><span>${pd(x.at).getMonth()+1}/${pd(x.at).getDate()}</span></div><div class="sbj">${esc(x.subject)}</div></a>`).join("")}</div>` : ""}
     <div class="grp"><div class="r" data-q="cal"><span class="main"><div class="t">カレンダー</div></span><span class="dot" style="background:${esc(col)}"></span><span style="color:var(--sub);font-size:15px">${esc(e.cal)}</span>${CH}</div></div>
@@ -891,33 +1321,20 @@ function openPop(i, editing, focusField) {
   const ymd = d => keyOf(d), t2 = d => `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
   // 編集（純正）：丸い枠のアイコン → 押すとその丸から横へ広がって入力になり、決めるとまた丸へ縮む
   const cals = D.cals || [], curCal = cals.find(c => c.title === e.cal) || {};
-  const WIDE = {d: 1, a: 1, b: 1, rr: 1};
-  const MO = (name, ic, label, val, input) => `<div class="mo${WIDE[name] ? " w" : ""}" data-mo="${name}"><button type="button" class="mob" aria-label="${label}">${ICB[name] || ic}</button><span class="mol">${label}</span><span class="mov">${val}</span><div class="moi">${input}</div></div>`;
-  const ymd2 = d => `${d.getMonth()+1}月${d.getDate()}日(${WD[d.getDay()]})`;
-  // 純正と同じ選択肢（丸い枠から横へ広がって選ぶ）
-  const TT = [[0, "なし"], [5, "5分"], [15, "15分"], [30, "30分"], [60, "1時間"], [90, "1時間30分"], [120, "2時間"]];
-  const AL = [[-1, "なし"], [0, "予定の時刻"], [5, "5分前"], [10, "10分前"], [15, "15分前"], [30, "30分前"], [60, "1時間前"], [120, "2時間前"], [1440, "1日前"], [2880, "2日前"]];
-  const RR = [["none", "しない"], ["daily", "毎日"], ["weekly", "毎週"], ["monthly", "毎月"], ["yearly", "毎年"]];
-  const MOC = (name, ic, label, opts, cur) => { const c = opts.find(o => String(o[0]) === cur) || opts[0];
-    return `<div class="mo${WIDE[name] ? " w" : ""}" data-mo="${name}" data-choice="1"><button type="button" class="mob" aria-label="${label}">${ICB[name] || ic}</button><span class="mol">${label}</span><span class="mov">${c[1]}</span><input type="hidden" name="${name}" value="${esc(String(c[0]))}"><div class="moi moc">${opts.map(o => `<button type="button" class="chp${String(o[0]) === String(c[0]) ? " on" : ""}" data-v="${esc(String(o[0]))}">${o[1]}</button>`).join("")}</div></div>`; };
-  const edit0 = `<div class="shd"><button class="cx" id="edc">キャンセル</button><h3>予定を編集</h3><span style="width:72px"></span></div>
-    <form id="edf" class="edf2">
+  // 🕘11-09 編集は見本（previews3）の形：題 → 日付の行（下に月の盤）→ 開始 → 終了（下に時計）→ 場所・移動時間・通知・繰り返し → メモ → ✓
+  const edit0 = `<div class="shd"><button class="cx" id="edc">キャンセル</button><h3>${e._new ? "新しい予定" : "予定を編集"}</h3><span style="width:72px"></span></div>
+    <form id="edf" class="edf2 ke">
       <div class="grp edf"><label><input name="title" value="${esc(e.title)}" maxlength="200" required placeholder="タイトル" style="font-size:17px"></label></div>
-      <div class="grp mos brd">
-        ${e.allDay ? "" : MO("d", ICN.today, "日付", ymd2(s), `<input name="d" type="date" value="${ymd(s)}" required>`)
-          + MO("a", ICN.clock2, "開始", t2(s), `<input name="a" type="time" value="${t2(s)}" required>`)
-          + MO("b", ICN.clock2, "終了", t2(en), `<input name="b" type="time" value="${t2(en)}" required><span class="durs">${[[30, "30分"], [60, "1時間"], [90, "1.5時間"], [120, "2時間"]].map(x => `<button type="button" class="chp" data-dur="${x[0]}">${x[1]}</button>`).join("")}</span>`)}
-        ${cals.length ? `<div class="mo" data-mo="cal" data-list="1" style="--k:${esc(curCal.color || col)}"><button type="button" class="mob neutral" aria-label="カレンダー"><i class="cdot" style="background:${esc(curCal.color || col)}"></i></button><span class="mol">カレンダー</span><span class="mov">${esc(curCal.title || e.cal || "")}</span><input type="hidden" name="cal" value="${esc(curCal.id || "")}"></div>` : ""}
-        ${MO("loc", ICN.pin, "場所", esc(e.loc || "なし"), `<input name="loc" value="${esc(e.loc || "")}" maxlength="500" placeholder="場所またはビデオ通話" enterkeyhint="done">`)}
-        ${e.allDay ? "" : MOC("tt", ICN.car, "移動時間", TT, String(e.tt || 0))
-          + MOC("al", ICN.bell, "通知", AL, String(e.al && e.al.length ? e.al[0] : -1))}
-        ${MOC("rr", ICN.rep, "繰り返し", RR, e.rr || "none")}
-      </div>
+      <div class="grp kgrp">${kTimeHTML()}</div>
+      <div class="grp kgrp"><label class="krow"><span class="kic">${ICB.loc}</span><input class="kin" name="loc" value="${esc(e.loc || "")}" maxlength="500" placeholder="場所" enterkeyhint="done"></label>
+        ${kChoiceRows([["tt", ICB.tt, "移動時間", TT, e.tt || 0], ["al", ICB.al, "通知", AL, e.al && e.al.length ? e.al[0] : (e._new ? 15 : -1)], ["rr", ICB.rr, "繰り返し", RR, e.rr || "none"]])}</div>
+      ${e._media && e._media.length ? `<div class="sec" style="margin-left:4px">この予定に付ける写真</div><div class="kph">${e._media.map(x => `<div class="kt"><img alt="" src="${esc(x.url || "")}"></div>`).join("")}</div>` : ""}
       <div class="grp edf"><label style="align-items:flex-start"><textarea name="notes" maxlength="4000" placeholder="メモ">${esc(e.notes || "")}</textarea></label></div>
+      <input type="hidden" name="cal" value="${esc((D.cals || []).find(c => c.title === e.cal)?.id || "")}">
     </form>
-    <button class="delrow" id="evdel">予定を削除</button><div class="okdock"><button class="okb" id="eds" aria-label="保存">${ICB.ok}</button></div>`;
+    ${e._new ? "" : '<button class="delrow" id="evdel">予定を削除</button>'}<div class="okdock"><button class="okb" id="eds" aria-label="保存">${ICB.ok}</button></div>`;
   sheetBg = document.createElement("div"); sheetBg.className = "sheetbg";
-  sheetEl = document.createElement("div"); sheetEl.className = "sheet"; sheetEl.setAttribute("role", "dialog");
+  sheetEl = document.createElement("div"); sheetEl.className = "sheet" + (editing ? " kfull" : ""); sheetEl.setAttribute("role", "dialog");
   sheetEl.innerHTML = `<div class="grab"></div>${editing ? edit0 : view0}`;
   document.body.append(sheetBg, sheetEl);
   // 詳細⇔編集・別の予定へは、シートは出したまま中身だけ滑らかに入れ替える（純正と同じ）
@@ -933,45 +1350,16 @@ function openPop(i, editing, focusField) {
   if (q("[data-edit]")) q("[data-edit]").onclick = () => openPop(i, true);
   // 詳細で押した項目をそのまま編集へ（題・時刻・場所・メモ・カレンダー）
   if (!editing && e.rw && e.eid) sheetEl.querySelectorAll("[data-q]").forEach(x => { x.classList.add("qe"); x.onclick = ev => { if (ev.target.closest("a")) return; if (x.dataset.q === "cal" && (D.cals || []).length) return quickCal(i, x); openPop(i, true, x.dataset.q); }; });
-  if (editing && focusField) setTimeout(() => { const mo = sheetEl.querySelector(`.mo[data-mo="${focusField}"]`);
-    if (mo) { (mo.dataset.list ? mo : mo.querySelector(".mob")).click(); return; }
+  if (editing && focusField) setTimeout(() => {
+    if (focusField === "a" || focusField === "b") { kq(focusField === "a" ? "#ksa" : "#ksb").click(); return; }
+    if (focusField === "d") { kOpenX("kxdate"); return; }
+    const kr = sheetEl.querySelector(`.krow[data-kr="${focusField}"]`); if (kr) { kr.click(); return; }
     const f = sheetEl.querySelector(`[name="${focusField}"]`); if (f) { f.focus(); f.setSelectionRange && f.setSelectionRange(f.value.length, f.value.length); } }, 380);
+  if (!editing) bindAtt(i);
   if (q("#ntm")) q("#ntm").onclick = () => { q("#ntx").classList.remove("fold"); q("#ntm").remove(); };
   sheetEl.querySelectorAll("[data-sw]").forEach(b => b.onclick = () => { const k = +b.dataset.sw; if (k !== i) openPop(k); });
   const oc = q("[data-open-co]"); if (oc) oc.onclick = () => { closeSheet(); go({v: "company", c: oc.dataset.openCo}); };
   const b = q("[data-open-meet]"); if (b) b.onclick = () => { const id = b.dataset.openMeet; closeSheet(); go({v: "meet", id}); };
-  // 丸い枠 → 広がって入力 → 決めると縮んで戻る
-  sheetEl.querySelectorAll('.mo[data-list="1"]').forEach(mo => {
-    const inp = mo.querySelector("input"), val = mo.querySelector(".mov"), dot = mo.querySelector(".cdot");
-    const pick = () => { showPop(cals.map(c => `<button class="sti calpick" data-cid="${esc(c.id)}" style="--c:${esc(c.color)}"><span class="stt"><i class="cdot" style="background:${esc(c.color)}"></i>${esc(c.title)}</span>${c.id === inp.value ? '<b class="ck2">✓</b>' : ""}</button>`).join(""), mo.querySelector(".mov"));
-      popEl.classList.add("stack", "cals"); popEl.style.zIndex = 46; scrimEl.style.zIndex = 45;
-      popEl.querySelectorAll("[data-cid]").forEach(b => b.onclick = () => { const c = cals.find(x => x.id === b.dataset.cid); inp.value = c.id; val.textContent = c.title; dot.style.background = c.color;
-        dot.animate([{transform: "scale(.4)"}, {transform: "scale(1.25)"}, {transform: "scale(1)"}], {duration: 420, easing: "cubic-bezier(.3,1.4,.5,1)"}); closePop(); }); };
-    mo.onclick = pick;
-  });
-  sheetEl.querySelectorAll('.mo[data-choice="1"]').forEach(mo => {
-    const inp = mo.querySelector("input"), val = mo.querySelector(".mov"), box = mo.querySelector(".moi");
-    const open = () => { sheetEl.querySelectorAll(".mo.open").forEach(x => x !== mo && x.classList.remove("open")); mo.classList.add("open");
-      const on = box.querySelector(".chp.on"); if (on) setTimeout(() => on.scrollIntoView({inline: "center", block: "nearest", behavior: "smooth"}), 280); };
-    mo.querySelector(".mob").onclick = ev => { ev.stopPropagation(); mo.classList.contains("open") ? mo.classList.remove("open") : open(); };
-    mo.querySelector(".mol").onclick = mo.querySelector(".mov").onclick = open;
-    box.querySelectorAll(".chp").forEach(b => b.onclick = ev => { ev.stopPropagation(); box.querySelectorAll(".chp").forEach(x => x.classList.toggle("on", x === b));
-      inp.value = b.dataset.v; val.textContent = b.textContent; setTimeout(() => mo.classList.remove("open"), 160); });
-  });
-  sheetEl.querySelectorAll('.mo:not([data-list]):not([data-choice])').forEach(mo => {
-    const inp = mo.querySelector("input,select"), val = mo.querySelector(".mov");
-    const close = () => { if (!mo.classList.contains("open")) return; mo.classList.remove("open");
-      const n = mo.dataset.mo, v = inp.value;
-      if (n === "d" && v) { const d = pd(v); val.textContent = ymd2(d); }
-      else if (n === "cal") { const c = cals.find(c => c.id === v); val.textContent = c ? c.title : ""; const dot = mo.querySelector(".cdot"); if (dot && c) dot.style.background = c.color; }
-      else val.textContent = v || "なし"; };
-    mo.querySelector(".mob").onclick = mo.querySelector(".mol").onclick = mo.querySelector(".mov").onclick = () => {
-      sheetEl.querySelectorAll(".mo.open").forEach(x => x !== mo && x.querySelector("input,select").blur());
-      mo.classList.add("open"); setTimeout(() => { inp.focus(); if (inp.showPicker && inp.type !== "text") try { inp.showPicker(); } catch (x) {} }, 260); };
-    inp.addEventListener("change", () => setTimeout(close, 120));
-    inp.addEventListener("blur", () => setTimeout(close, 120));
-    inp.addEventListener("keydown", ev => { if (ev.key === "Enter") { ev.preventDefault(); inp.blur(); } });
-  });
   // 予定を削除（純正：下から確認の札）
   const dl = q("#evdel");
   if (dl) dl.onclick = () => confirmSheet("この予定を削除してもよろしいですか？", "予定を削除", async () => {
@@ -979,39 +1367,35 @@ function openPop(i, editing, focusField) {
       D.events[i] = {...e, title: e.title, deleted: true}; D.events.splice(i, 1, {...e, start: "1970-01-01T00:00", end: "1970-01-01T00:00"}); closeSheet(); render(); toast("予定を削除しました");
     } catch (err) { toast(failMsg(err)); } });
   if (editing) {
+    kInit(s, en, e.allDay); kSync();
     const snap = () => new URLSearchParams(new FormData(q("#edf"))).toString(), s0 = snap();
     editDirty = () => sheetEl && q("#edf") && snap() !== s0;
-    q("#edc").onclick = () => editDirty() ? confirmSheet("変更を破棄してもよろしいですか？", "変更内容を破棄", () => openPop(i), "編集を続ける") : openPop(i);
-    // 終了の札：長さの丸で「開始＋n分」
-    sheetEl.querySelectorAll("[data-dur]").forEach(c => { c.onpointerdown = ev => ev.preventDefault(); c.onclick = ev => { ev.stopPropagation();
-      const a = q('[name="a"]').value, bi = q('[name="b"]'); if (!a) return; const m = (+a.slice(0, 2) * 60 + +a.slice(3) + +c.dataset.dur) % 1440;
-      bi.value = `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`; bi.dispatchEvent(new Event("change")); }; });
-    // 状態の見分け：値がある札は色の輪と白い字、無い札は灰色の線だけ
-    const brd = q(".brd"), stOf = mo => { const n = mo.dataset.mo, v = (mo.querySelector("input[name]") || {}).value;
-      mo.classList.toggle("off", (n === "loc" && !v) || (n === "tt" && v === "0") || (n === "al" && v === "-1") || (n === "rr" && v === "none")); };
-    let rects = new Map(); const snapR = () => brd.querySelectorAll(".mo").forEach(m => rects.set(m, m.getBoundingClientRect()));
-    brd.querySelectorAll(".mo").forEach(stOf); snapR();
-    // 札が広がる・戻る時、周りの札は今の場所から滑って並び直す（FLIP）
-    new MutationObserver(ms => { brd.querySelectorAll(".mo").forEach(stOf);
-      if (!ms.some(m => m.type === "attributes" && m.attributeName === "class" && m.target.classList.contains("mo"))) return;
-      brd.querySelectorAll(".mo").forEach(m => { const o = rects.get(m), n = m.getBoundingClientRect(); if (!o) return;
-        const dx = o.left - n.left, dy = o.top - n.top, sx = o.width / n.width, sy = o.height / n.height;
-        if (Math.abs(dx) + Math.abs(dy) + Math.abs(1 - sx) * 50 < 1) return;
-        m.animate([{transformOrigin: "0 0", transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})`}, {transformOrigin: "0 0", transform: "none"}], {duration: 420, easing: "cubic-bezier(.32,.72,0,1)"}); });
-      snapR(); }).observe(brd, {subtree: true, attributes: true, attributeFilter: ["class"], childList: true, characterData: true});
+    const leave = () => { if (e._new) { D.events.splice(i, 1); closeSheet(); } else openPop(i); };
+    q("#edc").onclick = () => editDirty() ? confirmSheet("変更を破棄してもよろしいですか？", "変更内容を破棄", leave, "編集を続ける") : leave();
+    kBind(); kBindChoices();
     q("#eds").onclick = async () => {
       const f = q("#edf"); if (!f.reportValidity()) return;
-      const v = Object.fromEntries(new FormData(f)), o = {op: "evedit", eid: e.eid, start: e.start};
+      const v = Object.fromEntries(new FormData(f)), allDay = v.ad === "1";
+      let ns, ne;
+      if (allDay) { const last = pd((v.d2 || v.d) + "T00:00"); last.setDate(last.getDate() + 1); ns = `${v.d}T00:00`; ne = `${kymd(last)}T00:00`; }   // ⭐終わりは最後の日の翌日 0:00（排他）
+      else { ns = `${v.d}T${v.a}`; ne = `${v.d}T${v.b}`; if (ne <= ns) { const n = pd(ns); n.setDate(n.getDate() + 1); ne = `${kymd(n)}T${v.b}`; } }   // 終わりが前なら翌日（日をまたぐ）
+      const al = +v.al < 0 ? [] : [+v.al];
+      if (e._new) {
+        const o = {op: "evadd", key: e._key, title: v.title.trim(), ns, ne, loc: v.loc || "", notes: v.notes || "", al, tt: +v.tt, rr: v.rr};
+        if (allDay) o.allDay = true; if (v.cal) o.cal = v.cal; if (e._media && e._media.length) o.media = e._media.map(x => x.id);
+        const btn = q("#eds"); btn.disabled = true;
+        try { await api.op(o); Object.assign(e, {title: o.title, start: ns, end: ne, allDay, loc: o.loc, notes: o.notes, _new: false, _pending: true});
+          closeSheet(); render(); toast("予定を作りました（Mac が登録します）"); } catch (err) { btn.disabled = false; toast(failMsg(err)); }
+        return;
+      }
+      const o = {op: "evedit", eid: e.eid, start: e.start};
       if (v.title.trim() !== e.title) o.title = v.title.trim();
-      if (!e.allDay) { const ns = `${v.d}T${v.a}`, ne = `${v.d}T${v.b}`;
-        if (ne <= ns) { toast("終わりは始まりより後にしてください"); return; }
-        if (ns !== e.start || ne !== e.end) { o.ns = ns; o.ne = ne; } }
+      if (ns !== e.start || ne !== e.end || allDay !== !!e.allDay) { o.ns = ns; o.ne = ne; if (allDay) o.allDay = true; }
       if ((v.loc || "") !== (e.loc || "")) o.loc = v.loc;
       if ((v.notes || "") !== (e.notes || "")) o.notes = v.notes;
-      if (v.cal && v.cal !== curCal.id) o.cal = v.cal;
-      if (v.tt !== undefined && +v.tt !== (e.tt || 0)) o.tt = +v.tt;
-      if (v.al !== undefined && +v.al !== (e.al && e.al.length ? e.al[0] : -1)) o.al = +v.al < 0 ? [] : [+v.al];
-      if (v.rr !== undefined && v.rr !== (e.rr || "none")) o.rr = v.rr;
+      if (+v.tt !== (e.tt || 0)) o.tt = +v.tt;
+      if (+v.al !== (e.al && e.al.length ? e.al[0] : -1)) o.al = al;
+      if (v.rr !== (e.rr || "none")) o.rr = v.rr;
       if (Object.keys(o).length <= 3) { openPop(i); return; }
       const btn = q("#eds"); btn.disabled = true;
       try { await api.op(o);
@@ -1089,6 +1473,16 @@ const ICB = {
   al: SF('<path d="M6.2 16.4V11a5.8 5.8 0 0 1 11.6 0v5.4l1.5 1.8H4.7z"/><path d="M10 20.4a2.1 2.1 0 0 0 4 0"/>'),
   rr: SF('<path d="M4.4 11.2V9.6A3.6 3.6 0 0 1 8 6h11.2M16.4 3.2 19.2 6l-2.8 2.8M19.6 12.8v1.6a3.6 3.6 0 0 1-3.6 3.6H4.8M7.6 20.8 4.8 18l2.8-2.8"/>'),
   ok: SF('<path d="M5.6 12.6l4.2 4.2 8.6-9.4"/>', ' stroke-width="2.6"'),
+  arrow: SF('<path d="M4 12h15M14 7l5 5-5 5"/>', ' stroke-width="1.8"'),
+  sun: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4.6"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.6A8.4 8.4 0 0 1 9.4 4a8.4 8.4 0 1 0 10.6 10.6z"/></svg>',
+  photo: SF('<rect x="3.2" y="5" width="17.6" height="14" rx="3"/><circle cx="9" cy="10" r="1.7"/><path d="M20.8 15.6l-4.6-4.4-7.6 7.8"/>'),
+  tray: SF('<path d="M3.5 13.5l2.6-7.2c.3-.8 1-1.3 1.9-1.3h8c.9 0 1.6.5 1.9 1.3l2.6 7.2v4.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><path d="M3.5 13.5h4.7l1.3 2.2h5l1.3-2.2h4.7"/>'),
+  plus: SF('<path d="M12 5v14M5 12h14"/>', ' stroke-width="2.2"'),
+  check: SF('<path d="M5.5 12.5l4 4 9-9.5"/>', ' stroke-width="2"'),
+  wait: SF('<circle cx="12" cy="12" r="8.6"/><path d="M12 7.2V12l3.2 2"/>'),
+  mac: SF('<rect x="3.2" y="4.6" width="17.6" height="11.4" rx="2"/><path d="M1.8 19h20.4"/>'),
+  video: SF('<rect x="2.8" y="6" width="12.6" height="12" rx="2.6"/><path d="M15.4 10.4l5.4-3v9.2l-5.4-3"/>'),
 };
 const ICN = {
   back: '<svg viewBox="0 0 11 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L2 9l7 7"/></svg>',
@@ -1477,6 +1871,9 @@ function palItems() {
       <button class="pb" data-pal="cos">${ICN.co}企業</button>
       <button class="pb" data-pal="tasks">${ICN.task}タスク${open ? ` ${open}` : ""}</button>
       <button class="pb" data-pal="add">${ICN.plus}タスクを足す</button>
+      <button class="pb" data-pal="newev">${ICB.plus}新しい予定</button>
+      <button class="pb" data-pal="photo">${ICB.photo}写真から予定</button>
+      <button class="pb" data-pal="tray">${ICB.tray}トレイ${(D.tray || []).length ? ` ${(D.tray || []).length}` : ""}</button>
       <button class="pb" data-pal="search">${ICN.search}検索</button>
       <button class="pb" data-pal="muse">${ICN.spark}Muse</button></div>
     <div class="ph2">表示</div>
@@ -1497,7 +1894,10 @@ function openPal() {
     else if (k === "home" || k === "today") { stack = []; view = {v: "home"}; const dir = offset > 0 || monthOff > 0 ? -1 : 1; offset = 0; monthOff = 0; if (mode === "month" && k === "today") monthOff = 0; anim = dir > 0 ? "in-next" : "in-prev"; render(); scrollTo(0, 0); }
     else if (k === "tasks" || k === "muse") go({v: "tasks"});
     else if (k === "add") { go({v: "tasks"}); setTimeout(() => { const i = $("#addi"); if (i) i.focus(); }, 380); }
-    else if (k === "search") go({v: "search", q: ""}); });
+    else if (k === "search") go({v: "search", q: ""});
+    else if (k === "newev") newEvent();
+    else if (k === "photo") photoToEvent();
+    else if (k === "tray") go({v: "tray"}); });
 }
 function ensureFab() {
   let f = $("#fab");
