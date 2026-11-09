@@ -325,7 +325,24 @@ button:active,a.r:active{transform:scale(.97)}
 .nmon .c.we span{color:var(--sub)}
 .nmon .c.t span{background:var(--red);color:#fff;font-weight:700}
 .nmon .c i{display:flex;gap:2px;height:4px}
-.nmon .c i b{width:9px;height:3px;border-radius:2px}
+.nmon .c{height:auto;min-height:74px;align-items:stretch;gap:1px;padding:3px 1px 2px;border-radius:0;transition:background-color .2s}
+.nmon .c span{align-self:center;width:24px;height:24px;line-height:24px;font-size:14px;font-weight:600;border-radius:12px}
+.nmon .c.sel{background:rgba(255,255,255,.1);border-radius:10px}
+.nmon .c i{display:flex;flex-direction:column;gap:1px;height:auto;width:100%;min-width:0}
+.nmon .c i b{display:block;width:auto;height:auto;border-radius:2px;font-size:9px;line-height:12px;font-weight:600;font-style:normal;color:#e5e5ea;white-space:nowrap;overflow:hidden;text-overflow:clip;padding-left:3px;border-left:2px solid var(--c);text-align:left}
+.nmon .c i b.ad{background:color-mix(in srgb,var(--c) 40%,transparent);border-left:0;padding:0 2px}
+.nmon .c i em{font-size:9px;line-height:11px;color:var(--sub);font-style:normal;text-align:center}
+.mlist{padding:10px 8px 120px}
+.mlh{font-size:17px;font-weight:700;margin:4px 6px 8px}
+.mle{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:7px 12px;margin-bottom:6px;border-radius:12px;background:#1c1c1e;text-align:left;transition:transform .15s,background-color .15s}
+.mle:active{transform:scale(.98);background:#2c2c2e}
+.mle .mt{flex:none;width:44px;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;line-height:1.2}
+.mle .mt small{font-size:11px;color:var(--sub);font-weight:500}
+.mle i{flex:none;width:3px;align-self:stretch;border-radius:2px}
+.mle .mx{min-width:0;display:flex;flex-direction:column}
+.mle .mx b{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mle .mx small{font-size:12px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mle0{color:var(--sub);text-align:center;padding:16px}
 /* リスト（純正：日ごとの見出し・左に色の棒・右に時刻） */
 .nlist .dh2{font-size:15px;font-weight:600;padding:18px 16px 6px}
 .nlist .it{display:flex;gap:10px;padding:8px 16px;position:relative;width:100%;text-align:left}
@@ -621,6 +638,38 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .chp{flex:none;height:30px;padding:0 12px;border-radius:15px;background:rgba(255,255,255,.08);color:var(--label);font-size:14px;font-weight:500;white-space:nowrap;transition:background-color .2s,transform .2s var(--spring)}
 .chp.on{background:var(--lapis);color:#fff;font-weight:600}
 .chp:active{transform:scale(.92)}
+/* ── 編集の板（案10）── */
+.brd{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;background:none!important;padding:0!important;overflow:visible!important}
+.brd .mo{--k:var(--lapis);flex-direction:column;justify-content:center;gap:3px;min-height:100px;padding:12px 4px 10px;background:#1c1c1e;border-radius:20px;text-align:center;will-change:transform}
+.brd .mo::before{display:none!important}
+.brd .mo.w{grid-column:span 2;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;row-gap:0;align-content:center;justify-content:stretch;text-align:left;padding:10px 12px;min-height:76px}
+.brd .mo.w .mob{grid-row:1/3}
+.brd .mo.w .mov{order:0;grid-column:2;grid-row:1;font-size:21px;font-weight:600;max-width:none;font-variant-numeric:tabular-nums;letter-spacing:-.2px}
+.brd .mo.w .mol{grid-column:2;grid-row:2;font-size:12px;margin:0}
+.brd .mo[data-mo="d"] .mov,.brd .mo[data-mo="rr"] .mov{font-size:17px}
+.brd .mol{order:3;flex:none;font-size:11.5px;color:var(--sub);margin-top:1px}
+.brd .mov{order:2;font-size:13px;font-weight:600;color:var(--label);max-width:100%}
+.brd .mob{width:44px;height:44px;border-radius:22px;align-self:center;background:color-mix(in srgb,var(--k) 20%,transparent);color:var(--k);box-shadow:inset 0 0 0 2px var(--k);transition:background-color .3s,box-shadow .3s,color .3s,transform .2s var(--ease)}
+.brd .mob svg{width:22px;height:22px}
+.brd .mo.off .mob{background:transparent;color:#8e8e93;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.16)}
+.brd .mo.off .mov{color:var(--sub);font-weight:500}
+.brd .mo[data-mo="d"]{--k:#ff453a}.brd .mo[data-mo="a"],.brd .mo[data-mo="b"]{--k:#30d158}.brd .mo[data-mo="loc"]{--k:#0a84ff}
+.brd .mo[data-mo="tt"]{--k:#64d2ff}.brd .mo[data-mo="al"]{--k:#ff9f0a}.brd .mo[data-mo="rr"]{--k:#bf5af2}
+.brd .mob.neutral{background:color-mix(in srgb,var(--k) 20%,transparent)!important}
+.brd .mob .cdot{width:18px;height:18px;border-radius:9px}
+.brd .mo:active{transform:scale(.97)}
+.brd .mo.open{grid-column:1/-1;display:flex;flex-direction:row;min-height:66px;padding:0 12px}
+.brd .mo.open .mob{background:var(--k);color:#fff;box-shadow:none}
+.brd .moi{left:12px;top:11px;bottom:11px;width:44px;border-radius:22px;background:#2c2c2e}
+.brd .mo.open .moi{width:calc(100% - 24px);border-radius:22px;padding-left:52px}
+.brd .mo.open .moi{display:flex;align-items:center;gap:6px}
+.brd .chp.on{background:var(--k)}
+.durs{display:flex;gap:4px;flex:none;padding-right:6px}
+.durs .chp{height:28px;padding:0 9px;font-size:12.5px}
+.brd .mo[data-mo="b"].open .moi input{flex:0 0 86px}
+.okdock{position:sticky;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;justify-content:flex-end;pointer-events:none;margin-top:-56px;height:56px;z-index:3}
+.okb{pointer-events:auto;width:56px;height:56px;border-radius:28px;background:#fff;color:#000;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.45);transition:transform .2s var(--spring)}
+.okb svg{width:24px;height:24px}.okb:active{transform:scale(.88)}.okb:disabled{opacity:.5}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -731,12 +780,12 @@ function closePop(now) {
   p.classList.add("out"); sc.classList.remove("on"); sc.style.pointerEvents = p.style.pointerEvents = "none"; setTimeout(() => { p.remove(); sc.remove(); }, 220);
 }
 const CLK = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="5" cy="5" r="4"/><path d="M5 2.6V5l1.6 1" stroke-linecap="round"/></svg>';
-let sheetEl = null, sheetBg = null;
+let sheetEl = null, sheetBg = null, editDirty = null;
 // 純正の確認の札（下から出る・赤い字の操作とキャンセル）
-function confirmSheet(msg, label, fn) {
+function confirmSheet(msg, label, fn, cancelLabel) {
   const bg = document.createElement("div"); bg.className = "scrim"; bg.style.zIndex = 40;
   const el = document.createElement("div"); el.className = "cfm";
-  el.innerHTML = `<div class="cg"><div class="cm">${esc(msg)}</div><button class="cd">${esc(label)}</button></div><button class="cc">キャンセル</button>`;
+  el.innerHTML = `<div class="cg"><div class="cm">${esc(msg)}</div><button class="cd">${esc(label)}</button></div><button class="cc">${esc(cancelLabel || "キャンセル")}</button>`;
   document.body.append(bg, el); requestAnimationFrame(() => { bg.classList.add("on"); el.classList.add("on"); });
   const close = () => { el.classList.remove("on"); bg.classList.remove("on"); setTimeout(() => { el.remove(); bg.remove(); }, 320); };
   bg.onclick = el.querySelector(".cc").onclick = close;
@@ -842,30 +891,31 @@ function openPop(i, editing, focusField) {
   const ymd = d => keyOf(d), t2 = d => `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
   // 編集（純正）：丸い枠のアイコン → 押すとその丸から横へ広がって入力になり、決めるとまた丸へ縮む
   const cals = D.cals || [], curCal = cals.find(c => c.title === e.cal) || {};
-  const MO = (name, ic, label, val, input) => `<div class="mo" data-mo="${name}"><button type="button" class="mob" aria-label="${label}">${ic}</button><span class="mol">${label}</span><span class="mov">${val}</span><div class="moi">${input}</div></div>`;
+  const WIDE = {d: 1, a: 1, b: 1, rr: 1};
+  const MO = (name, ic, label, val, input) => `<div class="mo${WIDE[name] ? " w" : ""}" data-mo="${name}"><button type="button" class="mob" aria-label="${label}">${ICB[name] || ic}</button><span class="mol">${label}</span><span class="mov">${val}</span><div class="moi">${input}</div></div>`;
   const ymd2 = d => `${d.getMonth()+1}月${d.getDate()}日（${WD[d.getDay()]}）`;
   // 純正と同じ選択肢（丸い枠から横へ広がって選ぶ）
   const TT = [[0, "なし"], [5, "5分"], [15, "15分"], [30, "30分"], [60, "1時間"], [90, "1時間30分"], [120, "2時間"]];
   const AL = [[-1, "なし"], [0, "予定の時刻"], [5, "5分前"], [10, "10分前"], [15, "15分前"], [30, "30分前"], [60, "1時間前"], [120, "2時間前"], [1440, "1日前"], [2880, "2日前"]];
   const RR = [["none", "しない"], ["daily", "毎日"], ["weekly", "毎週"], ["monthly", "毎月"], ["yearly", "毎年"]];
   const MOC = (name, ic, label, opts, cur) => { const c = opts.find(o => String(o[0]) === cur) || opts[0];
-    return `<div class="mo" data-mo="${name}" data-choice="1"><button type="button" class="mob" aria-label="${label}">${ic}</button><span class="mol">${label}</span><span class="mov">${c[1]}</span><input type="hidden" name="${name}" value="${esc(String(c[0]))}"><div class="moi moc">${opts.map(o => `<button type="button" class="chp${String(o[0]) === String(c[0]) ? " on" : ""}" data-v="${esc(String(o[0]))}">${o[1]}</button>`).join("")}</div></div>`; };
-  const edit0 = `<div class="shd"><button class="cx" id="edc">キャンセル</button><h3>予定を編集</h3><button class="dn" id="eds">完了</button></div>
+    return `<div class="mo${WIDE[name] ? " w" : ""}" data-mo="${name}" data-choice="1"><button type="button" class="mob" aria-label="${label}">${ICB[name] || ic}</button><span class="mol">${label}</span><span class="mov">${c[1]}</span><input type="hidden" name="${name}" value="${esc(String(c[0]))}"><div class="moi moc">${opts.map(o => `<button type="button" class="chp${String(o[0]) === String(c[0]) ? " on" : ""}" data-v="${esc(String(o[0]))}">${o[1]}</button>`).join("")}</div></div>`; };
+  const edit0 = `<div class="shd"><button class="cx" id="edc">キャンセル</button><h3>予定を編集</h3><span style="width:72px"></span></div>
     <form id="edf" class="edf2">
       <div class="grp edf"><label><input name="title" value="${esc(e.title)}" maxlength="200" required placeholder="タイトル" style="font-size:17px"></label></div>
-      <div class="grp mos">
-        ${MO("loc", ICN.pin, "場所", esc(e.loc || "なし"), `<input name="loc" value="${esc(e.loc || "")}" maxlength="500" placeholder="場所またはビデオ通話" enterkeyhint="done">`)}
+      <div class="grp mos brd">
         ${e.allDay ? "" : MO("d", ICN.today, "日付", ymd2(s), `<input name="d" type="date" value="${ymd(s)}" required>`)
           + MO("a", ICN.clock2, "開始", t2(s), `<input name="a" type="time" value="${t2(s)}" required>`)
-          + MO("b", ICN.clock2, "終了", t2(en), `<input name="b" type="time" value="${t2(en)}" required>`)}
-        ${cals.length ? `<div class="mo" data-mo="cal" data-list="1"><button type="button" class="mob neutral" aria-label="カレンダー"><i class="cdot" style="background:${esc(curCal.color || col)}"></i></button><span class="mol">カレンダー</span><span class="mov">${esc(curCal.title || e.cal || "")}</span><input type="hidden" name="cal" value="${esc(curCal.id || "")}"></div>` : ""}
+          + MO("b", ICN.clock2, "終了", t2(en), `<input name="b" type="time" value="${t2(en)}" required><span class="durs">${[[30, "30分"], [60, "1時間"], [90, "1.5時間"], [120, "2時間"]].map(x => `<button type="button" class="chp" data-dur="${x[0]}">${x[1]}</button>`).join("")}</span>`)}
+        ${cals.length ? `<div class="mo" data-mo="cal" data-list="1" style="--k:${esc(curCal.color || col)}"><button type="button" class="mob neutral" aria-label="カレンダー"><i class="cdot" style="background:${esc(curCal.color || col)}"></i></button><span class="mol">カレンダー</span><span class="mov">${esc(curCal.title || e.cal || "")}</span><input type="hidden" name="cal" value="${esc(curCal.id || "")}"></div>` : ""}
+        ${MO("loc", ICN.pin, "場所", esc(e.loc || "なし"), `<input name="loc" value="${esc(e.loc || "")}" maxlength="500" placeholder="場所またはビデオ通話" enterkeyhint="done">`)}
         ${e.allDay ? "" : MOC("tt", ICN.car, "移動時間", TT, String(e.tt || 0))
           + MOC("al", ICN.bell, "通知", AL, String(e.al && e.al.length ? e.al[0] : -1))}
         ${MOC("rr", ICN.rep, "繰り返し", RR, e.rr || "none")}
       </div>
       <div class="grp edf"><label style="align-items:flex-start"><textarea name="notes" maxlength="4000" placeholder="メモ">${esc(e.notes || "")}</textarea></label></div>
     </form>
-    <button class="delrow" id="evdel">予定を削除</button>`;
+    <button class="delrow" id="evdel">予定を削除</button><div class="okdock"><button class="okb" id="eds" aria-label="保存">${ICB.ok}</button></div>`;
   sheetBg = document.createElement("div"); sheetBg.className = "sheetbg";
   sheetEl = document.createElement("div"); sheetEl.className = "sheet"; sheetEl.setAttribute("role", "dialog");
   sheetEl.innerHTML = `<div class="grab"></div>${editing ? edit0 : view0}`;
@@ -929,7 +979,26 @@ function openPop(i, editing, focusField) {
       D.events[i] = {...e, title: e.title, deleted: true}; D.events.splice(i, 1, {...e, start: "1970-01-01T00:00", end: "1970-01-01T00:00"}); closeSheet(); render(); toast("予定を削除しました");
     } catch (err) { toast(failMsg(err)); } });
   if (editing) {
-    q("#edc").onclick = () => openPop(i);
+    const snap = () => new URLSearchParams(new FormData(q("#edf"))).toString(), s0 = snap();
+    editDirty = () => sheetEl && q("#edf") && snap() !== s0;
+    q("#edc").onclick = () => editDirty() ? confirmSheet("変更を破棄してもよろしいですか？", "変更内容を破棄", () => openPop(i), "編集を続ける") : openPop(i);
+    // 終了の札：長さの丸で「開始＋n分」
+    sheetEl.querySelectorAll("[data-dur]").forEach(c => { c.onpointerdown = ev => ev.preventDefault(); c.onclick = ev => { ev.stopPropagation();
+      const a = q('[name="a"]').value, bi = q('[name="b"]'); if (!a) return; const m = (+a.slice(0, 2) * 60 + +a.slice(3) + +c.dataset.dur) % 1440;
+      bi.value = `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`; bi.dispatchEvent(new Event("change")); }; });
+    // 状態の見分け：値がある札は色の輪と白い字、無い札は灰色の線だけ
+    const brd = q(".brd"), stOf = mo => { const n = mo.dataset.mo, v = (mo.querySelector("input[name]") || {}).value;
+      mo.classList.toggle("off", (n === "loc" && !v) || (n === "tt" && v === "0") || (n === "al" && v === "-1") || (n === "rr" && v === "none")); };
+    let rects = new Map(); const snapR = () => brd.querySelectorAll(".mo").forEach(m => rects.set(m, m.getBoundingClientRect()));
+    brd.querySelectorAll(".mo").forEach(stOf); snapR();
+    // 札が広がる・戻る時、周りの札は今の場所から滑って並び直す（FLIP）
+    new MutationObserver(ms => { brd.querySelectorAll(".mo").forEach(stOf);
+      if (!ms.some(m => m.type === "attributes" && m.attributeName === "class" && m.target.classList.contains("mo"))) return;
+      brd.querySelectorAll(".mo").forEach(m => { const o = rects.get(m), n = m.getBoundingClientRect(); if (!o) return;
+        const dx = o.left - n.left, dy = o.top - n.top, sx = o.width / n.width, sy = o.height / n.height;
+        if (Math.abs(dx) + Math.abs(dy) + Math.abs(1 - sx) * 50 < 1) return;
+        m.animate([{transformOrigin: "0 0", transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})`}, {transformOrigin: "0 0", transform: "none"}], {duration: 420, easing: "cubic-bezier(.32,.72,0,1)"}); });
+      snapR(); }).observe(brd, {subtree: true, attributes: true, attributeFilter: ["class"], childList: true, characterData: true});
     q("#eds").onclick = async () => {
       const f = q("#edf"); if (!f.reportValidity()) return;
       const v = Object.fromEntries(new FormData(f)), o = {op: "evedit", eid: e.eid, start: e.start};
@@ -959,7 +1028,7 @@ function openPop(i, editing, focusField) {
   sheetEl.addEventListener("touchmove", ev => { if (y0 === null) return; const t = ev.touches[0];
     if (Math.abs(t.clientX - x0) > Math.abs(t.clientY - y0) + 4) { y0 = null; sheetEl.style.transition = ""; sheetEl.style.transform = ""; return; }
     dy = Math.max(0, t.clientY - y0); sheetEl.style.transform = `translateY(${dy}px)`; }, {passive: true});
-  sheetEl.addEventListener("touchend", () => { if (y0 === null) return; y0 = null; sheetEl.style.transition = ""; sheetEl.style.transform = ""; if (dy > 110) closeSheet(); });
+  sheetEl.addEventListener("touchend", () => { if (y0 === null) return; y0 = null; sheetEl.style.transition = ""; sheetEl.style.transform = ""; if (dy > 110) { if (editDirty && editDirty()) confirmSheet("変更を破棄してもよろしいですか？", "変更内容を破棄", () => closeSheet(), "編集を続ける"); else closeSheet(); } });
 }
 /* iPhone で直した予定（Mac が書き戻すまでの間もそう見せる）：目印ごとに覚える・3日で忘れる */
 let pendEv = store.get("pendEv", {});
@@ -1010,6 +1079,17 @@ addEventListener("scroll", () => { if (popEl && (Date.now() - popAt < 450 || Mat
 const H0 = 8, H1 = 22;
 if (!["one", "multi", "list", "month"].includes(mode)) mode = "multi";
 function days() { return mode === "one" ? 1 : innerWidth < 560 ? 3 : 6; }
+const SF = (d, extra) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"${extra || ""}>${d}</svg>`;
+const ICB = {
+  loc: SF('<path d="M12 21.2c-.3 0-6.7-5.7-6.7-11A6.7 6.7 0 0 1 12 3.5a6.7 6.7 0 0 1 6.7 6.7c0 5.3-6.4 11-6.7 11z"/><circle cx="12" cy="10.2" r="2.4"/>'),
+  d: SF('<rect x="3.6" y="5" width="16.8" height="15.4" rx="3.4"/><path d="M3.6 9.6h16.8M8 3.2v3.4M16 3.2v3.4"/><circle cx="8.4" cy="13.6" r=".55" fill="currentColor"/><circle cx="12" cy="13.6" r=".55" fill="currentColor"/><circle cx="15.6" cy="13.6" r=".55" fill="currentColor"/><circle cx="8.4" cy="17" r=".55" fill="currentColor"/><circle cx="12" cy="17" r=".55" fill="currentColor"/>'),
+  a: SF('<circle cx="12" cy="12" r="8.6"/><path d="M12 7.2V12l3.2 2"/>'),
+  b: SF('<circle cx="12" cy="12" r="8.6"/><path d="M12 7.2V12h-3.6"/><path d="M15.2 15.2l2.6 2.6" opacity=".0"/>'),
+  tt: SF('<path d="M4.2 15.6v-3.1c0-.5.1-.9.3-1.3l1.7-3.6c.4-.8 1.2-1.3 2.1-1.3h7.4c.9 0 1.7.5 2.1 1.3l1.7 3.6c.2.4.3.8.3 1.3v3.1c0 .6-.5 1-1 1H5.2c-.6 0-1-.4-1-1z"/><path d="M4.6 11.4h14.8M6.4 16.6v1.6M17.6 16.6v1.6"/><circle cx="7.6" cy="13.8" r=".7" fill="currentColor"/><circle cx="16.4" cy="13.8" r=".7" fill="currentColor"/>'),
+  al: SF('<path d="M6.2 16.4V11a5.8 5.8 0 0 1 11.6 0v5.4l1.5 1.8H4.7z"/><path d="M10 20.4a2.1 2.1 0 0 0 4 0"/>'),
+  rr: SF('<path d="M4.4 11.2V9.6A3.6 3.6 0 0 1 8 6h11.2M16.4 3.2 19.2 6l-2.8 2.8M19.6 12.8v1.6a3.6 3.6 0 0 1-3.6 3.6H4.8M7.6 20.8 4.8 18l2.8-2.8"/>'),
+  ok: SF('<path d="M5.6 12.6l4.2 4.2 8.6-9.4"/>', ' stroke-width="2.6"'),
+};
 const ICN = {
   back: '<svg viewBox="0 0 11 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L2 9l7 7"/></svg>',
   one: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="16" height="14" rx="3"/><path d="M3 9h16"/></svg>',
@@ -1064,6 +1144,11 @@ function home(main) {
   // 日｜月のフリップ（アプリと同じ）：つまみが滑ってから面が裏返る
   $("#fl").onclick = () => { const f = $("#fl"), toMonth = mode !== "month"; f.classList.toggle("m", toMonth); if (navigator.vibrate) navigator.vibrate(6);
     setTimeout(() => { if (toMonth) { store.set("dayMode", mode); setMode("month", "in-flip"); } else setMode(store.get("dayMode", "multi") === "month" ? "multi" : store.get("dayMode", "multi"), "in-flip"); }, 160); };
+  // 月：1回押すと選ぶ（下に一覧）・選んだ日をもう一度押すとその日の時間割へ
+  main.querySelectorAll("[data-mday]").forEach(b => b.onclick = () => { const k = b.dataset.mday;
+    if (k === monSel) { const t0 = new Date(); t0.setHours(0,0,0,0); offset = Math.round((pd(k) - t0) / 864e5); setMode("multi", "in-flip"); return; }
+    monSel = k; main.querySelectorAll(".nmon .c.sel").forEach(x => x.classList.remove("sel")); b.classList.add("sel"); if (navigator.vibrate) navigator.vibrate(4);
+    const ml = $("#mlist"); ml.innerHTML = monList(evAll); ml.animate([{opacity: .3, transform: "translateY(6px)"}, {opacity: 1, transform: "none"}], {duration: 260, easing: "cubic-bezier(.32,.72,0,1)"}); bind(ml); });
   main.querySelectorAll("[data-day]").forEach(b => b.onclick = () => {
     const t0 = new Date(); t0.setHours(0,0,0,0); offset = Math.round((pd(b.dataset.day) - t0) / 864e5);
     if (mode === "month") setMode("multi", "in-flip"); else render(); });
@@ -1204,6 +1289,12 @@ function listView(evAll) {
   return `<div class="nlist">${out || '<p class="empty">この3週間の予定はありません</p>'}</div>`;
 }
 
+let monSel = keyOf(new Date());
+function monList(evAll) {
+  const d = pd(monSel), dE = new Date(d); dE.setDate(d.getDate() + 1);
+  const de = evAll.filter(e => e.e > d && e.s < dE && !e.deleted && e.s.getFullYear() > 1970).sort((p, q) => (q.allDay ? 1 : 0) - (p.allDay ? 1 : 0) || p.s - q.s);
+  return `<div class="mlh">${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日(${WD[d.getDay()]})</div>` + (de.length ? de.map(e => `<button class="mle" data-ev="${e.i}"><span class="mt">${e.allDay ? "終日" : hm(e.s)}${e.allDay ? "" : `<small>${hm(e.e)}</small>`}</span><i style="background:${esc(e.color || "#2159bd")}"></i><span class="mx"><b>${esc(e.title)}</b>${e.loc ? `<small>${esc(e.loc)}</small>` : ""}</span></button>`).join("") : '<p class="mle0">予定はありません</p>');
+}
 function monthView(evAll) {
   const t = new Date(), first = new Date(t.getFullYear(), t.getMonth() + monthOff, 1);
   const last = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
@@ -1211,10 +1302,11 @@ function monthView(evAll) {
   for (let k = 0; k < first.getDay(); k++) cells += `<div class="c e"></div>`;
   for (let dd = 1; dd <= last; dd++) {
     const d = new Date(first.getFullYear(), first.getMonth(), dd), dE = new Date(d); dE.setDate(dd + 1);
-    const cs = [...new Set(evAll.filter(e => e.e > d && e.s < dE).map(e => e.color || "#2159bd"))].slice(0, 3);
-    cells += `<button class="c${[0,6].includes(d.getDay()) ? " we" : ""}${keyOf(d) === keyOf(t) ? " t" : ""}" data-day="${keyOf(d)}"><span>${dd}</span><i>${cs.map(c => `<b style="background:${c}"></b>`).join("")}</i></button>`;
+    const de = evAll.filter(e => e.e > d && e.s < dE && !e.deleted && e.s.getFullYear() > 1970).sort((p, q) => (q.allDay ? 1 : 0) - (p.allDay ? 1 : 0) || p.s - q.s);
+    const k = keyOf(d), bars = de.slice(0, 4).map(e => `<b style="--c:${esc(e.color || "#2159bd")}"${e.allDay ? ' class="ad"' : ""}>${esc(e.title)}</b>`).join("");
+    cells += `<button class="c${[0,6].includes(d.getDay()) ? " we" : ""}${k === keyOf(t) ? " t" : ""}${k === monSel ? " sel" : ""}" data-mday="${k}"><span>${dd}</span><i>${bars}${de.length > 4 ? `<em>+${de.length - 4}</em>` : ""}</i></button>`;
   }
-  return `<div class="nmon"><h2>${first.getMonth() + 1}月</h2><div class="row7">${cells}</div></div>`;
+  return `<div class="nmon"><h2>${first.getMonth() + 1}月</h2><div class="row7">${cells}</div></div><div class="mlist" id="mlist">${monList(evAll)}</div>`;
 }
 
 /* ── タスク（丸を押すと完了・上の欄で追加。iPhone で押した物は Mac の Aletheia が次の同期で反映する） ── */
