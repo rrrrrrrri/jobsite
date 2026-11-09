@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>編集の形 10案</title>
+<style>
+:root{--bg:#000;--card:#1c1c1e;--card2:#2c2c2e;--sep:rgba(255,255,255,.08);--tx:#fff;--sub:#8e8e93;--acc:#0a84ff;--red:#ff453a;
+  --ease:cubic-bezier(.32,.72,0,1);--spring:cubic-bezier(.34,1.45,.5,1)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 -apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif}
+header{position:sticky;top:0;z-index:9;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:rgba(0,0,0,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+header h1{margin:0;font-size:22px;font-weight:700}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:8px -16px 0;padding:0 16px;overscroll-behavior-x:contain}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;border:0;border-radius:99px;padding:7px 13px;background:var(--card2);color:var(--tx);font:600 14px -apple-system}
+.tabs button.on{background:var(--tx);color:#000}
+main{padding:12px 12px 60px;overflow-x:hidden}
+.pv{display:none}.pv.on{display:block;animation:fi .35s var(--ease)}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}}
+.cap{margin:4px 4px 12px}.cap b{font-size:17px}.cap p{margin:4px 0 0;color:var(--sub);font-size:14px}
+.sheet{position:relative;background:#111113;border-radius:26px;padding:12px 12px 16px;overflow:hidden;max-width:430px;margin:0 auto}
+.sh{display:flex;align-items:center;justify-content:space-between;margin:0 2px 10px}
+.sh button{border:0;background:none;color:var(--acc);font:16px -apple-system;padding:4px}
+.sh b{font-size:16px}
+.ttl{width:100%;border:0;border-radius:14px;background:var(--card);color:var(--tx);font:600 19px -apple-system;padding:13px 14px;outline:none}
+.ttl.big{background:none;font-size:24px;padding:4px 4px 10px}
+/* 輪：中に絵・周りにすき間のある弧・下に点 */
+.ring{--s:64px;--c:var(--acc);position:relative;width:var(--s);height:var(--s);border:0;padding:0;background:none;color:var(--tx);flex:none;cursor:pointer;transition:transform .25s var(--spring)}
+.ring:active{transform:scale(.9)}
+.ring svg.arc{position:absolute;inset:0;width:100%;height:100%;transform:rotate(135deg)}
+.ring svg.arc circle{fill:none;stroke-width:3.2;stroke-linecap:round}
+.ring .tr{stroke:rgba(255,255,255,.2)}
+.ring .fg{stroke:var(--c);transition:stroke-dasharray .6s var(--ease)}
+.ring .ic{position:absolute;inset:21%;transform:translateY(-3%);display:grid;place-items:center;border-radius:50%;background:var(--card2)}
+.ring .ic svg{width:52%;height:52%;stroke:var(--c);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ring .dots{position:absolute;left:50%;bottom:3%;transform:translateX(-50%);display:flex;gap:4px}
+.ring .dots i{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.3)}
+.ring .dots i.on{background:var(--tx)}
+.lab{font-size:12px;color:var(--sub);text-align:center;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.val{font-size:13px;font-weight:600;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 広がった姿（輪 → 角の丸い入力） */
+.morph{position:fixed;z-index:50;background:var(--card);border-radius:999px;overflow:hidden;box-shadow:0 0 0 1.5px var(--c,var(--acc)),0 20px 50px rgba(0,0,0,.6);
+  display:flex;align-items:center;gap:10px;padding:0 10px;transition:all .48s var(--ease)}
+.morph .mi{flex:none;width:40px;height:40px;border-radius:50%;background:var(--card2);display:grid;place-items:center}
+.morph .mi svg{width:20px;height:20px;stroke:var(--c,var(--acc));fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.morph .body{flex:1;min-width:0;opacity:0;transition:opacity .2s .2s}
+.morph.open .body{opacity:1}
+.morph input{width:100%;border:0;background:none;color:var(--tx);font:600 17px -apple-system;outline:none;color-scheme:dark}
+.morph .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;padding:2px 0}
+.morph .chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:0;border-radius:99px;padding:8px 12px;background:var(--card2);color:var(--tx);font:600 14px -apple-system;transition:background .2s,transform .2s var(--spring)}
+.chip:active{transform:scale(.92)}
+.chip.on{background:var(--c,var(--acc));color:#fff}
+.chip i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:0}
+.morph .ok{flex:none;width:36px;height:36px;border-radius:50%;border:0;background:var(--c,var(--acc));color:#fff;font:700 16px -apple-system;opacity:0;transform:scale(.4);transition:all .3s .25s var(--spring)}
+.morph.open .ok{opacity:1;transform:none}
+.veil{position:fixed;inset:0;z-index:49;background:rgba(0,0,0,0);transition:background .4s}
+.veil.on{background:rgba(0,0,0,.45)}
+.del{display:block;width:100%;margin-top:14px;border:0;border-radius:14px;background:var(--card);color:var(--red);font:16px -apple-system;padding:13px}
+.notes{margin-top:10px;border-radius:14px;background:var(--card);padding:12px 14px;color:#d1d1d6;font-size:14px;white-space:pre-line}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);opacity:0;background:#2c2c2e;padding:10px 16px;border-radius:99px;font-size:14px;transition:all .35s var(--ease);z-index:60}
+.toast.on{opacity:1;transform:translateX(-50%)}
+/* 1 格子 */
+.g3{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 6px;justify-items:center;padding:6px 0}
+/* 2 帯 */
+.strip{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding:8px 4px 6px;overscroll-behavior-x:contain}
+.strip::-webkit-scrollbar{display:none}
+.strip>div{display:flex;flex-direction:column;align-items:center;width:64px}
+.sum{margin-top:6px;border-radius:14px;background:var(--card);padding:12px 14px}
+.sum .when{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.sum .sub{color:var(--sub);font-size:14px}
+/* 3 2列 */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:18px;padding:8px 10px 8px 8px;min-width:0}
+.tile .t{min-width:0}.tile .t .val{text-align:left}.tile .t .lab{text-align:left;margin:0}
+/* 4 時計 */
+.clock{position:relative;width:240px;height:240px;margin:6px auto 4px}
+.clock svg{width:100%;height:100%}
+.clock .mid{position:absolute;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none}
+.clock .mid b{font-size:26px;font-variant-numeric:tabular-nums}
+.knob{cursor:grab;touch-action:none}
+/* 5 ダイヤル */
+.dial{position:relative;height:300px}
+.dial .ring{position:absolute;transition:all .5s var(--ease)}
+.dial .hub{position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;background:var(--card);display:grid;place-items:center;text-align:center;padding:12px}
+.dial .hub b{font-size:20px;font-variant-numeric:tabular-nums}
+/* 7 島 */
+.island{display:flex;align-items:center;gap:6px;margin:6px auto 0;width:max-content;max-width:100%;background:#000;border-radius:99px;padding:6px;box-shadow:0 0 0 1px var(--sep);transition:all .5s var(--ease)}
+.island .ring{--s:44px}
+/* 8 扇 */
+.fanwrap{position:relative}
+.fan{position:fixed;z-index:51;width:0;height:0}
+.fan .chip{position:absolute;transform:translate(-50%,-50%) scale(.2);opacity:0;transition:all .45s var(--spring);white-space:nowrap}
+.fan.on .chip{opacity:1}
+/* 9 ドック */
+.dock{position:sticky;bottom:8px;margin-top:12px;display:flex;justify-content:space-around;background:rgba(44,44,46,.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:28px;padding:10px 4px}
+.dock .ring{--s:48px}
+/* 10 混在の板 */
+.cc{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cc .tl{background:var(--card);border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px;min-height:96px}
+.cc .w2{grid-column:span 2;flex-direction:row;gap:10px;justify-content:flex-start;padding:10px 12px}
+.cc .w2 .t .val,.cc .w2 .t .lab{text-align:left}
+.cc .h2{grid-row:span 2}
+.legend{color:var(--sub);font-size:13px;margin:10px 4px 0}
+</style></head>
+<body>
+<header><h1>編集の形 10案</h1><div class="tabs" id="tabs"></div></header>
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+<script>
+// サンプルの予定（実データは使わない）
+const EV = {title: "サンプル社 説明会 オンライン", d: "2026-11-10", a: "17:00", b: "18:00", loc: "", cal: "就活", tt: 0, al: -1, rr: "none", notes: "形式: オンライン\n会場: オンライン2"};
+const CALS = [["就活", "#ff453a"], ["授業", "#30d158"], ["Google", "#ffd60a"], ["アルバイト", "#64d2ff"], ["お知らせ", "#0a84ff"], ["暫定", "#bf5af2"], ["重要", "#5e5ce6"]];
+const TT = [[0, "なし"], [5, "5分"], [15, "15分"], [30, "30分"], [60, "1時間"], [90, "1.5時間"], [120, "2時間"]];
+const AL = [[-1, "なし"], [0, "開始時"], [5, "5分前"], [15, "15分前"], [30, "30分前"], [60, "1時間前"], [1440, "1日前"]];
+const RR = [["none", "しない"], ["daily", "毎日"], ["weekly", "毎週"], ["monthly", "毎月"], ["yearly", "毎年"]];
+const P = {
+  pin: '<path d="M12 21s-6-5.3-6-11a6 6 0 0 1 12 0c0 5.7-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>',
+  cal: '<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  clk: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
+  end: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4h4"/>',
+  car: '<path d="M5 16V12l2-5h10l2 5v4M5 16h14M7 16v2M17 16v2"/><circle cx="8" cy="13" r=".6"/><circle cx="16" cy="13" r=".6"/>',
+  bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20a2 2 0 0 0 4 0"/>',
+  rep: '<path d="M4 12a7 7 0 0 1 12-5l2 2M20 12a7 7 0 0 1-12 5l-2-2M18 4v5h-5M6 20v-5h5"/>',
+  tag: '<circle cx="12" cy="12" r="5"/>',
+};
+const st = {...EV};
+const fmtD = v => { const d = new Date(v + "T00:00"); return `${d.getMonth()+1}月${d.getDate()}日(${"日月火水木金土"[d.getDay()]})`; };
+const calC = () => (CALS.find(c => c[0] === st.cal) || CALS[0])[1];
+// 項目の定義：値の見せ方・弧の割合（量のある物は量で満たす）・入れ方
+const F = {
+  loc: {l: "場所", p: P.pin, c: "#0a84ff", v: () => st.loc || "なし", f: () => st.loc ? 1 : 0, kind: "text", ph: "場所・URL"},
+  d:   {l: "日付", p: P.cal, c: "#ff9f0a", v: () => fmtD(st.d), f: () => 1, kind: "date"},
+  a:   {l: "開始", p: P.clk, c: "#30d158", v: () => st.a, f: () => (+st.a.slice(0, 2) * 60 + +st.a.slice(3)) / 1440, kind: "time"},
+  b:   {l: "終了", p: P.end, c: "#30d158", v: () => st.b, f: () => (+st.b.slice(0, 2) * 60 + +st.b.slice(3)) / 1440, kind: "time"},
+  cal: {l: "カレンダー", p: P.tag, c: null, v: () => st.cal, f: () => 1, kind: "cal"},
+  tt:  {l: "移動時間", p: P.car, c: "#64d2ff", v: () => TT.find(o => o[0] === st.tt)[1], f: () => st.tt / 120, kind: "pick", o: TT},
+  al:  {l: "通知", p: P.bell, c: "#ffd60a", v: () => AL.find(o => o[0] === st.al)[1], f: () => st.al < 0 ? 0 : 1 - Math.min(st.al, 1440) / 1440 * .7, kind: "pick", o: AL},
+  rr:  {l: "繰り返し", p: P.rep, c: "#bf5af2", v: () => RR.find(o => o[0] === st.rr)[1], f: () => st.rr === "none" ? 0 : 1, kind: "pick", o: RR},
+};
+const KEYS = ["loc", "d", "a", "b", "cal", "tt", "al", "rr"];
+const col = k => F[k].c || calC();
+// 輪：270度の弧（下が開いた形）＋下の点（何段目かを示す）
+function ring(k, size, dots) {
+  const r = 46, C = 2 * Math.PI * r, span = C * .75, fr = Math.max(.04, Math.min(1, F[k].f()));
+  const n = F[k].o ? F[k].o.length : 0, idx = F[k].o ? F[k].o.findIndex(o => o[0] === st[k]) : -1;
+  const dd = dots !== false && n ? `<span class="dots">${Array.from({length: Math.min(n, 5)}, (_, j) => `<i class="${j === Math.min(idx, 4) ? "on" : ""}"></i>`).join("")}</span>` : "";
+  return `<button class="ring" data-k="${k}" style="--s:${size || 64}px;--c:${col(k)}" aria-label="${F[k].l}">
+    <svg class="arc" viewBox="0 0 100 100"><circle class="tr" cx="50" cy="50" r="${r}" stroke-dasharray="${span} ${C}"/><circle class="fg" cx="50" cy="50" r="${r}" stroke-dasharray="${span * fr} ${C}"/></svg>
+    <span class="ic"><svg viewBox="0 0 24 24">${F[k].p === P.tag ? `<circle cx="12" cy="12" r="6" fill="${calC()}" stroke="none"/>` : F[k].p}</svg></span>${dd}</button>`;
+}
+const cell = (k, s) => `<div style="display:flex;flex-direction:column;align-items:center;min-width:0;width:100%">${ring(k, s)}<div class="val" data-v="${k}">${F[k].v()}</div><div class="lab">${F[k].l}</div></div>`;
+const head = (big) => `<div class="sh"><button>キャンセル</button><b>予定を編集</b><button style="font-weight:600">完了</button></div><input class="ttl${big ? " big" : ""}" value="${st.title}">`;
+const tail = () => `<div class="notes">${st.notes}</div><button class="del">予定を削除</button>`;
+function refresh() { document.querySelectorAll(".pv.on [data-k]").forEach(b => { const k = b.dataset.k; if (b.classList.contains("ring")) { const t = document.createElement("div"); t.innerHTML = ring(k, parseInt(b.style.getPropertyValue("--s")), !!b.querySelector(".dots") || undefined); b.replaceWith(t.firstElementChild); } });
+  document.querySelectorAll(".pv.on [data-v]").forEach(x => x.textContent = F[x.dataset.v].v()); bind(); extra[cur] && extra[cur](); }
+function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 1400); }
+
+/* ── 輪が広がって入力になる（共通）：輪の位置から丸のまま出て、横へ伸びて角丸の入力に。決めると輪へ縮んで戻る ── */
+let open = null;
+function morph(btn, opt) {
+  if (open) return; const k = btn.dataset.k, f = F[k], r = btn.getBoundingClientRect(), c = col(k);
+  const veil = document.createElement("div"); veil.className = "veil";
+  const m = document.createElement("div"); m.className = "morph"; m.style.setProperty("--c", c);
+  let body = "";
+  if (f.kind === "text") body = `<input value="${st[k]}" placeholder="${f.ph}">`;
+  else if (f.kind === "date") body = `<input type="date" value="${st.d}">`;
+  else if (f.kind === "time") body = `<input type="time" value="${st[k]}">`;
+  else if (f.kind === "cal") body = `<div class="chips">${CALS.map(x => `<button class="chip${x[0] === st.cal ? " on" : ""}" data-x="${x[0]}" style="--c:${x[1]}"><i style="background:${x[1]}"></i>${x[0]}</button>`).join("")}</div>`;
+  else body = `<div class="chips">${f.o.map(o => `<button class="chip${o[0] === st[k] ? " on" : ""}" data-x="${o[0]}">${o[1]}</button>`).join("")}</div>`;
+  m.innerHTML = `<span class="mi"><svg viewBox="0 0 24 24">${f.p === P.tag ? `<circle cx="12" cy="12" r="6" fill="${calC()}" stroke="none"/>` : f.p}</svg></span><div class="body">${body}</div>${f.kind === "pick" || f.kind === "cal" ? "" : '<button class="ok">✓</button>'}`;
+  const W = Math.min(innerWidth - 24, 406), H = 56, L = (innerWidth - W) / 2;
+  let T = (opt && opt.top != null) ? opt.top : Math.min(Math.max(r.top + r.height / 2 - H / 2, 80), innerHeight - H - 40);
+  Object.assign(m.style, {left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", transition: "none"});
+  document.body.append(veil, m); btn.style.visibility = "hidden";
+  requestAnimationFrame(() => requestAnimationFrame(() => { veil.classList.add("on"); m.style.transition = "";
+    Object.assign(m.style, {left: L + "px", top: T + "px", width: W + "px", height: H + "px"}); m.classList.add("open");
+    setTimeout(() => { const i = m.querySelector("input"); if (i) { i.focus(); if (i.showPicker && i.type !== "text") try { i.showPicker(); } catch (e) {} }
+      const on = m.querySelector(".chip.on"); if (on) on.scrollIntoView({inline: "center", block: "nearest", behavior: "smooth"}); }, 380); }));
+  const close = (commit) => {
+    if (commit !== undefined) { st[k] = commit; }
+    const nb = commit !== undefined ? (refresh(), document.querySelector(`.pv.on .ring[data-k="${k}"]`)) : btn;
+    const rr = (nb || btn).getBoundingClientRect(); if (nb) nb.style.visibility = "hidden";
+    m.classList.remove("open"); veil.classList.remove("on");
+    Object.assign(m.style, {left: rr.left + "px", top: rr.top + "px", width: rr.width + "px", height: rr.height + "px"});
+    setTimeout(() => { m.remove(); veil.remove(); if (nb) { nb.style.visibility = ""; nb.animate([{transform: "scale(1.18)"}, {transform: "scale(1)"}], {duration: 380, easing: "cubic-bezier(.34,1.45,.5,1)"}); } btn.style.visibility = ""; open = null; }, 470);
+    if (commit !== undefined) toast(`${f.l}：${F[k].v()}`);
+  };
+  open = close;
+  veil.onclick = () => { const i = m.querySelector("input"); close(i ? (f.kind === "text" ? i.value : i.value || st[k]) : undefined); };
+  m.querySelectorAll(".chip").forEach(b => b.onclick = () => { m.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === b));
+    const x = b.dataset.x; setTimeout(() => close(f.kind === "cal" ? x : (typeof st[k] === "number" ? +x : x)), 170); });
+  const ok = m.querySelector(".ok"); if (ok) ok.onclick = () => close(m.querySelector("input").value || st[k]);
+  const inp = m.querySelector("input"); if (inp) inp.addEventListener("keydown", e => { if (e.key === "Enter") close(inp.value || st[k]); });
+}
+function bind() { document.querySelectorAll(".pv.on .ring[data-k]").forEach(b => { if (b.dataset.b) return; b.dataset.b = 1; b.onclick = () => (mode[cur] || morph)(b); }); }
+
+/* ── 10案 ── */
+const V = [
+  {n: "格子", d: "8つの輪を4列2段に。値は輪の下に1行。押すと輪がその場から伸びて入力になる。縦の長さは今の半分。",
+    h: () => `${head()}<div class="g3" style="margin-top:12px">${KEYS.map(k => cell(k, 60)).join("")}</div>${tail()}`},
+  {n: "帯＋大きな時刻", d: "いつ・どこを大きな文字で一目に。輪は1列の帯で横へ流す（端で止まり、余白は出ない）。",
+    h: () => `${head(true)}<div class="sum"><div class="when" data-v="a"></div><div class="sub"><span data-v="d"></span>・〜<span data-v="b"></span>・<span data-v="cal"></span></div></div><div class="strip">${KEYS.map(k => `<div>${ring(k, 58)}<div class="lab">${F[k].l}</div></div>`).join("")}</div>${tail()}`},
+  {n: "2列の札", d: "輪＋値＋見出しを小さな札にして2列。読みやすさと短さの中間。",
+    h: () => `${head()}<div class="g2" style="margin-top:10px">${KEYS.map(k => `<div class="tile">${ring(k, 48)}<div class="t"><div class="val" data-v="${k}"></div><div class="lab">${F[k].l}</div></div></div>`).join("")}</div>${tail()}`},
+  {n: "時計の輪", d: "開始と終了は大きな24時間の輪の上の2つのつまみ。弧の長さ＝予定の長さ。つまみをなぞると5分刻みで動く。残りは小さな輪。",
+    h: () => `${head()}<div class="clock" id="clock"></div><div class="g3">${["d", "loc", "cal", "tt", "al", "rr"].map(k => cell(k, 52)).join("")}</div>${tail()}`},
+  {n: "ダイヤル", d: "中央に今の予定、周りに輪が円く並ぶ。押した輪が中央へ吸い寄せられて入力に変わる。",
+    h: () => `${head()}<div class="dial" id="dial"><div class="hub"><div><b data-v="a"></b><div class="lab" style="margin:2px 0 0"><span data-v="d"></span></div></div></div>${KEYS.map(k => ring(k, 54)).join("")}</div>${tail()}`},
+  {n: "量で満ちる弧", d: "弧が値の量を表す：移動時間は長いほど満ち、通知は近いほど満ち、時刻は1日のどこか。見ただけで差が分かる。",
+    h: () => `${head()}<div class="g3" style="grid-template-columns:repeat(4,1fr);margin-top:12px">${KEYS.map(k => cell(k, 70)).join("")}</div><p class="legend">弧＝量　点＝何番目の選択か</p>${tail()}`},
+  {n: "島", d: "題の下の黒い島に輪が並ぶ（Dynamic Island 風）。押すと島ごと横に伸びて入力になり、閉じると島に戻る。",
+    h: () => `${head(true)}<div class="island" id="isl">${KEYS.map(k => ring(k, 44)).join("")}</div><div class="sum" style="margin-top:12px"><div class="when"><span data-v="a"></span>〜<span data-v="b"></span></div><div class="sub"><span data-v="d"></span>・<span data-v="cal"></span>・通知 <span data-v="al"></span></div></div>${tail()}`},
+  {n: "扇", d: "選ぶ物（移動時間・通知・繰り返し・カレンダー）は、輪の周りに選択肢が扇に広がる。指を離した所で決まる。文字の物は伸びる入力。",
+    h: () => `${head()}<div class="g3" style="margin-top:14px">${KEYS.map(k => cell(k, 60)).join("")}</div>${tail()}`},
+  {n: "ドック", d: "中身（題・メモ）を主役に、輪は下のガラスのドックに常駐。親指が届く所で全部変えられる。",
+    h: () => `${head(true)}<div class="sum"><div class="when"><span data-v="a"></span>〜<span data-v="b"></span></div><div class="sub"><span data-v="d"></span>・<span data-v="cal"></span>・<span data-v="loc"></span></div></div>${tail()}<div class="dock">${["d", "a", "b", "cal", "tt", "al", "rr", "loc"].map(k => ring(k, 40)).slice(0, 7).join("")}</div>`},
+  {n: "混ぜた板", d: "コントロールセンターのように大小の札。よく変える時刻は大きく、たまに変える物は小さな輪。",
+    h: () => `${head()}<div class="cc" style="margin-top:10px">
+      <div class="tl w2">${ring("a", 54)}<div class="t"><div class="val" data-v="a" style="font-size:20px"></div><div class="lab">開始</div></div></div>
+      <div class="tl w2">${ring("b", 54)}<div class="t"><div class="val" data-v="b" style="font-size:20px"></div><div class="lab">終了</div></div></div>
+      <div class="tl w2">${ring("d", 54)}<div class="t"><div class="val" data-v="d"></div><div class="lab">日付</div></div></div>
+      <div class="tl">${ring("cal", 46)}<div class="lab" data-v="cal"></div></div><div class="tl">${ring("loc", 46)}<div class="lab">場所</div></div>
+      <div class="tl">${ring("tt", 46)}<div class="lab" data-v="tt"></div></div><div class="tl">${ring("al", 46)}<div class="lab" data-v="al"></div></div>
+      <div class="tl w2">${ring("rr", 46)}<div class="t"><div class="val" data-v="rr"></div><div class="lab">繰り返し</div></div></div></div>${tail()}`},
+];
+// 案ごとの振る舞い
+const mode = {}, extra = {};
+// 4: 時計の輪（ドラッグで時刻）
+extra[3] = () => {
+  const el = document.getElementById("clock"); if (!el) return;
+  const R = 100, cx = 120, cy = 120, toA = t => { const [h, m] = t.split(":").map(Number); return (h * 60 + m) / 1440 * 2 * Math.PI - Math.PI / 2; };
+  const pt = a => [cx + R * Math.cos(a), cy + R * Math.sin(a)];
+  const a0 = toA(st.a), a1 = toA(st.b), [x0, y0] = pt(a0), [x1, y1] = pt(a1), big = ((a1 - a0 + 2 * Math.PI) % (2 * Math.PI)) > Math.PI ? 1 : 0;
+  const ticks = Array.from({length: 24}, (_, h) => { const a = h / 24 * 2 * Math.PI - Math.PI / 2, [x, y] = [cx + 84 * Math.cos(a), cy + 84 * Math.sin(a)]; return h % 6 ? `<circle cx="${x}" cy="${y}" r="1.2" fill="#555"/>` : `<text x="${x}" y="${y + 4}" text-anchor="middle" fill="#8e8e93" font-size="11">${h}</text>`; }).join("");
+  const m2 = t => +t.slice(0, 2) * 60 + +t.slice(3), dur = (m2(st.b) - m2(st.a) + 1440) % 1440;
+  el.innerHTML = `<svg viewBox="0 0 240 240"><circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#2c2c2e" stroke-width="22"/>
+    <path d="M${x0} ${y0} A${R} ${R} 0 ${big} 1 ${x1} ${y1}" fill="none" stroke="#30d158" stroke-width="22" stroke-linecap="round"/>${ticks}
+    <circle class="knob" data-n="a" cx="${x0}" cy="${y0}" r="13" fill="#fff"/><circle class="knob" data-n="b" cx="${x1}" cy="${y1}" r="13" fill="#fff"/></svg>
+    <div class="mid"><div><b>${st.a}〜${st.b}</b><div class="lab">${Math.floor(dur / 60)}時間${dur % 60 ? dur % 60 + "分" : ""}</div></div></div>`;
+  el.querySelectorAll(".knob").forEach(k => k.onpointerdown = e => { e.preventDefault(); k.setPointerCapture(e.pointerId);
+    const mv = ev => { const b = el.getBoundingClientRect(), x = (ev.clientX - b.left) / b.width * 240 - cx, y = (ev.clientY - b.top) / b.height * 240 - cy;
+      let m = Math.round(((Math.atan2(y, x) + Math.PI / 2 + 2 * Math.PI) % (2 * Math.PI)) / (2 * Math.PI) * 1440 / 5) * 5 % 1440;
+      st[k.dataset.n] = `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`; extra[3](); if (navigator.vibrate) navigator.vibrate(3); };
+    k.onpointermove = mv; k.onpointerup = () => { k.onpointermove = null; document.querySelectorAll(".pv.on [data-v]").forEach(x => x.textContent = F[x.dataset.v].v()); }; });
+};
+// 5: ダイヤル（輪を円く置く・押すと中央へ寄ってから入力）
+extra[4] = () => {
+  const d = document.getElementById("dial"); if (!d) return; const w = d.clientWidth, h = d.clientHeight, R = Math.min(w, h) / 2 - 34;
+  d.querySelectorAll(".ring").forEach((b, j, all) => { const a = j / all.length * 2 * Math.PI - Math.PI / 2; b.style.left = (w / 2 + R * Math.cos(a) - 27) + "px"; b.style.top = (h / 2 + R * Math.sin(a) - 27) + "px"; });
+};
+mode[4] = b => { const d = document.getElementById("dial"), r = d.getBoundingClientRect(); b.style.left = (r.width / 2 - 27) + "px"; b.style.top = (r.height / 2 - 27) + "px"; b.style.zIndex = 3;
+  setTimeout(() => morph(b), 380); };
+// 7: 島（島そのものが伸びる＝輪の場所でなく島の位置に入力）
+mode[6] = b => { const r = document.getElementById("isl").getBoundingClientRect(); morph(b, {top: r.top}); };
+// 8: 扇
+mode[7] = b => { const k = b.dataset.k, f = F[k]; if (f.kind !== "pick" && f.kind !== "cal") return morph(b);
+  const r = b.getBoundingClientRect(), opts = f.kind === "cal" ? CALS.map(c => [c[0], c[0], c[1]]) : f.o.map(o => [o[0], o[1]]);
+  const veil = document.createElement("div"); veil.className = "veil"; const fan = document.createElement("div"); fan.className = "fan";
+  fan.style.left = r.left + r.width / 2 + "px"; fan.style.top = r.top + r.height / 2 + "px";
+  const n = opts.length, span = Math.PI * 1.1, R = 112, cxs = r.left + r.width / 2, base = cxs < innerWidth / 3 ? -Math.PI / 2 - span / 2 + .9 : cxs > innerWidth * 2 / 3 ? -Math.PI / 2 - span / 2 - .9 : -Math.PI / 2 - span / 2;
+  fan.innerHTML = opts.map((o, j) => `<button class="chip${o[0] === st[k] ? " on" : ""}" data-x="${o[0]}" style="--c:${o[2] || col(k)}">${o[2] ? `<i style="background:${o[2]}"></i>` : ""}${o[1]}</button>`).join("");
+  document.body.append(veil, fan); b.animate([{transform: "scale(1)"}, {transform: "scale(.85)"}], {duration: 200, fill: "forwards"});
+  requestAnimationFrame(() => { veil.classList.add("on"); fan.classList.add("on");
+    fan.querySelectorAll(".chip").forEach((c, j) => { const a = base + (n === 1 ? .5 : j / (n - 1)) * span, x = R * Math.cos(a), y = R * Math.sin(a) * (r.top < 260 ? -1 : 1);
+      c.style.transitionDelay = j * 25 + "ms"; c.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`; }); });
+  const close = v => { fan.classList.remove("on"); veil.classList.remove("on"); fan.querySelectorAll(".chip").forEach(c => c.style.transform = "translate(-50%,-50%) scale(.2)");
+    b.animate([{transform: "scale(.85)"}, {transform: "scale(1.15)"}, {transform: "scale(1)"}], {duration: 420, easing: "cubic-bezier(.34,1.45,.5,1)"});
+    setTimeout(() => { fan.remove(); veil.remove(); if (v !== undefined) { st[k] = v; refresh(); toast(`${f.l}：${F[k].v()}`); } }, 300); };
+  veil.onclick = () => close(); fan.querySelectorAll(".chip").forEach(c => c.onclick = () => close(f.kind === "cal" ? c.dataset.x : (typeof st[k] === "number" ? +c.dataset.x : c.dataset.x)));
+};
+let cur = 0;
+function show(i) { cur = i; document.querySelectorAll("#tabs button").forEach((b, j) => b.classList.toggle("on", j === i));
+  const m = document.getElementById("main"); m.innerHTML = `<section class="pv on"><div class="cap"><b>${i + 1}. ${V[i].n}</b><p>${V[i].d}</p></div><div class="sheet">${V[i].h()}</div></section>`;
+  document.querySelectorAll(".pv.on [data-v]").forEach(x => x.textContent = F[x.dataset.v].v()); bind(); extra[i] && extra[i](); scrollTo(0, 0);
+  try { localStorage.pv = i; } catch (e) {} }
+document.getElementById("tabs").innerHTML = V.map((v, i) => `<button>${i + 1} ${v.n}</button>`).join("");
+document.querySelectorAll("#tabs button").forEach((b, i) => b.onclick = () => show(i));
+let s0 = 0; try { s0 = +localStorage.pv || 0; } catch (e) {}
+show(s0);
+addEventListener("resize", () => extra[cur] && extra[cur]());
+</script>
+</body></html>
