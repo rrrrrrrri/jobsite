@@ -1028,7 +1028,8 @@ async function photoToEvent() {
   const items = shots.flatMap(x => (got[x.id] && got[x.id].items) || []);
   const cd = el.querySelector("#mcd");
   if (!items.length) {
-    say(shots.some(x => got[x.id]) ? "予定が見つかりませんでした" : "まだ読めていません（Mac が開くと読みます）", true);
+    const quota = shots.some(x => got[x.id] && got[x.id].status === "quota");
+    say(quota ? "AI の上限です。Mac が1時間ごとに読み直します" : shots.some(x => got[x.id]) ? "予定が見つかりませんでした（写真に日時が写っていません）" : "まだ読めていません（Mac が開くと読みます）", true);
     cd.innerHTML = `<button class="mbtn" id="mempty">空の予定で作る</button>`; cd.querySelector("#mempty").onclick = () => newEvent({media}); return;
   }
   el.querySelector("#mread").remove();
@@ -1088,6 +1089,7 @@ function tray(main) {
       ${items.map(t => `<div class="tiw"><div><div class="ti2" data-tn="${esc(t.n)}"><div class="tth"><img alt="" data-th="${esc(t.th)}">${t.v ? '<span class="mbadge">▶</span>' : ""}</div><div class="ttx"><b>${esc(t.n.replace(/^[a-z0-9]+-/, ""))}</b><small><span class="tst ok">${ICB.check}Mac に届きました</span><span class="tleft">あと ${Math.max(0, t.left)}時間</span></small></div></div></div></div>`).join("")}
     </div>
     ${!pendTray.length && !items.length ? `<div class="tempty">${ICB.tray}<span>トレイは空です</span></div>` : ""}
+    ${items.length >= 60 ? `<p class="trule" style="margin-bottom:0;color:#ff9f0a">Mac のトレイがいっぱいです（60件）。古い物を消すか、24時間待つと空きます</p>` : ""}
     <p class="trule">Mac のトレイと同じ：入った時刻から24時間で消えます（60件まで）。予定に付けた写真は消えません。</p>`;
   main.querySelectorAll("img[data-th]").forEach(im => api.img(im.dataset.th).then(u => { if (u) im.src = u; }).catch(() => {}));
   $("#tdz").onclick = async () => {
@@ -1744,7 +1746,11 @@ function tasks(main) {
   });
   bind(main);
 }
-const failMsg = e => /authori[sz]|permission|権限|許可/i.test(String(e && e.message || e)) ? "書き込みの許可が要ります。ページを開き直して許可してください" : "送れませんでした。電波を確かめてください";
+const failMsg = e => { const m = String(e && e.message || e);
+  if (/authori[sz]|permission|権限|許可/i.test(m)) return "書き込みの許可が要ります。ページを開き直して許可してください";
+  if (/頼みの種類が正しくありません|置き場が正しくありません/.test(m)) return "窓口が古いままです（Apps Script の新バージョンのデプロイが要ります）";   // 新しい頼み（写真・トレイ・新しい予定）を古い窓口が知らない
+  if (/MB までです|写真か動画だけです|終日は|時刻が正しくありません|題が正しくありません/.test(m)) return m;
+  return "送れませんでした。電波を確かめてください"; };
 /* ── Muse の掲示板 ── */
 function mdHTML(md) {
   const inl = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
