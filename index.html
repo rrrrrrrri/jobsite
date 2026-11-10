@@ -945,6 +945,16 @@ function confirmSheet(msg, label, fn, cancelLabel) {
   bg.onclick = el.querySelector(".cc").onclick = close;
   el.querySelector(".cd").onclick = () => { close(); fn(); };
 }
+// 選択肢が2つ以上の確認の札（純正の繰り返しの削除と同じ形）
+function confirmSheet2(msg, acts, cancelLabel) {
+  const bg = document.createElement("div"); bg.className = "scrim"; bg.style.zIndex = 40;
+  const el = document.createElement("div"); el.className = "cfm";
+  el.innerHTML = `<div class="cg"><div class="cm">${esc(msg)}</div>${acts.map((a, k) => `<button class="cd" data-k="${k}">${esc(a[0])}</button>`).join("")}</div><button class="cc">${esc(cancelLabel || "キャンセル")}</button>`;
+  document.body.append(bg, el); requestAnimationFrame(() => { bg.classList.add("on"); el.classList.add("on"); });
+  const close = () => { el.classList.remove("on"); bg.classList.remove("on"); setTimeout(() => { el.remove(); bg.remove(); }, 320); };
+  bg.onclick = el.querySelector(".cc").onclick = close;
+  el.querySelectorAll(".cd").forEach(b => b.onclick = () => { close(); acts[+b.dataset.k][1](); });
+}
 // 重なった予定（純正）：押すとまずその時間の予定の小さな一覧。1件押すと詳細へ
 function stackPop(b) {
   const r = b.getBoundingClientRect(), list = [b];
@@ -1592,10 +1602,15 @@ function openPop(i, editing, focusField) {
   const b = q("[data-open-meet]"); if (b) b.onclick = () => { const id = b.dataset.openMeet; closeSheet(); go({v: "meet", id}); };
   // 予定を削除（純正：下から確認の札）
   const dl = q("#evdel");
-  if (dl) dl.onclick = () => confirmSheet("この予定を削除してもよろしいですか？", "予定を削除", async () => {
-    try { await api.op({op: "evdel", eid: e.eid, start: e.start});
+  // 🔁11-10 繰り返しの予定は純正と同じ2択（この予定のみ／これ以降のすべて）。これまでは常にその回だけ消えていた
+  const doDel = async span => {
+    try { await api.op({op: "evdel", eid: e.eid, start: e.start, span});
+      if (span === "future") { const t0 = e.start; D.events = D.events.filter(x => !(x.eid === e.eid && x.start >= t0)); closeSheet(); render(); toast("これ以降の繰り返しを削除しました"); return; }
       D.events[i] = {...e, title: e.title, deleted: true}; D.events.splice(i, 1, {...e, start: "1970-01-01T00:00", end: "1970-01-01T00:00"}); closeSheet(); render(); toast("予定を削除しました");
-    } catch (err) { toast(failMsg(err)); } });
+    } catch (err) { toast(failMsg(err)); } };
+  if (dl) dl.onclick = () => (e.rr && e.rr !== "none")
+    ? confirmSheet2("これは繰り返しの予定です。", [["この予定のみ削除", () => doDel("this")], ["これ以降のすべての予定を削除", () => doDel("future")]])
+    : confirmSheet("この予定を削除してもよろしいですか？", "予定を削除", () => doDel("this"));
   if (editing) {
     kInit(s, en, e.allDay); kSync();
     const snap = () => new URLSearchParams(new FormData(q("#edf"))).toString(), s0 = snap();
