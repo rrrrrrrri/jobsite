@@ -698,7 +698,8 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .aread{display:flex;align-items:center;gap:10px;margin:-6px 0 10px;padding:10px 12px;border-radius:12px;background:var(--card,#2c2c2e);font-size:14px}.aread.err{color:#ff9f0a}
 .attl{display:flex;align-items:center;gap:12px;margin:0 4px 12px}
 .adot{flex:none;width:16px;height:16px;border-radius:8px}
-.attl input{flex:1;min-width:0;border:0;background:none;color:var(--label);font:700 30px -apple-system,"Hiragino Sans",sans-serif;outline:none}.attl input::placeholder{color:#5a5a5e}
+.attl textarea{flex:1;min-width:0;border:0;background:none;color:var(--label);font:700 22px/1.3 -apple-system,"Hiragino Sans",sans-serif;outline:none;resize:none;overflow:hidden;padding:0;word-break:break-all}.attl textarea::placeholder{color:#5a5a5e}
+.attl{align-items:flex-start}.attl .adot{margin-top:7px}
 .ahr{height:.5px;background:var(--sep);margin:0 -14px 16px}
 .achips{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .achips .atime{flex:1 1 0;min-width:0;overflow:hidden}.achips .abr{flex-basis:100%;height:0}
@@ -713,7 +714,7 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .aother{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:18px;background:rgba(33,90,189,.18);color:var(--klapisL);font-size:14px;font-weight:600;margin:2px 0 8px}.aother svg{width:17px;height:17px}
 .amore{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.amore:empty{display:none}
 .amchip{height:30px;padding:0 10px;border-radius:15px;background:rgba(255,255,255,.1);color:var(--label);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}.amchip i{font-style:normal;color:var(--sub);font-size:11px}
-.aloc{width:100%;height:50px;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:var(--label);font:inherit;font-size:17px;padding:0 16px;outline:none;margin:6px 0 14px}.aloc::placeholder{color:var(--sub)}
+.aloc{width:100%;min-height:50px;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:var(--label);font:inherit;font-size:16px;line-height:1.35;padding:14px 16px;outline:none;margin:6px 0 14px;resize:none;overflow:hidden;display:block;box-sizing:border-box;word-break:break-all}.aloc::placeholder{color:var(--sub)}
 .aph{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
 .aplus{width:52px;height:52px;border-radius:26px;background:rgba(33,90,189,.18);color:var(--klapisL);display:grid;place-items:center}.aplus svg{width:22px;height:22px}
 .apt{position:relative;width:52px;height:52px;border-radius:12px;overflow:hidden;background:#3a3a3c}.apt img{width:100%;height:100%;object-fit:cover}
@@ -1028,7 +1029,15 @@ function minutes(main) {
    値は Mac の登録の唯一口（buildPrefilledEvent）が組んだ予定そのもの。押すと新しい予定のシートで直してから承認できる。 */
 let inboxDone = store.get("inboxDone", {});
 const inboxList = () => { const now = Date.now(); for (const k in inboxDone) if (now - inboxDone[k].at > 3 * 3600e3) delete inboxDone[k];
-  return (D.inbox || []).filter(x => !inboxDone[x.id] && pd(x.ne) > new Date()); };   // 終わった候補は出さない（Mac の受け箱には過ぎた物も残る）
+  return (D.inbox || []).filter(x => !inboxDone[x.id] && pd(x.ne) > new Date() && !inboxPastDeadline(x)); };
+// 申し込みの締切が過ぎた仮の候補は出さない（「募集のご案内」で開催日が読めず、受け取った日の終日として残る物）
+function inboxPastDeadline(x) {
+  // ⚠️時刻の読めた催しは隠さない（申し込み済みかもしれない）。隠すのは開催の時刻が読めず終日で残った仮の募集だけ
+  if (!x.tent || !x.allDay) return false;
+  const m = /締切[:：]\s*(?:(20\d\d)[年\/\-])?(\d{1,2})[月\/](\d{1,2})/.exec(x.notes || ""); if (!m) return false;
+  const now = new Date(), d = new Date(m[1] ? +m[1] : now.getFullYear(), +m[2] - 1, +m[3], 23, 59);
+  return d < now && now - d < 200 * 864e5;
+}   // 終わった候補は出さない（Mac の受け箱には過ぎた物も残る）
 function inboxMark(id, how) { inboxDone[id] = {how, at: Date.now()}; store.set("inboxDone", inboxDone); }
 async function inboxAct(x, how, btn) {
   if (btn) { btn.disabled = true; ktap(btn); }
@@ -1415,11 +1424,10 @@ function addHTML(e, TT, AL, RR) {
     <div class="ashd">
       <label class="apaste">${ICN.spark}<input id="apt" placeholder="文章を貼ると自動で入ります" autocomplete="off" enterkeyhint="done"><button type="button" class="aimg" id="aimg" aria-label="画像から">${ICB.photo}</button></label>
       <button type="button" class="atent" id="atent" aria-pressed="true"><i></i><span>確</span></button>
-      <button type="button" class="atask" id="atask">${ICN.task}<span>タスクに</span></button>
       <button type="button" class="ax" id="edc" aria-label="閉じる">✕</button>
     </div>
     <div class="aread" id="aread" hidden><span class="mdots"><i></i><i></i><i></i></span><span id="art"></span></div>
-    <div class="attl"><button type="button" class="adot" id="acal" style="background:${esc(c0.color || "#ff375f")}" aria-label="カレンダー"></button><input name="title" value="${esc(e.title)}" maxlength="200" required placeholder="タイトル" autocomplete="off"></div>
+    <div class="attl"><button type="button" class="adot" id="acal" style="background:${esc(c0.color || "#ff375f")}" aria-label="カレンダー"></button><textarea name="title" rows="1" maxlength="200" required placeholder="タイトル" autocomplete="off" enterkeyhint="done">${esc(e.title)}</textarea></div>
     <input type="hidden" name="cal" value="${esc(c0.id || "")}"><input type="hidden" name="tent" value="">
     <div class="ahr"></div>
     <div class="achips"><button type="button" class="ach adate" id="adate">${ICB.d}<span id="adl"></span></button><i class="abr"></i><button type="button" class="ach atime" id="atime">${ICB.a}<span id="atl"></span></button>
@@ -1427,7 +1435,7 @@ function addHTML(e, TT, AL, RR) {
     <div class="kgrp ahide">${kTimeHTML()}</div>
     ${chip("tt", TT, e.tt || 0)}${chip("al", AL, 15)}
     <button type="button" class="aother" id="aother">${ICB.d}<span>ほかの日にも</span></button><div class="amore" id="amore"></div>
-    <input class="aloc" name="loc" value="${esc(e.loc || "")}" maxlength="500" placeholder="場所" autocomplete="off">
+    <textarea class="aloc" name="loc" rows="1" maxlength="500" placeholder="場所" autocomplete="off" enterkeyhint="done">${esc(e.loc || "")}</textarea>
     <div class="aph" id="aph"><button type="button" class="aplus" id="aplus" aria-label="写真を付ける">${ICB.plus}</button></div>
     <div class="alab">メモ</div><textarea class="anotes" name="notes" maxlength="4000">${esc(e.notes || "")}</textarea>
     <button type="button" class="arep" id="arep">${ICB.rr}<span id="arl">繰り返し</span><svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 4.5l3 3 3-3"/></svg></button>
@@ -1464,7 +1472,8 @@ function addBind(e, i, TT, AL, RR) {
     popEl.classList.add("stack", "cals"); popEl.style.zIndex = 46; scrimEl.style.zIndex = 45;
     popEl.querySelectorAll("[data-cid]").forEach(b => b.onclick = () => { const c = cals.find(x => x.id === b.dataset.cid); inp.value = c.id; q("#acal").style.background = c.color; ktap(q("#acal")); closePop(); }); };
   // タスクに（題をタスクにして閉じる）
-  q("#atask").onclick = async () => { const t = f.querySelector('[name="title"]').value.trim(); if (!t) { toast("題を入れてください"); return; }
+  for (const ta of f.querySelectorAll('textarea[name="title"], textarea[name="loc"]')) { const fit = () => { ta.style.height = "auto"; ta.style.height = ta.scrollHeight + "px"; }; ta.addEventListener("input", fit); ta.addEventListener("keydown", ev => { if (ev.key === "Enter") { ev.preventDefault(); ta.blur(); } }); requestAnimationFrame(fit); setTimeout(fit, 400); }
+  if (q("#atask")) q("#atask").onclick = async () => { const t = f.querySelector('[name="title"]').value.trim(); if (!t) { toast("題を入れてください"); return; }
     try { await api.op({op: "add", text: t, key: rid()}); D.events.splice(i, 1); closeSheet(); toast("タスクにしました"); } catch (err) { toast(failMsg(err)); } };
   // ほかの日にも（同じ時刻で別の日にも作る）
   const more = e._more = e._more || [];
@@ -1481,10 +1490,10 @@ function addBind(e, i, TT, AL, RR) {
       sendFile("up", fl, {noread: true}, p => { m.p = p; drawPh(); }, m.id).catch(err => { media.splice(media.indexOf(m), 1); drawPh(); toast(failMsg(err)); }); } };
   drawPh();
   // 文章を貼ると自動で入ります（読むのは Mac の中）／画像から
-  const fill = it => { if (!it) return; const ti = f.querySelector('[name="title"]'); if (it.title) ti.value = it.title;
+  const fill = it => { if (!it) return; const ti = f.querySelector('[name="title"]'); if (it.title) { ti.value = it.title; ti.dispatchEvent(new Event("input")); }
     if (it.ns) { const s = pd(it.ns), en = pd(it.ne || it.ns); kInit(s, en, !!it.allDay); if (it.allDay) KS.ad = true; kReadout(); }
     if (it.tent && q("#atent").getAttribute("aria-pressed") === "true") q("#atent").click();
-    if (it.loc) f.querySelector('[name="loc"]').value = it.loc; if (it.brief) { const n = f.querySelector('[name="notes"]'); n.value = n.value ? n.value + "\n" + it.brief : it.brief; }
+    if (it.loc) { const l = f.querySelector('[name="loc"]'); l.value = it.loc; l.dispatchEvent(new Event("input")); } if (it.brief) { const n = f.querySelector('[name="notes"]'); n.value = n.value ? n.value + "\n" + it.brief : it.brief; }
     ["title", "loc", "notes"].forEach(n => f.querySelector(`[name="${n}"]`).animate([{background: "rgba(33,90,189,.25)"}, {background: "transparent"}], {duration: 900})); };
   const wait = async (id, say) => { const r = q("#aread"); r.hidden = false; const t0 = Date.now();
     while (sheetEl && Date.now() - t0 < 15 * 60e3) { let g = null; try { g = await api.res(id); } catch (x) {} if (g) { g = typeof g === "string" ? JSON.parse(g) : g;
