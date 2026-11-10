@@ -1018,7 +1018,7 @@ function minutes(main) {
    値は Mac の登録の唯一口（buildPrefilledEvent）が組んだ予定そのもの。押すと新しい予定のシートで直してから承認できる。 */
 let inboxDone = store.get("inboxDone", {});
 const inboxList = () => { const now = Date.now(); for (const k in inboxDone) if (now - inboxDone[k].at > 3 * 3600e3) delete inboxDone[k];
-  return (D.inbox || []).filter(x => !inboxDone[x.id]); };
+  return (D.inbox || []).filter(x => !inboxDone[x.id] && pd(x.ne) > new Date()); };   // 終わった候補は出さない（Mac の受け箱には過ぎた物も残る）
 function inboxMark(id, how) { inboxDone[id] = {how, at: Date.now()}; store.set("inboxDone", inboxDone); }
 async function inboxAct(x, how, btn) {
   if (btn) { btn.disabled = true; ktap(btn); }
