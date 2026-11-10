@@ -1651,10 +1651,15 @@ function openPop(i, editing, focusField) {
       if (+v.al !== (e.al && e.al.length ? e.al[0] : -1)) o.al = al;
       if (v.rr !== (e.rr || "none")) o.rr = v.rr;
       if (Object.keys(o).length <= 3) { openPop(i); return; }
-      const btn = q("#eds"); btn.disabled = true;
-      try { await api.op(o);
-        pendEv[evKey(e)] = {...o, at: Date.now()}; store.set("pendEv", pendEv); applyPendEv(); render(); openPop(i); 
-      } catch (err) { btn.disabled = false; toast(failMsg(err)); }
+      const btn = q("#eds");
+      const send = async span => { btn.disabled = true; if (span) o.span = span;
+        try { await api.op(o);
+          pendEv[evKey(e)] = {...o, at: Date.now()}; store.set("pendEv", pendEv); applyPendEv(); render(); openPop(i);
+          if (span === "future") toast("これ以降の繰り返しも直しました（Mac が反映します）");
+        } catch (err) { btn.disabled = false; toast(failMsg(err)); } };
+      // 🔁11-10 繰り返しの予定は純正と同じ2択（繰り返しそのものを変えた時は Mac が系列に当てるので聞かない）
+      if (e.rr && e.rr !== "none" && o.rr === undefined) { confirmSheet2("これは繰り返しの予定です。", [["この予定のみ保存", () => send("this")], ["これ以降のすべての予定を保存", () => send("future")]]); return; }
+      await send();
     };
   }
   // 下へはらうと閉じる（指に付いてくる）
