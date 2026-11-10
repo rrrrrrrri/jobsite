@@ -868,6 +868,8 @@ const remoteOp = o => fetch(CONF.u, {method: "POST", headers: {"Content-Type": "
 const api = {
   index: st => GAS ? call("getIndex", st) : API ? remote({fn: "index", st: st || 0}) : fetch("data/index.json", {cache: "no-store"}).then(r => r.text()).then(t => ({stamp: t.length, text: t})),
   muse: ms => GAS ? call("getMuse", ms) : API ? remote({fn: "muse", st: ms || 0}) : Promise.resolve({museStamp: 0}),
+  sync: (st, ms) => GAS ? call("getSync", st, ms) : remote({fn: "sync", st: st || 0, ms: ms || 0}),
+  part: (name, st) => GAS ? call("getPart", name, st) : API ? remote({fn: "part", name, st: st || 0}) : fetch(`data/${name}.json`, {cache: "no-store"}).then(r => r.ok ? r.text() : null).then(t => ({stamp: t ? t.length : 0, text: t})),
   meet: id => GAS ? call("getMeet", id) : API ? remote({fn: "meet", id}) : fetch(`data/meet/${id}.json`).then(r => r.ok ? r.text() : null),
   img: n => GAS ? call("getImg", n) : API ? remote({fn: "img", id: n}) : Promise.resolve(`data/img/${n}`),
   op: o => GAS ? call("addOp", o) : API ? remoteOp(o) : Promise.resolve(true),
@@ -891,6 +893,51 @@ function pruneNotes() {
   store.set("pendNote", pendNote);
 }
 const openTasks = () => D.tasks.filter(t => !pendDone[t.id]).length + pendAdd.length;
+
+/* ⚡️11-11 入口から分けた2本：企業の関連メール（mails）と検索用の本文（search）。要る時だけ読む。
+   入口に parts の印がある時だけ分かれている。古い入口は全部入りなので、その時は何も読まずに入口の値を使う。
+   読めなくても画面はそのまま。次に要る時にもう一度だけ頼む。 */
+const PART = {mails: {v: "", data: null, stamp: 0, busy: false, tried: 0, fail: false}, search: {v: "", data: null, stamp: 0, busy: false, tried: 0, fail: false}};
+const partSplit = k => !!(D && D.parts && D.parts[k]);
+const partPending = k => partSplit(k) && !PART[k].data && !PART[k].fail;
+const mailsOf = c => (c && c.mails) || (c && PART.mails.data && PART.mails.data[c.name]) || [];
+const qOf = m => m.q != null ? m.q : (PART.search.data && PART.search.data[m.id]) || "";
+function needPart(k) {
+  const p = PART[k];
+  if (!partSplit(k) || p.v === D.parts[k] || p.busy || Date.now() - p.tried < 15000) return;
+  p.busy = true; p.tried = Date.now();
+  api.part(k, p.stamp).then(r => {
+    if (!r || !r.text) { if (!p.data) p.fail = true; return; }
+    const j = JSON.parse(r.text); p.data = j.items || {}; p.v = j.v || ""; p.stamp = r.stamp || 0; p.fail = false;
+  }).catch(() => { if (!p.data) p.fail = true; }).finally(() => { p.busy = false; try { partArrived(k); } catch (e) {} });
+}
+/* 届いたら、開いている所だけ差し替える（入力中の字・スクロールの位置は動かさない） */
+function partArrived(k) {
+  if (!D) return;
+  if (k === "mails") {
+    const slot = document.getElementById("mlslot");
+    if (slot && view.v === "company") { const c = D.companies.find(x => x.name === view.c); if (c) { slot.innerHTML = coMailsHTML(c); bindCoMails(); } }
+    const ps = document.getElementById("pmslot");
+    if (ps) { const c = D.companies.find(x => x.name === ps.dataset.co); if (c) ps.innerHTML = evMailsHTML(c); }
+  }
+  const res = document.getElementById("sres");
+  if (res && view.v === "search" && (view.q || "").trim()) { res.innerHTML = searchResults(view.q); bind(res); }
+}
+function evMailsHTML(co) {
+  const mails = mailsOf(co).slice(0, 2);
+  return mails.length ? `<div class="sec" style="margin-left:4px">メール</div><div class="grp">${mails.map(x => `<a class="mail" ${mailHref(x)}><div class="h"><span>${esc(x.from)}</span><span>${pd(x.at).getMonth()+1}/${pd(x.at).getDate()}</span></div><div class="sbj">${esc(x.subject)}</div></a>`).join("")}</div>` : "";
+}
+/* 企業のページの「関連のメール」。読めるまでは静かな1行（メールが在ると分かっている会社だけ） */
+function coMailsHTML(c) {
+  const mails = mailsOf(c), notes = c.notes || [], showAll = view.allMail, md = d => `${d.getMonth()+1}/${d.getDate()}`;
+  const more = !showAll && (mails.length > 3 || notes.length > 6) ? '<button class="more" id="allm">すべて表示</button>' : "";
+  if (!mails.length) {
+    const wait = c.lastMail && partSplit("mails") && !PART.mails.data ? `<div class="upd"${notes.length ? "" : ' id="sx-ml"'} style="margin:10px 0">${PART.mails.fail ? "関連のメールを読めませんでした" : "関連のメールを読み込み中"}</div>` : "";
+    return wait + (more ? `<div class="group">${more}</div>` : "");
+  }
+  return `<div class="sec"${notes.length ? "" : ' id="sx-ml"'}>関連のメール</div><div class="group">${mails.slice(0, showAll ? 15 : 3).map(m => `<a class="mail" ${mailHref(m)}><div class="h"><span>${esc(m.from)}</span><span>${md(pd(m.at))}</span></div><div class="sbj">${esc(m.subject)}</div><div class="sn">${esc(m.snippet)}</div></a>${m.app && m.url ? `<a class="mweb" href="${esc(m.url)}" target="_blank" rel="noopener">Safari で開く</a>` : ""}`).join("")}${more}</div>`;
+}
+function bindCoMails() { if ($("#allm")) $("#allm").onclick = () => { view = {...view, allMail: true}; render(); }; }
 
 const ORDER = ["entry","document","test","interview1","interview2","finalInterview","offer"];
 let BOARD = [], MUSEMT = {}, FILES = {}, D = null, MUSE = {}, stamp = 0, museStamp = 0, stack = [], view = {v: "home"}, offset = 0, mode = store.get("calMode", "multi"), monthOff = 0, anim = "";
@@ -1679,7 +1726,7 @@ function openPop(i, editing, focusField) {
   }
   // 純正カレンダーの作り：上は ✕ と「編集」、本文は題・日時・時間割・行のまとまり（会議／場所／メモ／企業）
   const canJoin = joinOK(e);
-  const mails = co ? (co.mails || []).slice(0, 2) : [];
+  if (co) needPart("mails");
   const ICO = h => `<span class="ico">${h}</span>`;
   const meetRows = link ? `<div class="grp">
       <a class="r" href="${esc(link)}" target="_blank" rel="noopener">${ICO(ICN.video)}<span class="main"><div class="t lk">${svcName(link)}に参加</div><div class="s">${esc(link.replace(/^https:\/{2}/, "").slice(0, 40))}</div></span></a>
@@ -1700,7 +1747,7 @@ function openPop(i, editing, focusField) {
       ${m ? `<button class="r" data-open-meet="${m.id}">${ICO(ICN.doc)}<span class="main"><div class="t">議事録</div><div class="s">${esc(m.kind)}</div></span>${CH}</button>` : ""}</div>` : ""}
     ${attHTML(e)}
     ${e.notes ? `<div class="sec" style="margin-left:4px">メモ</div><div class="grp" data-q="notes"><div class="nt${e.notes.length > 260 ? " fold" : ""}" id="ntx">${linkify(nlFix(e.notes))}</div>${e.notes.length > 260 ? '<button class="more" id="ntm">すべて表示</button>' : ""}</div>` : ""}
-    ${mails.length ? `<div class="sec" style="margin-left:4px">メール</div><div class="grp">${mails.map(x => `<a class="mail" ${mailHref(x)}><div class="h"><span>${esc(x.from)}</span><span>${pd(x.at).getMonth()+1}/${pd(x.at).getDate()}</span></div><div class="sbj">${esc(x.subject)}</div></a>`).join("")}</div>` : ""}
+    ${co ? `<div id="pmslot" data-co="${esc(co.name)}">${evMailsHTML(co)}</div>` : ""}
     <div class="grp"><div class="r" data-q="cal"><span class="main"><div class="t">カレンダー</div></span><span class="dot" style="background:${esc(col)}"></span><span style="color:var(--sub);font-size:15px">${esc(e.cal)}</span>${CH}</div></div>
     ${e.rw && e.eid ? '<button class="delrow" id="evdel">予定を削除</button>' : ""}`;
   const ymd = d => keyOf(d), t2 = d => `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
@@ -2351,8 +2398,9 @@ function company(main) {
     return `<button class="er${old ? " past" : ""}" data-ev="${e.i}"><span class="bar3" style="--c:${esc(e.color || "#2159bd")}"></span><span class="dd2${[0,6].includes(e.s.getDay()) ? " we" : ""}"><b>${md(e.s)}</b><span>${WD[e.s.getDay()]}曜</span></span><span class="main"><div class="t">${esc(shortTitle(e.title, c.name))}</div><div class="s">${e.allDay ? "終日" : hm(e.s) + "〜" + hm(e.en)}${e.loc ? "・" + esc(e.loc.replace(/https?:\/{2}\S+/g, "").trim() || svcName(e.loc)) : ""}</div></span>${old ? "" : `<span class="lf">${left === 0 ? "今日" : left === 1 ? "明日" : left > 0 ? `${left}日後` : "開催中"}</span>`}</button>`; };
   const nx = liveNext(c);
   const dls = (D.deadlines || []).filter(x => x.co === c.name);
-  const mails = c.mails || [], notes = c.notes || [], showAll = view.allMail, showPast = view.allPast;
-  const chips = [["sx-ev", "日程", ICN.today, up.length || past.length], ["sx-dl", "締切", ICN.flag, dls.length], ["sx-ml", "メール", ICN.mail, mails.length || notes.length], ["sx-mt", "議事録", ICN.doc, ms.length], ["sx-fl", "資料", ICN.folder, files.length], ["sx-memo", "メモ", ICN.memo, 1]]
+  needPart("mails");
+  const mails = mailsOf(c), notes = c.notes || [], showAll = view.allMail, showPast = view.allPast;
+  const chips = [["sx-ev", "日程", ICN.today, up.length || past.length], ["sx-dl", "締切", ICN.flag, dls.length], ["sx-ml", "メール", ICN.mail, mails.length || notes.length || (c.lastMail && partPending("mails"))], ["sx-mt", "議事録", ICN.doc, ms.length], ["sx-fl", "資料", ICN.folder, files.length], ["sx-memo", "メモ", ICN.memo, 1]]
     .filter(x => x[3]);
   // 状態は1行：次の締切・次の予定・マイページの知らせ・ログイン切れ・最後のメール
   const nextEv = up[0];
@@ -2369,7 +2417,7 @@ function company(main) {
     ${dls.length ? `<div class="sec sh" id="sx-dl">${ICN.flag}締切</div><div class="group">${dls.map(x => { const d = pd(x.date), left = Math.round((d - t0) / 864e5);
         return `<div class="er"><span class="dd2"><b style="color:var(--ruby)">${md(d)}</b><span>${WD[d.getDay()]}曜</span></span><span class="main"><div class="t">${esc(x.label)}</div><div class="s">${esc(x.what || x.subject || "")}</div></span><span class="lf" style="color:var(--ruby)">${left === 0 ? "今日" : left === 1 ? "明日" : `あと${left}日`}</span></div>`; }).join("")}</div>` : ""}
     ${notes.length ? `<div class="sec sh" id="sx-ml">${ICN.mail}メールの要点</div><div class="group tl">${notes.slice(0, showAll ? 30 : 6).map(x => `<div class="li"><span class="d">${md(pd(x.at))}</span><span style="flex:1;min-width:0"><div class="w">${esc(x.what)}${x.due ? `<span class="duec">${esc(x.due)}</span>` : ""}</div><div class="sj">${esc(x.subject)}</div></span></div>`).join("")}</div>` : ""}
-    ${mails.length ? `<div class="sec"${notes.length ? "" : ' id="sx-ml"'}>関連のメール</div><div class="group">${mails.slice(0, showAll ? 15 : 3).map(m => `<a class="mail" ${mailHref(m)}><div class="h"><span>${esc(m.from)}</span><span>${md(pd(m.at))}</span></div><div class="sbj">${esc(m.subject)}</div><div class="sn">${esc(m.snippet)}</div></a>${m.app && m.url ? `<a class="mweb" href="${esc(m.url)}" target="_blank" rel="noopener">Safari で開く</a>` : ""}`).join("")}${!showAll && (mails.length > 3 || notes.length > 6) ? '<button class="more" id="allm">すべて表示</button>' : ""}</div>` : ""}
+    <div id="mlslot">${coMailsHTML(c)}</div>
     ${ms.length ? `<div class="sec sh" id="sx-mt">${ICN.doc}議事録</div><div class="group">${ms.map(m => { const d = pd(m.date); return `<button class="er" data-meet="${m.id}"><span class="dd2${[0,6].includes(d.getDay()) ? " we" : ""}"><b>${md(d)}</b><span>${WD[d.getDay()]}曜</span></span><span class="main"><div class="t">${esc(m.kind)}</div><div class="s">${esc(m.title)}</div></span>${CH}</button>`; }).join("")}</div>` : ""}
     ${files.length ? `<div class="sec sh" id="sx-fl">${ICN.folder}資料</div><div class="group files">${files.map(f => `<a class="r" href="${esc(f.u)}" target="_blank" rel="noopener"><span class="main"><div class="t">${esc(f.n)}</div><div class="s">${f.muse ? "Muse・" : ""}${md(new Date(f.t))}</div></span>${CH}</a>`).join("")}</div>` : ""}
     <div class="sec sh" id="sx-memo">${ICN.memo}メモ</div>
@@ -2394,7 +2442,7 @@ function company(main) {
     try { await api.op({op: "memo", co: c.name, text: v}); if ($("#memost")) $("#memost").textContent = "保存しました"; } catch (e) { if ($("#memost")) $("#memost").textContent = "送れませんでした"; last = null; } };
   ta.oninput = () => { fit(); clearTimeout(tm); tm = setTimeout(save, 1500); };
   ta.onblur = save;
-  if ($("#allm")) $("#allm").onclick = () => { view = {...view, allMail: true}; render(); };
+  bindCoMails();
   bind(main);
 }
 
@@ -2415,16 +2463,19 @@ function searchResults(q) {
   const evs = D.events.map((e, i) => ({e, i, s: pd(e.start)})).filter(x => hit([x.e.title, x.e.loc, x.e.cal].join(" "), terms)).sort((a, b) => b.s - a.s)
     .map(x => `<button class="r" data-ev="${x.i}"><span class="main"><div class="t">${snip(x.e.title, terms)}</div><div class="s">${md(x.s)}（${WD[x.s.getDay()]}）${x.e.allDay ? "終日" : hm(x.s)}${x.e.loc ? "・" + esc(x.e.loc) : ""}</div></span></button>`);
   const tks = D.tasks.filter(t => hit(t.t, terms)).map(t => `<div class="r"><span class="main"><div class="t">${snip(t.t, terms)}</div>${t.due ? `<div class="s">${md(pd(t.due))} まで</div>` : ""}</span></div>`);
-  const mts = D.meets.filter(m => hit([m.company, m.kind, m.title, m.q].join(" "), terms)).sort((a, b) => b.date.localeCompare(a.date))
-    .map(m => `<button class="r" data-meet="${m.id}"><span class="main"><div class="t">${esc(m.company)} ${esc(m.kind)}<span style="color:var(--sub);font-weight:400;font-size:13px">　${md(pd(m.date))}</span></div><div class="s">${snip(hit(m.title, terms) ? m.title : m.q || m.title, terms, 80)}</div></span>${CH}</button>`);
-  const mails = []; for (const c of D.companies) for (const m of c.mails || []) if (hit([m.subject, m.snippet, m.from].join(" "), terms)) mails.push({c, m});
+  const mts = D.meets.filter(m => hit([m.company, m.kind, m.title, qOf(m)].join(" "), terms)).sort((a, b) => b.date.localeCompare(a.date))
+    .map(m => `<button class="r" data-meet="${m.id}"><span class="main"><div class="t">${esc(m.company)} ${esc(m.kind)}<span style="color:var(--sub);font-weight:400;font-size:13px">　${md(pd(m.date))}</span></div><div class="s">${snip(hit(m.title, terms) ? m.title : qOf(m) || m.title, terms, 80)}</div></span>${CH}</button>`);
+  const mails = []; for (const c of D.companies) for (const m of mailsOf(c)) if (hit([m.subject, m.snippet, m.from].join(" "), terms)) mails.push({c, m});
   mails.sort((a, b) => b.m.at.localeCompare(a.m.at));
   const mls = mails.map(({c, m}) => `<a class="r" ${mailHref(m)}><span class="main"><div class="t">${snip(m.subject, terms)}</div><div class="s">${esc(c.name)}・${md(pd(m.at))}　${snip(m.snippet, terms)}</div></span></a>`);
   const bd = BOARD.filter(b => hit(b.n + " " + b.text, terms)).map(b => `<a class="r" href="${esc(b.u)}" target="_blank" rel="noopener"><span class="main"><div class="t">${snip(b.n.replace(/^\d{4}-\d{2}-\d{2}_/, ""), terms)}</div><div class="s">${snip(b.text, terms)}</div></span>${CH}</a>`);
   const out = sec("企業", cos) + sec("会・議事録", mts) + sec("予定", evs) + sec("タスク", tks) + sec("メール", mls) + sec("Muse", bd);
-  return out || `<p class="empty">「${esc(q)}」に当たる物はありません</p>`;
+  // 分けた2本がまだ届いていない間は「ありません」と言い切らない
+  const wait = partPending("mails") || partPending("search") ? '<div class="upd" style="margin:14px 0">メールと議事録の本文を読み込み中</div>' : "";
+  return out ? out + wait : wait || `<p class="empty">「${esc(q)}」に当たる物はありません</p>`;
 }
 function search(main) {
+  needPart("mails"); needPart("search");
   bar("検索", backName());
   const recent = store.get("recentQ", []);
   main.innerHTML = `<h1 class="large">検索</h1>
@@ -2516,7 +2567,7 @@ function lazyImgs(root) {
   root.querySelectorAll("[data-img]").forEach(el => io.observe(el));
 }
 
-/* ── 読み込みと即時反映（開いている間は20秒ごと・戻ってきた時にも確かめる） ── */
+/* ── 読み込みと即時反映（開いている間は45秒ごと・送った直後だけ速く・戻ってきた時にも確かめる） ── */
 // 予定・タスク・企業（Mac が書く index.json）を先に出し、Muse の物（各社の欄・資料・掲示板）は後から足す＝開いてすぐ見える。
 const canRender = () => !drwEl && !palEl && !sheetEl && (view.v === "home" || (view.v === "search" && document.activeElement?.id !== "sq") || ((view.v === "company" || view.v === "tasks") && !["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName)));
 /* ⚡️11-10 送った直後（写真・頼み・テキスト）は90秒だけ3.5秒ごとに確かめる（前は一律20秒＝届いても最大20秒見えなかった） */
@@ -2528,17 +2579,33 @@ async function refresh(first) {
   if (refBusy && !first) return; refBusy = true; lastRef = Date.now();
   try { return await refresh0(first); } finally { refBusy = false; lastRef = Date.now(); }
 }
+/* ⚡️11-11 普段は窓口を1回だけ呼ぶ（入口と Muse の物をまとめて）。前は20秒ごとに2本。
+   開いた直後は今まで通り2本を並べて呼ぶ＝入口が先に出る。窓口が古くてまとめ読みの口が無い時は、10分のあいだ前の2本で読む。 */
+let syncOff = 0;
 async function refresh0(first) {
   if (first || view.v === "tray") loadTrayTxt();
-  const m = api.muse(museStamp).then(r => {
-    if (!r || r.museStamp === museStamp) return;
+  const takeMuse = r => {
+    if (!r || r.museStamp === undefined || r.museStamp === museStamp) return false;
     MUSE = r.muse || {}; FILES = r.files || {}; BOARD = r.board || []; MUSEMT = r.museMt || {}; museStamp = r.museStamp;
-    if (D && canRender()) render();
-  }).catch(() => {});
+    return true;
+  };
+  let m = null, r = null, fell = false, museNew = false;
+  if (!first && (GAS || API) && Date.now() - syncOff > 6e5) {
+    try { const sy = await api.sync(stamp, museStamp); if (!sy || !sy.index) throw new Error("形が違います"); r = sy.index; museNew = takeMuse(sy.muse); }
+    catch (e) { r = null; fell = true; }
+  }
   try {
-    const r = await api.index(stamp);
+    if (!r) {
+      m = api.muse(museStamp).then(x => { if (takeMuse(x) && D && canRender()) render(); }).catch(() => {});
+      r = await api.index(stamp);
+      if (fell) syncOff = Date.now();
+    }
     if (r.text) { D = JSON.parse(r.text); stamp = r.stamp; prunePending(); pruneNotes(); applyPendEv(); if (first || canRender() || trayIdle()) render(); }
     else if (first) $("#main").innerHTML = '<div class="err">まだ中身がありません。Mac の Aletheia が書くと出ます。</div>';
+    else if (museNew && D && canRender()) render();
+    // 開いている所が分けた2本を使うなら、新しくなった時だけ読み直す
+    if (D && view.v === "company") needPart("mails");
+    if (D && view.v === "search") { needPart("mails"); needPart("search"); }
   } catch (e) {
     if (first || !D) $("#main").innerHTML = `<div class="err">読み込めませんでした：${esc(e && e.message || e)}</div>`;
   }
@@ -2549,7 +2616,7 @@ if (!GAS && !API && /github\.io$/.test(location.hostname)) {
   $("#main").innerHTML = '<div class="err">鍵の付いたリンクで開いてください（Mac の Claude が渡したリンクを、最後の「#k=…」まで全部そのまま開く）。</div>';
 } else refresh(true);
 setTimeout(() => { if (!D && /読み込み中/.test($("#main").textContent)) $("#main").innerHTML = '<div class="err">読み込みに時間がかかっています。開き直してください（Mac の Google ドライブが止まっていないかも確かめます）</div>'; }, 30000);
-setInterval(() => { if (document.hidden) return; const gap = Date.now() - lastRef; if (gap > (Date.now() < hotUntil ? 3400 : 19500)) refresh(false); }, 1000);
+setInterval(() => { if (document.hidden) return; const gap = Date.now() - lastRef; if (gap > (Date.now() < hotUntil ? 3400 : 44500)) refresh(false); }, 1000);
 document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(false); });
 addEventListener("resize", () => { if (D && view.v === "home") { closePop(true); render(); } });
 addEventListener("keydown", e => { if (e.key === "Escape") { closeSheet(); closePop(); } });
