@@ -673,6 +673,12 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .msearch{margin:0 16px 8px}.msearch input{width:100%;height:38px;border:0;border-radius:10px;background:var(--fill);color:var(--label);font:inherit;font-size:16px;padding:0 12px;outline:none}
 .mrow{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;text-align:left;min-height:60px}
 .mrow+.mrow{border-top:.5px solid var(--sep)}.mrow:active{background:var(--hl)}
+.ibc{margin:0 16px 10px;border-radius:14px;background:var(--card);overflow:hidden}
+.ibm{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;text-align:left}.ibm:active{background:var(--hl)}
+.ibbar{flex:none;width:4px;align-self:stretch;border-radius:2px}
+.ibm .msum svg{width:13px;height:13px;vertical-align:-2px;margin-right:4px;opacity:.7}
+.ibb{display:flex;gap:8px;padding:0 14px 12px}.ibb button{flex:1;height:40px;border-radius:12px;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px}
+.ibno{background:var(--fill);color:var(--label)}.ibok{background:var(--label);color:var(--bg)}.ibok svg{width:17px;height:17px}.ibb button:disabled{opacity:.4}
 .mday{flex:none;width:34px;display:flex;flex-direction:column;align-items:center;line-height:1.1}.mday b{font-size:20px;font-variant-numeric:tabular-nums}.mday small{font-size:11px;color:var(--sub)}
 .mtx{flex:1;min-width:0;display:flex;flex-direction:column}.mtx b{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mtx small{font-size:12.5px;color:var(--sub)}
 .msum{font-size:13px;color:var(--sub);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px}
@@ -908,7 +914,7 @@ function bind(r) {
 function render() {
   const main = $("#main"), a = anim; anim = "";
   closePal(true); closeCos(true);
-  ({home, company, meet, tasks, event, search, tray, minutes})[view.v](main);
+  ({home, company, meet, tasks, event, search, tray, minutes, inbox})[view.v](main);
   ensureFab();
   if (a) { const el = view.v === "home" && ["in-next","in-prev","in-flip"].includes(a) ? main.querySelector(".pane") : main;
     if (el) { el.classList.remove("in-push","in-pop","in-next","in-prev","in-flip"); void el.offsetWidth; el.classList.add(a); } }
@@ -1008,6 +1014,40 @@ function minutes(main) {
   const i = $("#mq"); i.oninput = () => { view.q = i.value; clearTimeout(minutes.t); minutes.t = setTimeout(() => { const pos = i.selectionStart; minutes(main); const j = $("#mq"); j.focus(); j.setSelectionRange(pos, pos); }, 250); };
   bind(main);
 }
+/* ── 📥11-09 受け箱：Mac がメールから読んだ予定の候補を、ここで承認・見送り（Mac の受け箱と同じ口で登録される） ──
+   値は Mac の登録の唯一口（buildPrefilledEvent）が組んだ予定そのもの。押すと新しい予定のシートで直してから承認できる。 */
+let inboxDone = store.get("inboxDone", {});
+const inboxList = () => { const now = Date.now(); for (const k in inboxDone) if (now - inboxDone[k].at > 3 * 3600e3) delete inboxDone[k];
+  return (D.inbox || []).filter(x => !inboxDone[x.id]); };
+function inboxMark(id, how) { inboxDone[id] = {how, at: Date.now()}; store.set("inboxDone", inboxDone); }
+async function inboxAct(x, how, btn) {
+  if (btn) { btn.disabled = true; ktap(btn); }
+  try {
+    if (how === "ok") { const o = {op: "evadd", key: rid(), inbox: x.id, title: x.title, ns: x.ns, ne: x.ne, tent: !!x.tent}; if (x.allDay) o.allDay = true; await api.op(o); }
+    else await api.op({op: "inno", inbox: x.id});
+    inboxMark(x.id, how);
+    const row = btn && btn.closest(".ibc");
+    const done = () => { if (view.v === "inbox") inbox($("#main")); };
+    if (row) { row.animate([{opacity: 1, transform: "none"}, {opacity: 0, transform: `translateX(${how === "ok" ? 40 : -40}px)`}], {duration: 220, easing: "cubic-bezier(.22,.61,.36,1)"}).onfinish = done; } else done();
+    toast(how === "ok" ? "承認しました（Mac が予定に入れます）" : "見送りました");
+  } catch (err) { if (btn) btn.disabled = false; toast(failMsg(err)); }
+}
+function inbox(main) {
+  bar("受け箱", backName());
+  const list = inboxList(), groups = []; let last = "";
+  for (const x of list) { const d = pd(x.ns), k = `${d.getMonth() + 1}月${d.getDate()}日(${WD[d.getDay()]})`; if (k !== last) { groups.push({k, items: []}); last = k; } groups[groups.length - 1].items.push(x); }
+  main.innerHTML = `<h1 class="large">受け箱</h1>
+    ${groups.map(g => `<div class="sec">${g.k}</div>${g.items.map(x => { const s = pd(x.ns), e = pd(x.ne);
+      return `<div class="ibc" data-ib="${esc(x.id)}"><button class="ibm" data-ibo="${esc(x.id)}"><span class="ibbar" style="background:${esc(x.color || "#8e8e93")}"></span><span class="mtx">
+        <b>${esc(x.title)}</b><small>${x.allDay ? "終日" : `${hm(s)} → ${hm(e)}`}${x.tent ? "・仮" : ""}${x.loc ? `・${esc(x.loc)}` : ""}</small>${x.from ? `<span class="msum">${ICN.mail}${esc(x.from)}</span>` : ""}</span>${CH}</button>
+        <div class="ibb"><button class="ibno" data-ibn="${esc(x.id)}">見送る</button><button class="ibok" data-iby="${esc(x.id)}">${ICB.check}追加</button></div></div>`; }).join("")}`).join("")}
+    ${!list.length ? `<p class="empty">承認を待っている予定はありません（メールから読んだ候補が出ます）</p>` : ""}
+    <div style="height:110px"></div>`;
+  const by = id => list.find(x => x.id === id);
+  main.querySelectorAll("[data-iby]").forEach(b => b.onclick = () => inboxAct(by(b.dataset.iby), "ok", b));
+  main.querySelectorAll("[data-ibn]").forEach(b => b.onclick = () => inboxAct(by(b.dataset.ibn), "no", b));
+  main.querySelectorAll("[data-ibo]").forEach(b => b.onclick = () => { const x = by(b.dataset.ibo); if (x) newEvent({...x, inbox: x.id, brief: ""}); });
+}
 /* ── 🤏11-09 2本指でつまむ（ホームのカレンダー）：縮める＝日数が増える（単一日 → 複数日 → 月）・広げる＝逆 ── */
 (() => {
   const ORDER = ["one", "multi", "month"]; let d0 = 0, done = false;
@@ -1072,8 +1112,8 @@ function openPlain(html, onClose) {
 function newEvent(pre) {
   const now = new Date(), s = pre && pre.ns ? pd(pre.ns) : new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1), en = pre && pre.ne ? pd(pre.ne) : new Date(+s + 36e5);
   const f = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}T${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
-  D.events.push({title: (pre && pre.title) || "", start: f(s), end: f(en), allDay: !!(pre && pre.allDay), loc: (pre && pre.loc) || "", notes: (pre && pre.brief) || "",
-    color: "#8e8e93", cal: "", rw: true, _new: true, _key: rid(), _media: (pre && pre.media) || []});
+  D.events.push({title: (pre && pre.title) || "", start: f(s), end: f(en), allDay: !!(pre && pre.allDay), loc: (pre && pre.loc) || "", notes: (pre && (pre.notes || pre.brief)) || "",
+    color: "#8e8e93", cal: "", rw: true, _new: true, _key: rid(), _media: (pre && pre.media) || [], _tent: !!(pre && pre.tent), _inbox: (pre && pre.inbox) || "", _cal0: (pre && pre.cal) || ""});
   openPop(D.events.length - 1, true);
   setTimeout(() => { const t = sheetEl && sheetEl.querySelector('[name="title"]'); if (t && !t.value) t.focus(); }, 380);
 }
@@ -1090,7 +1130,7 @@ async function photoToEvent() {
   try {
     for (const x of shots) await sendFile("up", x.f, null, p => { const t = el.querySelector(`[data-id="${x.id}"] .mprog`); if (t) { t.innerHTML = ringSVG(p); if (p >= 1) t.classList.add("done"); } }, x.id);
   } catch (e) { say(`止まりました：${failMsg(e)}`, true); return; }
-  say("Mac が読んでいます");
+  say("読んでいます");
   const t0 = Date.now(), got = {};
   while (alive && sheetEl === el && Date.now() - t0 < 15 * 60e3) {
     for (const x of shots) if (!got[x.id]) { try { const r = await api.res(x.id); if (r) got[x.id] = typeof r === "string" ? JSON.parse(r) : r; } catch (e) {} }
@@ -1405,6 +1445,9 @@ function addBind(e, i, TT, AL, RR) {
   chips(q("#att"), "tt"); chips(q("#aal"), "al"); chips(q("#arep"), "rr", q("#arl"));
   // 確／仮
   q("#atent").onclick = () => { const b = q("#atent"), tent = b.getAttribute("aria-pressed") === "true"; b.setAttribute("aria-pressed", tent ? "false" : "true"); b.classList.toggle("tent", tent); b.querySelector("span").textContent = tent ? "仮" : "確"; f.querySelector('[name="tent"]').value = tent ? "1" : ""; ktap(b); };
+  if (e) setTimeout(() => { if (q("#edf")) e._f0 = Object.fromEntries(new FormData(q("#edf"))); }, 0);
+  if (e && e._inbox && e._cal0) { const ci = f.querySelector('[name="cal"]'); if (ci && (D.cals || []).some(c => c.id === e._cal0)) ci.value = e._cal0; }
+  if (e && e._tent) { const b = q("#atent"); b.setAttribute("aria-pressed", "false"); b.classList.add("tent"); b.querySelector("span").textContent = "仮"; f.querySelector('[name="tent"]').value = "1"; }
   // カレンダー（色の点）
   q("#acal").onclick = () => { const cals = D.cals || []; if (!cals.length) return; const inp = f.querySelector('[name="cal"]');
     showPop(cals.map(c => `<button class="sti calpick" data-cid="${esc(c.id)}"><span class="stt"><i class="cdot" style="background:${esc(c.color)}"></i>${esc(c.title)}</span>${c.id === inp.value ? '<b class="ck2">✓</b>' : ""}</button>`).join(""), q("#acal"));
@@ -1430,6 +1473,7 @@ function addBind(e, i, TT, AL, RR) {
   // 文章を貼ると自動で入ります（読むのは Mac の中）／画像から
   const fill = it => { if (!it) return; const ti = f.querySelector('[name="title"]'); if (it.title) ti.value = it.title;
     if (it.ns) { const s = pd(it.ns), en = pd(it.ne || it.ns); kInit(s, en, !!it.allDay); if (it.allDay) KS.ad = true; kReadout(); }
+    if (it.tent && q("#atent").getAttribute("aria-pressed") === "true") q("#atent").click();
     if (it.loc) f.querySelector('[name="loc"]').value = it.loc; if (it.brief) { const n = f.querySelector('[name="notes"]'); n.value = n.value ? n.value + "\n" + it.brief : it.brief; }
     ["title", "loc", "notes"].forEach(n => f.querySelector(`[name="${n}"]`).animate([{background: "rgba(33,90,189,.25)"}, {background: "transparent"}], {duration: 900})); };
   const wait = async (id, say) => { const r = q("#aread"); r.hidden = false; const t0 = Date.now();
@@ -1439,10 +1483,10 @@ function addBind(e, i, TT, AL, RR) {
       q("#art").textContent = Date.now() - t0 > 90e3 ? `Mac 待ち（Mac を最後に見たのは ${macSeen()}）` : say; await new Promise(z => setTimeout(z, 3500)); } };
   const pt = q("#apt"); let sent = "";
   const read = async () => { const t = pt.value.trim(); if (t.length < 8 || t === sent) return; sent = t; const id = rid();
-    try { await api.op({op: "readtext", id, text: t.slice(0, 6000)}); pt.value = ""; pt.placeholder = "読んでいます…"; await wait(id, "Mac が読んでいます"); pt.placeholder = "文章を貼ると自動で入ります"; } catch (err) { sent = ""; toast(failMsg(err)); } };
+    try { await api.op({op: "readtext", id, text: t.slice(0, 6000)}); pt.value = ""; pt.placeholder = "読んでいます…"; await wait(id, "読んでいます"); pt.placeholder = "文章を貼ると自動で入ります"; } catch (err) { sent = ""; toast(failMsg(err)); } };
   pt.addEventListener("paste", () => setTimeout(read, 50)); pt.addEventListener("keydown", ev => { if (ev.key === "Enter") { ev.preventDefault(); read(); } }); pt.addEventListener("blur", read);
   q("#aimg").onclick = async () => { const [fl] = await pickFiles("image/*", false); if (!fl) return; const id = rid(), r = q("#aread"); r.hidden = false; q("#art").textContent = "Drive へ上げています";
-    try { await sendFile("up", fl, null, null, id); media.push({id, url: URL.createObjectURL(fl), p: 1}); drawPh(); await wait(id, "Mac が読んでいます"); } catch (err) { r.hidden = true; toast(failMsg(err)); } };
+    try { await sendFile("up", fl, null, null, id); media.push({id, url: URL.createObjectURL(fl), p: 1}); drawPh(); await wait(id, "読んでいます"); } catch (err) { r.hidden = true; toast(failMsg(err)); } };
   // この種別の既定にする（題の種別ごとに 長さ・移動時間・通知 を覚える＝次からその種別の題を入れると入る）
   q("#adef").onclick = () => { const t = f.querySelector('[name="title"]').value, k = akind(t); if (!k) { toast("題に種別（説明会・面接など）を入れてください"); return; }
     const d = adefs(); d[k] = {dur: kDur(), tt: +f.querySelector('[name="tt"]').value, al: +f.querySelector('[name="al"]').value}; store.set("evDefaults", d); ktap(q("#adef")); toast(`「${k}」の既定にしました`); };
@@ -1569,14 +1613,18 @@ function openPop(i, editing, focusField) {
       if (e._new) {
         const o = {op: "evadd", key: e._key, title: v.title.trim(), ns, ne, loc: v.loc || "", notes: v.notes || "", al, tt: +v.tt, rr: v.rr};
         if (allDay) o.allDay = true; if (v.cal) o.cal = v.cal; if (v.tent) o.tent = true;
+        // 🔗11-09 受け箱の承認：Mac が候補から唯一口で組む＝直した所だけ送る（メモ・通知・移動時間・暦は触った時だけ）
+        if (e._inbox) { const f0 = e._f0 || {}; o.inbox = e._inbox; o.tent = !!v.tent;
+          if ((v.notes || "") === (f0.notes || "")) delete o.notes; if (v.al === f0.al) delete o.al; if (v.tt === f0.tt) delete o.tt; if (v.rr === f0.rr) delete o.rr; if (!v.cal || v.cal === f0.cal) delete o.cal; }
         if (e._media && e._media.length) { if (e._media.some(x => x.p < 1)) { toast("写真を送っています。少し待ってください"); return; } o.media = e._media.map(x => x.id); }
         const btn = q("#eds"); btn.disabled = true;
         try { await api.op(o);
           // ほかの日にも：同じ時刻・長さで別の日にも（1日ずつ別の頼み）
           const shift = d => { const a = pd(ns), b = pd(ne), k = kday0(d) - kday0(a), f2 = x => `${kymd(x)}T${kp2(x.getHours())}:${kp2(x.getMinutes())}`; return [f2(new Date(+a + k)), f2(new Date(+b + k))]; };
-          for (const d of (e._more || [])) { const [n1, n2] = shift(d); await api.op({...o, key: rid(), ns: n1, ne: n2, media: undefined}); }
+          for (const d of (e._more || [])) { const [n1, n2] = shift(d); await api.op({...o, key: rid(), ns: n1, ne: n2, media: undefined, inbox: undefined}); }
           Object.assign(e, {title: o.title, start: ns, end: ne, allDay, loc: o.loc, notes: o.notes, _new: false, _pending: true});
-          closeSheet(); render(); toast(`予定を作りました${(e._more || []).length ? `（ほか${e._more.length}日）` : ""}（Mac が登録します）`); } catch (err) { btn.disabled = false; toast(failMsg(err)); }
+          if (e._inbox) inboxMark(e._inbox, "ok");
+          closeSheet(); render(); toast(e._inbox ? "承認しました（Mac が予定に入れます）" : `予定を作りました${(e._more || []).length ? `（ほか${e._more.length}日）` : ""}（Mac が登録します）`); } catch (err) { btn.disabled = false; toast(failMsg(err)); }
         return;
       }
       const o = {op: "evedit", eid: e.eid, start: e.start};
@@ -2065,6 +2113,7 @@ function palItems() {
       <button class="pb" data-pal="today">${ICN.today}今日</button>
       <button class="pb" data-pal="cos">${ICN.co}企業</button>
       <button class="pb" data-pal="minutes">${ICN.doc}議事録</button>
+      <button class="pb" data-pal="inbox">${ICN.mail}受け箱${inboxList().length ? ` ${inboxList().length}` : ""}</button>
       <button class="pb" data-pal="newev">${ICB.plus}新しい予定</button>
       <button class="pb" data-pal="photo">${ICB.photo}写真から予定</button>
       <button class="pb" data-pal="tray">${ICB.tray}トレイ${(D.tray || []).length ? ` ${(D.tray || []).length}` : ""}</button>
@@ -2092,7 +2141,8 @@ function openPal() {
     else if (k === "newev") newEvent();
     else if (k === "photo") photoToEvent();
     else if (k === "tray") go({v: "tray"});
-    else if (k === "minutes") go({v: "minutes", q: ""}); });
+    else if (k === "minutes") go({v: "minutes", q: ""});
+    else if (k === "inbox") go({v: "inbox"}); });
 }
 function ensureFab() {
   let f = $("#fab");
