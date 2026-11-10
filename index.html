@@ -577,6 +577,7 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .sheet .shd .ed{height:40px;padding:0 16px;border-radius:20px;font-size:16px;font-weight:600;color:var(--label)}
 .sheet .shd .cx{color:var(--lapis);font-size:17px;padding:8px 4px}
 .sheet .shd .dn{color:var(--lapis);font-size:17px;font-weight:700;padding:8px 4px}
+.sheet .shd .shr{display:flex;gap:8px}.sheet .shd .ed{height:44px;border-radius:22px}
 .sheet .shd h3{margin:0;font-size:17px;font-weight:600}
 .sheet .r .ico{width:22px;height:22px;color:var(--lapis);flex:none}
 .sheet .r .ico svg{width:22px;height:22px}
@@ -688,18 +689,20 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .apaste{flex:1;min-width:0;display:flex;align-items:center;gap:8px;height:44px;padding:0 6px 0 12px;border-radius:14px;background:#0f0f10;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);color:var(--klapisL)}
 .apaste svg{width:18px;height:18px;flex:none}
 .apaste input{flex:1;min-width:0;border:0;background:none;color:var(--label);font:inherit;font-size:15px;outline:none}.apaste input::placeholder{color:var(--sub)}
-.aimg{flex:none;width:34px;height:34px;display:grid;place-items:center;color:var(--klapisL)}.aimg svg{width:22px;height:22px}
-.atent{flex:none;display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:18px;background:#fff;color:#000;font-weight:700;font-size:15px}
+.aimg{flex:none;width:40px;height:44px;padding:0;display:grid;place-items:center;color:var(--klapisL)}.aimg svg{width:22px;height:22px}
+.atent{position:relative;flex:none;display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:18px;background:#fff;color:#000;font-weight:700;font-size:15px}
+.atent::before{content:"";position:absolute;inset:-4px 0}
 .atent i{width:16px;height:16px;border-radius:8px;background:#000;position:relative}.atent i::after{content:"";position:absolute;left:4px;top:5px;width:7px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg)}
 .atent.tent{background:rgba(255,255,255,.12);color:var(--label)}.atent.tent i{background:transparent;box-shadow:inset 0 0 0 1.5px var(--sub)}.atent.tent i::after{display:none}
 .atask{flex:none;display:flex;align-items:center;gap:5px;height:36px;padding:0 10px;border-radius:18px;background:rgba(33,90,189,.18);color:var(--klapisL);font-size:13px;font-weight:600}.atask svg{width:16px;height:16px}
-.ax{flex:none;width:30px;height:30px;border-radius:15px;background:rgba(255,255,255,.12);color:var(--sub);font-size:14px;font-weight:700}
+.ax{position:relative;flex:none;width:36px;height:36px;padding:0;border-radius:18px;background:rgba(255,255,255,.12);color:var(--sub);display:grid;place-items:center;line-height:0}
+.ax svg{width:14px;height:14px;display:block}.ax::after,.adot::after{content:"";position:absolute;inset:-4px}.adot::after{inset:-16px}
 @media (max-width:380px){.atask span{display:none}.atask{padding:0 9px}}
 .aread{display:flex;align-items:center;gap:10px;margin:-6px 0 10px;padding:10px 12px;border-radius:12px;background:var(--card,#2c2c2e);font-size:14px}.aread.err{color:#ff9f0a}
-.attl{display:flex;align-items:center;gap:12px;margin:0 4px 12px}
-.adot{flex:none;width:16px;height:16px;border-radius:8px}
+.attl{display:flex;align-items:center;gap:10px;margin:0 4px 14px}
+.adot{position:relative;flex:none;width:12px;height:12px;padding:0;border-radius:6px}
 .attl textarea{flex:1;min-width:0;border:0;background:none;color:var(--label);font:700 22px/1.3 -apple-system,"Hiragino Sans",sans-serif;outline:none;resize:none;overflow:hidden;padding:0;word-break:break-all}.attl textarea::placeholder{color:#5a5a5e}
-.attl{align-items:flex-start}.attl .adot{margin-top:7px}
+.attl{align-items:flex-start}.attl .adot{margin-top:8.3px}
 .ahr{height:.5px;background:var(--sep);margin:0 -14px 16px}
 .achips{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .achips .atime{flex:1 1 0;min-width:0;overflow:hidden}.achips .abr{flex-basis:100%;height:0}
@@ -711,20 +714,20 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .aic{width:50px;height:50px;border-radius:14px;background:rgba(255,255,255,.07);display:grid;place-items:center;color:var(--klapisL)}.aic svg{width:20px;height:20px}
 .aic.set,.arep.set{background:rgba(33,90,189,.24)}
 .ahide{background:transparent!important}.ahide #kdrow,.ahide #ktm{display:none}
-.aother{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:18px;background:rgba(33,90,189,.18);color:var(--klapisL);font-size:14px;font-weight:600;margin:2px 0 8px}.aother svg{width:17px;height:17px}
+.aother{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 16px;border-radius:22px;background:rgba(33,90,189,.18);color:var(--klapisL);font-size:14px;font-weight:600;margin:2px 0 8px}.aother svg{width:17px;height:17px}
 .amore{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.amore:empty{display:none}
 .amchip{height:30px;padding:0 10px;border-radius:15px;background:rgba(255,255,255,.1);color:var(--label);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}.amchip i{font-style:normal;color:var(--sub);font-size:11px}
 .aloc{width:100%;min-height:50px;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:var(--label);font:inherit;font-size:16px;line-height:1.35;padding:14px 16px;outline:none;margin:6px 0 14px;resize:none;overflow:hidden;display:block;box-sizing:border-box;word-break:break-all}.aloc::placeholder{color:var(--sub)}
 .aph{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
 .aplus{width:52px;height:52px;border-radius:26px;background:rgba(33,90,189,.18);color:var(--klapisL);display:grid;place-items:center}.aplus svg{width:22px;height:22px}
 .apt{position:relative;width:52px;height:52px;border-radius:12px;overflow:hidden;background:#3a3a3c}.apt img{width:100%;height:100%;object-fit:cover}
-.alab{font-size:13px;color:var(--sub);font-weight:600;margin:0 2px 6px}
-.anotes{width:100%;min-height:150px;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:var(--label);font:inherit;font-size:16px;padding:12px 14px;outline:none;resize:none;margin-bottom:14px}
-.arep{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-radius:12px;color:var(--label);font-size:17px;font-weight:700;margin-bottom:6px}.arep svg:first-child{width:21px;height:21px}
-.adef{display:flex;align-items:center;gap:10px;color:var(--klapisL);font-size:15px;font-weight:600;margin:8px 2px 18px}
+.alab{font-size:13px;color:var(--sub);font-weight:600;margin:0 4px 8px}
+.anotes{width:100%;min-height:150px;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:var(--label);font:inherit;font-size:16px;line-height:1.5;padding:14px 16px;outline:none;resize:none;margin-bottom:14px;display:block;box-sizing:border-box;white-space:pre-wrap;word-break:break-word}
+.arep{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 12px 0 4px;border-radius:12px;color:var(--label);font-size:16px;font-weight:600;margin-bottom:6px}.arep svg:first-child{width:21px;height:21px}
+.adef{display:flex;align-items:center;gap:10px;min-height:44px;color:var(--klapisL);font-size:15px;font-weight:600;margin:4px 4px 14px}
 .afoot{position:sticky;bottom:0;display:flex;justify-content:space-between;align-items:center;margin:0 -14px;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:.5px solid var(--sep)}
-.acancel{height:42px;padding:0 18px;border-radius:12px;background:rgba(255,255,255,.1);color:var(--label);font-size:17px;font-weight:600}
-.aadd{height:42px;padding:0 22px;border-radius:12px;background:#fff;color:#000;font-size:17px;font-weight:700}.aadd:disabled{opacity:.5}
+.acancel{height:44px;padding:0 18px;border-radius:12px;background:rgba(255,255,255,.1);color:var(--label);font-size:17px;font-weight:600}
+.aadd{height:44px;padding:0 22px;border-radius:12px;background:#fff;color:#000;font-size:17px;font-weight:700}.aadd:disabled{opacity:.5}
 /* ── 📷11-09 写真・動画・トレイ ── */
 .mph,.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:0 0 10px}
 .mph .mt,.mgrid .mt{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#3a3a3c;display:block;width:auto;padding:0}
@@ -746,11 +749,12 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .mview{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,0);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:background-color .22s cubic-bezier(.22,.61,.36,1)}
 .mview.on{background:rgba(0,0,0,.92)}.mview img{max-width:100%;max-height:78vh;object-fit:contain;opacity:0;transform:scale(.96);transition:opacity .22s cubic-bezier(.22,.61,.36,1),transform .22s cubic-bezier(.22,.61,.36,1)}.mview.on img{opacity:1;transform:none}
 .mvbar{position:absolute;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;padding:0 16px;color:var(--sub);font-size:12px}.mvbar span{flex:1}
-.mvbar button{height:38px;padding:0 16px;border-radius:19px;background:rgba(255,255,255,.12);color:#fff;font-size:15px}.mvbar .mvdel{color:#ff453a}
+.mvbar button{height:44px;padding:0 16px;border-radius:22px;background:rgba(255,255,255,.12);color:#fff;font-size:15px;white-space:nowrap}.mvbar .mvdel{color:#ff453a}.mvbar button:disabled{opacity:.4}
+.mview .mvv{max-width:100%;max-height:78vh}.mview .mvtxt{max-width:calc(100% - 40px);max-height:70vh;overflow:auto;white-space:pre-wrap;word-break:break-word;color:#fff;font-size:17px;line-height:1.6;user-select:text;-webkit-user-select:text}.mview .mvtxt a{color:#70a3fa}
 .tdrop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:calc(100% - 32px);margin:4px 16px 0;height:120px;border-radius:16px;border:1.5px dashed rgba(255,255,255,.2);color:var(--sub);background:rgba(255,255,255,.03);font-size:15px;transition:background-color .22s cubic-bezier(.22,.61,.36,1),border-color .22s,color .22s}
 .tdrop svg{width:28px;height:28px}.tdrop.hot{background:rgba(33,90,189,.14);border-color:rgba(112,163,250,.7);color:#70a3fa}.tdrop:active{transform:scale(.98)}
 .tlist{margin:10px 16px 0;display:flex;flex-direction:column;gap:8px}
-.tiw{display:grid;grid-template-rows:1fr;transition:grid-template-rows .28s cubic-bezier(.22,.61,.36,1),opacity .22s;animation:mIn .28s cubic-bezier(.22,.61,.36,1) both}.tiw>div{position:relative;min-height:0}.tiw.gone{grid-template-rows:0fr;opacity:0}
+.tiw{display:grid;grid-template-rows:1fr;transition:grid-template-rows .28s cubic-bezier(.22,.61,.36,1),opacity .22s;animation:mIn .28s cubic-bezier(.22,.61,.36,1) both}.tiw{grid-template-columns:minmax(0,1fr)}.tiw>div{position:relative;min-height:0;min-width:0}.tiw.gone{grid-template-rows:0fr;opacity:0}
 .ti2{position:relative;z-index:1;display:flex;align-items:center;gap:12px;background:var(--card,#2c2c2e);border-radius:14px;padding:8px;touch-action:pan-y;transition:transform .22s cubic-bezier(.22,.61,.36,1)}.ti2.drag{transition:none}
 .tdel{position:absolute;right:0;top:0;bottom:0;width:0;border-radius:14px;background:#ff453a;color:#fff;font-size:13px;font-weight:600;display:grid;place-items:center;overflow:hidden;white-space:nowrap}
 .tth{position:relative;flex:none;width:56px;height:56px;border-radius:10px;overflow:hidden;background:#3a3a3c}.tth img{width:100%;height:100%;object-fit:cover;display:block}
@@ -759,6 +763,17 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .tst{display:inline-flex;align-items:center;gap:4px}.tst svg{width:13px;height:13px}.tst.ok{color:#d1d1d6}.tst.ok svg{animation:mpop .22s cubic-bezier(.3,1.15,.55,1)}.tst.err{color:#ff9f0a}
 @keyframes mpop{0%{transform:scale(.4);opacity:0}100%{transform:none;opacity:1}}
 .tleft{margin-left:auto;font-variant-numeric:tabular-nums}
+@media (max-width:360px){.tinb button svg{display:none}}
+.tin{margin:4px 16px 0;background:var(--card,#2c2c2e);border-radius:16px;padding:10px 10px 8px}
+.tin textarea{display:block;width:100%;box-sizing:border-box;min-height:44px;max-height:180px;border:0;background:none;color:var(--label);font:inherit;font-size:16px;line-height:1.45;padding:6px 6px 4px;outline:none;resize:none}.tin textarea::placeholder{color:var(--sub)}
+.tinb{display:flex;align-items:center;gap:8px;margin-top:4px}.tinb button{display:flex;align-items:center;justify-content:center;gap:6px;height:44px;padding:0 14px;border-radius:22px;background:rgba(255,255,255,.08);color:var(--label);font-size:15px;font-weight:600;white-space:nowrap}
+.tinb button svg{width:19px;height:19px;color:var(--lapis)}.tinb .tgo{margin-left:auto;background:#fff;color:#000;padding:0 20px}.tinb .tgo:disabled{opacity:.35}
+.ti2.txt{flex-direction:column;align-items:stretch;gap:2px;padding:12px 6px 2px 14px}.ti2.txt .tbody{padding-right:8px}
+.tfoot{display:flex;align-items:center;gap:4px}.tfoot small{flex:1;min-width:0;display:flex;align-items:center;gap:6px;color:var(--sub);font-size:12.5px}.tfoot .tleft{margin-right:4px}
+.tbody{font-size:15px;line-height:1.5;white-space:pre-wrap;word-break:break-word;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.tbody.open{display:block}.tbody a{color:var(--lapis)}
+.tacts{flex:none;display:flex;gap:0}.tact{width:44px;height:44px;border-radius:22px;display:grid;place-items:center;color:var(--lapis)}.tact svg{width:20px;height:20px}.tact:active{background:rgba(255,255,255,.08)}
+.tsrc{display:inline-flex;align-items:center;gap:4px}.tsrc svg{width:13px;height:13px}
+.tth .mlocal{width:100%;height:100%;object-fit:cover;display:block}
 .tempty{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--sub);padding:28px 0 8px;font-size:14px}.tempty svg{width:30px;height:30px}
 .trule{margin:12px 20px 120px;color:var(--sub);font-size:12.5px;line-height:1.55}
 /* ── 🕘11-09 予定の編集：日付の盤と時計（Mac 本体の部品の写し）。動きは easeOut・300ms 未満・弾み 0.15 以下 ── */
@@ -1110,6 +1125,44 @@ async function sendFile(kind, file, extra, onProg, id) {
   }
   return id;
 }
+/* 📤11-10 共有：iOS の共有シート（AirDrop・メッセージ・保存）。⚠️押したその場で呼ぶ（読み込みを待ってからだと iOS が断る）＝実物は先に読んでおく */
+const copyText = async t => { try { await navigator.clipboard.writeText(t); } catch (e) { const a = document.createElement("textarea"); a.value = t; a.style.cssText = "position:fixed;opacity:0"; document.body.append(a); a.select(); try { document.execCommand("copy"); } catch (x) {} a.remove(); } };
+async function shareIt(d) {
+  try {
+    if (d.files && d.files.length && navigator.canShare && navigator.canShare({files: d.files})) { await navigator.share({files: d.files}); return; }
+    if (navigator.share && !(d.files && d.files.length)) { const o = {}; if (d.title) o.title = d.title; if (d.text) o.text = d.text; if (d.url) o.url = d.url; await navigator.share(o); return; }
+    if (d.files && d.files.length) { saveFile(d.files[0]); return; }
+    await copyText(d.url || d.text || d.title || ""); toast("コピーしました");
+  } catch (e) { if (e && e.name === "AbortError") return; toast("共有できませんでした"); }
+}
+function saveFile(f) { const a = document.createElement("a"); a.href = URL.createObjectURL(f); a.download = f.name || "file"; document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000); }
+api.tray = () => GAS ? call("getTray") : API ? remote({fn: "tray"}) : Promise.resolve(null);
+api.file = (kind, id, eid) => GAS ? call("getFile", kind, id, eid || "") : API ? remote({fn: "file", kind, id, eid: eid || ""}) : Promise.resolve(null);
+const fileCache = {};
+/** 実物を読む（12MB まで）。大きい物は {big, url}＝ドライブで開く */
+async function loadFile(kind, name, eid, show) {
+  const key = kind + "/" + name; if (fileCache[key]) return fileCache[key];
+  const r = await api.file(kind, name, eid); if (!r) return null; if (r.big) return r;
+  const bin = atob(r.b64), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+  const ext = (name.match(/\.[A-Za-z0-9]{1,8}$/) || [""])[0], base = String(show || name).replace(/[\\/:*?"<>|]+/g, "_").slice(0, 80);
+  const f = new File([u8], base.toLowerCase().endsWith(ext.toLowerCase()) ? base : base + ext, {type: r.mime});
+  return fileCache[key] = {file: f, url: URL.createObjectURL(f), mime: r.mime};
+}
+/** 全面表示の下の段に「共有」「保存」を足し、実物が読めたら写真を差し替える（動画はその場で再生・音は出さない） */
+function fullBar(v, kind, name, eid, show, isVideo) {
+  const bar = v.querySelector(".mvbar"), note = bar.querySelector("span");
+  bar.querySelector(".mvx").insertAdjacentHTML("beforebegin", '<button class="mvsh" disabled>共有</button><button class="mvsv" disabled>保存</button>');
+  const sh = bar.querySelector(".mvsh"), sv = bar.querySelector(".mvsv"); note.textContent = "読み込み中";
+  loadFile(kind, name, eid, show).then(r => { if (!v.isConnected) return;
+    if (!r) { note.textContent = "実物はまだ読めません"; return; }
+    if (r.big) { note.innerHTML = `<a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:#70a3fa">ドライブで開く</a>`; return; }
+    note.textContent = "";
+    const im = v.querySelector("img");
+    if (/^image\x2f/.test(r.mime)) { if (im) im.src = r.url; }
+    else if (/^video\x2f/.test(r.mime) || isVideo) { const vd = document.createElement("video"); vd.src = r.url; vd.controls = true; vd.muted = true; vd.playsInline = true; vd.className = "mvv"; if (im) im.replaceWith(vd); else v.prepend(vd); }
+    sh.disabled = sv.disabled = false; sh.onclick = () => shareIt({files: [r.file]}); sv.onclick = () => saveFile(r.file);
+  }).catch(() => { if (v.isConnected) note.textContent = "読み込めませんでした"; });
+}
 const pickFiles = (accept, multiple) => new Promise(ok => { const i = document.createElement("input"); i.type = "file"; i.accept = accept; i.multiple = !!multiple;
   i.onchange = () => ok([...(i.files || [])]); i.click(); });
 const macSeen = () => { const u = D && D.updatedAt && pd(D.updatedAt); return u ? `${u.getHours()}:${String(u.getMinutes()).padStart(2, "0")}` : "—"; };
@@ -1131,7 +1184,7 @@ function openPlain(html, onClose) {
 function newEvent(pre) {
   const now = new Date(), s = pre && pre.ns ? pd(pre.ns) : new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1), en = pre && pre.ne ? pd(pre.ne) : new Date(+s + 36e5);
   const f = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}T${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
-  D.events.push({title: (pre && pre.title) || "", start: f(s), end: f(en), allDay: !!(pre && pre.allDay), loc: (pre && pre.loc) || "", notes: (pre && (pre.notes || pre.brief)) || "",
+  D.events.push({title: (pre && pre.title) || "", start: f(s), end: f(en), allDay: !!(pre && pre.allDay), loc: (pre && pre.loc) || "", notes: nlFix((pre && (pre.notes || pre.brief)) || ""),
     color: "#8e8e93", cal: "", rw: true, _new: true, _key: rid(), _media: (pre && pre.media) || [], _tent: !!(pre && pre.tent), _inbox: (pre && pre.inbox) || "", _cal0: (pre && pre.cal) || ""});
   openPop(D.events.length - 1, true);
   setTimeout(() => { const t = sheetEl && sheetEl.querySelector('[name="title"]'); if (t && !t.value) t.focus(); }, 380);
@@ -1155,7 +1208,7 @@ async function photoToEvent() {
     for (const x of shots) if (!got[x.id]) { try { const r = await api.res(x.id); if (r) got[x.id] = typeof r === "string" ? JSON.parse(r) : r; } catch (e) {} }
     if (shots.every(x => got[x.id])) break;
     if (Date.now() - t0 > 90e3) say(`Mac 待ち（Mac を最後に見たのは ${macSeen()}）。Mac が開くと読みます`);
-    await new Promise(r => setTimeout(r, 4000));
+    await new Promise(r => setTimeout(r, Date.now() - t0 < 30e3 ? 1500 : 4000));   // ⚡️窓口が読んだ結果はすぐ在る＝最初は細かく確かめる
   }
   if (!alive || sheetEl !== el) return;
   const media = shots.map(x => ({id: x.id, url: x.url}));
@@ -1168,7 +1221,7 @@ async function photoToEvent() {
   }
   el.querySelector("#mread").remove();
   const fmt = it => { const s = pd(it.ns), e = pd(it.ne); return it.allDay ? `${s.getMonth() + 1}月${s.getDate()}日(${WD[s.getDay()]})　終日` : `${s.getMonth() + 1}月${s.getDate()}日(${WD[s.getDay()]})　${hm(s)} → ${hm(e)}`; };
-  cd.innerHTML = items.map((it, k) => `<div class="mcand" style="animation-delay:${k * 60}ms"><b>${esc(it.title)}</b><div class="mw">${fmt(it)}</div>${it.loc ? `<div class="mw">${esc(it.loc)}</div>` : ""}${it.brief ? `<div class="mbr">${esc(it.brief).slice(0, 300)}</div>` : ""}<button class="mbtn" data-ci="${k}">この予定を作る</button></div>`).join("")
+  cd.innerHTML = items.map((it, k) => `<div class="mcand" style="animation-delay:${k * 60}ms"><b>${esc(it.title)}</b><div class="mw">${fmt(it)}</div>${it.loc ? `<div class="mw">${esc(it.loc)}</div>` : ""}${it.brief ? `<div class="mbr">${esc(nlFix(it.brief).slice(0, 300))}</div>` : ""}<button class="mbtn" data-ci="${k}">この予定を作る</button></div>`).join("")
     + `<button class="mbtn sub" id="mempty">空の予定で作る</button>`;
   cd.querySelectorAll("[data-ci]").forEach(b => b.onclick = () => newEvent({...items[+b.dataset.ci], media}));
   cd.querySelector("#mempty").onclick = () => newEvent({media});
@@ -1181,7 +1234,7 @@ function attHTML(e) {
   const have = e.att || [], pend = (pendAtt[e.eid] || []).filter(x => !have.some(a => a.n.startsWith(x.id + "-")) && Date.now() - x.at < 864e5 * 3);
   return `<div class="sec" style="margin-left:4px">写真と動画</div><div class="mgrid" id="mgrid">
     ${have.map((a, k) => `<button class="mt" data-ai="${k}"><img alt="" data-th="${esc(a.th)}">${a.v ? '<span class="mbadge">▶</span>' : ""}</button>`).join("")}
-    ${pend.map(x => `<div class="mt pend"><div class="mfake">${x.err ? "止まりました" : x.p < 1 ? ringSVG(x.p || 0) : ""}</div><span class="mbadge">${x.err ? "押すと続き" : x.p < 1 ? "送っています" : "Mac 待ち"}</span></div>`).join("")}
+    ${pend.map(x => `<div class="mt pend"><div class="mfake">${x.err ? "止まりました" : x.p < 1 ? ringSVG(x.p || 0) : ""}</div><span class="mbadge">${x.err ? "押すと続き" : x.p < 1 ? "送っています" : "届きました"}</span></div>`).join("")}
     <button class="mt madd" id="madd" aria-label="写真・動画を付ける">${ICB.plus}</button></div>`;
 }
 function bindAtt(i) {
@@ -1199,8 +1252,8 @@ function refreshAtt(i) { const g = sheetEl && sheetEl.querySelector("#mgrid"); i
 function viewAtt(i, k, src) {
   const e = D.events[i], a = (e.att || [])[k]; if (!a) return;
   const v = document.createElement("div"); v.className = "mview";
-  v.innerHTML = `<img alt="" src="${src || ""}"><div class="mvbar"><span>${a.v ? "動画（Mac の予定の資料で再生できます）" : ""}</span><button class="mvdel">削除</button><button class="mvx">閉じる</button></div>`;
-  document.body.append(v); requestAnimationFrame(() => v.classList.add("on"));
+  v.innerHTML = `<img alt="" src="${src || ""}"><div class="mvbar"><span></span><button class="mvdel">削除</button><button class="mvx">閉じる</button></div>`;
+  document.body.append(v); requestAnimationFrame(() => v.classList.add("on")); fullBar(v, "att", a.n, e.eid, a.n.replace(/^[a-z0-9]{8,40}-/, ""), a.v);
   const close = () => { v.classList.remove("on"); setTimeout(() => v.remove(), 260); };
   v.querySelector(".mvx").onclick = close; v.onclick = ev => { if (ev.target === v) close(); };
   // 下へはらうと閉じる・左右になぞると前後の写真へ（純正の写真と同じ）
@@ -1213,44 +1266,127 @@ function viewAtt(i, k, src) {
     try { await api.op({op: "attdel", eid: e.eid, name: a.n}); e.att = (e.att || []).filter(x => x !== a); close(); refreshAtt(i); toast("削除しました"); } catch (err) { toast(failMsg(err)); } });
 }
 
-/* トレイ（Mac のノッチのトレイへ）。本体と同じ：入った時刻から24時間・60件まで */
-let pendTray = store.get("pendTray", []), trayGone = store.get("trayGone", {});
+/* トレイ：スマホ ⇄ Mac（写真・動画・テキスト・URL）。本体と同じ：入った時刻から24時間・60件まで
+   ⚡️11-10 テキスト・URL は窓口に置いた時点で「届きました」（Mac を待たない）。写真・動画も窓口が受け取ったら「届きました」。
+   📤Mac のトレイの物（スクショ・テキスト・リンク）もここに出る＝開く・コピー・保存・共有（iOS の共有シートから AirDrop） */
+let pendTray = store.get("pendTray", []), trayGone = store.get("trayGone", {}), trayTxt = store.get("trayTxt", []), trayDraft = "", trayTxtAt = 0;
+const pendURL = {};   /* 送っている途中の写真の見た目（開いている間だけ） */
+const isURL = t => /^https?:\/{2}\S+$/i.test(String(t).trim());
+const hoursLeft = at => Math.max(0, Math.ceil((864e5 - (Date.now() - at)) / 36e5));
+const trayCount = () => (D.tray || []).filter(t => !trayGone[t.n]).length + (D.trayText || []).filter(t => !trayGone[t.id]).length
+  + trayTxt.filter(t => !trayGone["txt-" + t.id] && Date.now() - t.at < 864e5).length + pendTray.length;
+async function loadTrayTxt() {
+  try { const r = await api.tray(); if (!Array.isArray(r)) return;
+    const have = new Set(r.map(x => x.id)), now = Date.now();
+    const mine = trayTxt.filter(x => !have.has(x.id) && (!x.ok || now - x.at < 60e3) && now - x.at < 864e5);   /* まだ送れていない物・入れた直後の物は残す */
+    const next = mine.concat(r.map(x => ({id: x.id, text: x.text, k: x.k, at: Date.parse(x.at) || now, ok: true})));
+    const same = JSON.stringify(next) === JSON.stringify(trayTxt); trayTxt = next; store.set("trayTxt", trayTxt);
+    if (!same && trayIdle()) render();
+  } catch (e) {}
+}
+const pendState = x => x.err ? `<span class="tst err">止まりました</span>`
+  : x.p < 1 ? `<span class="tst">${ringSVG(x.p || 0).replace('class="mring"', 'class="mring sm"')}送っています ${Math.round((x.p || 0) * 100)}%</span>`
+  : Date.now() - x.at > 180e3 ? `<span class="tst">${ICB.mac}Mac 待ち　最後に見たのは ${macSeen()}</span>`
+  : `<span class="tst ok">${ICB.check}届きました</span><span class="tleft">Mac へ写しています</span>`;
+const txtState = (x, got) => x.err ? `<span class="tst err">送れませんでした　押すと送り直し</span>` : !x.ok ? `<span class="tst"><span class="mdots"><i></i><i></i><i></i></span>送っています</span>`
+  : `<span class="tst ok">${ICB.check}${got ? "Mac にも届きました" : "届きました"}</span>`;
+async function trayPush(x) {
+  x.err = false;
+  try { await api.op({op: "trayadd", id: x.id, text: x.text}); x.ok = true; } catch (e) { x.err = true; toast(failMsg(e)); }
+  store.set("trayTxt", trayTxt);
+  const el = $(`[data-tx="txt-${x.id}"] small .tst`); if (el && view.v === "tray") el.outerHTML = txtState(x, false);
+}
+function trayAddText(text) {
+  text = String(text || "").replace(/\r\n?/g, "\n").trim(); if (!text) return;
+  if (text.length > 20000) { toast("20000字までです"); return; }
+  const x = {id: rid(), text, k: isURL(text) ? "link" : "text", at: Date.now(), ok: false};
+  trayTxt.unshift(x); store.set("trayTxt", trayTxt); if (view.v === "tray") tray($("#main"));
+  trayPush(x);
+}
+function traySendFiles(files) {
+  const main = $("#main");
+  for (const f of files) { const x = {id: rid(), name: f.name || "写真", at: Date.now(), p: 0}; if ((f.type || "").startsWith("image/")) pendURL[x.id] = URL.createObjectURL(f);
+    pendTray.unshift(x); store.set("pendTray", pendTray); if (view.v === "tray") tray(main);
+    sendFile("tray", f, null, p => { x.p = p; if (p >= 1) x.at = Date.now(); store.set("pendTray", pendTray); const el = $(`[data-pend="${x.id}"] small`); if (el && view.v === "tray") el.innerHTML = pendState(x); }, x.id)
+      .catch(err => { x.err = true; store.set("pendTray", pendTray); if (view.v === "tray") tray(main); toast(failMsg(err)); }); }
+}
+/* クリップボードから（iOS は「ペースト」の確認が出る）。写真も文字も */
+async function trayPaste() {
+  try {
+    if (navigator.clipboard && navigator.clipboard.read) { const items = await navigator.clipboard.read(), files = []; let text = "";
+      for (const it of items) { const ty = it.types.find(t => t.startsWith("image/"));
+        if (ty) { const b = await it.getType(ty); files.push(new File([b], `clip-${Date.now()}.${(ty.split("/")[1] || "png").replace("jpeg", "jpg")}`, {type: ty})); }
+        else if (it.types.includes("text/plain")) text += await (await it.getType("text/plain")).text(); }
+      if (files.length) traySendFiles(files); if (text.trim()) trayAddText(text);
+      if (!files.length && !text.trim()) toast("クリップボードは空です"); return; }
+    const t = await navigator.clipboard.readText(); if (t.trim()) trayAddText(t); else toast("クリップボードは空です");
+  } catch (e) { toast("下の欄に貼り付けてください"); const ta = $("#ttx"); if (ta) ta.focus(); }
+}
+function viewTray(t, src) {
+  const v = document.createElement("div"); v.className = "mview";
+  v.innerHTML = `<img alt="" src="${src || ""}"><div class="mvbar"><span></span><button class="mvx">閉じる</button></div>`;
+  document.body.append(v); requestAnimationFrame(() => v.classList.add("on"));
+  const close = () => { v.classList.remove("on"); setTimeout(() => v.remove(), 260); };
+  v.querySelector(".mvx").onclick = close; v.onclick = ev => { if (ev.target === v) close(); };
+  let y0 = null, x0 = null; v.addEventListener("touchstart", ev => { y0 = ev.touches[0].clientY; x0 = ev.touches[0].clientX; }, {passive: true});
+  v.addEventListener("touchend", ev => { if (y0 === null) return; const dy = ev.changedTouches[0].clientY - y0, dx = ev.changedTouches[0].clientX - x0; y0 = null; if (dy > 90 && Math.abs(dy) > Math.abs(dx)) close(); });
+  fullBar(v, "tray", t.n, "", t.src === "mac" ? (t.t || "Mac") : t.n.replace(/^[a-z0-9]+-/, ""), t.v);
+}
 function tray(main) {
   bar("トレイ", backName());
-  const now = Date.now();
+  const now = Date.now(), got = new Set(D.trayGot || []), map = {};
   pendTray = pendTray.filter(x => now - x.at < 864e5 && !(D.tray || []).some(t => t.n.startsWith(x.id + "-"))); store.set("pendTray", pendTray);
   for (const k in trayGone) if (now - trayGone[k] > 864e5 * 2) delete trayGone[k]; store.set("trayGone", trayGone);
-  const items = (D.tray || []).filter(t => !trayGone[t.n]);
+  trayTxt = trayTxt.filter(x => now - x.at < 864e5);
+  if (now - trayTxtAt > 5000) { trayTxtAt = now; loadTrayTxt(); }
+  const txtRow = (id, text, state, left) => { map[id] = text; return `<div class="tiw"><div><div class="ti2 txt" data-tx="${esc(id)}"><div class="tbody">${linkify(text.slice(0, 4000))}</div><div class="tfoot"><small>${state}<span class="tleft">あと ${left}時間</span></small><div class="tacts"><button class="tact" data-cp="1" aria-label="コピー">${ICB.copy}</button><button class="tact" data-sh="1" aria-label="共有">${ICB.share}</button></div></div></div></div></div>`; };
+  const rows = [];
+  for (const x of pendTray) rows.push([x.at + 1e12, `<div class="tiw"><div><div class="ti2" data-pend="${x.id}"><div class="tth">${pendURL[x.id] ? `<img class="mlocal" alt="" src="${pendURL[x.id]}">` : `<div class="mfake">${x.err ? "!" : ""}</div>`}</div><div class="ttx"><b>${esc(x.name)}</b><small>${pendState(x)}</small></div></div></div></div>`]);
+  for (const x of trayTxt) if (!trayGone["txt-" + x.id]) rows.push([x.at, txtRow("txt-" + x.id, x.text, txtState(x, got.has(x.id)), hoursLeft(x.at))]);
+  for (const t of D.trayText || []) if (!trayGone[t.id]) rows.push([+pd(t.at), txtRow(t.id, t.text, `<span class="tst tsrc">${ICB.mac}Mac から</span>`, Math.max(0, t.left))]);
+  const files = (D.tray || []).filter(t => !trayGone[t.n]);
+  for (const t of files) rows.push([+pd(t.at), `<div class="tiw"><div><div class="ti2" data-tn="${esc(t.n)}"><div class="tth"><img alt="" data-th="${esc(t.th)}">${t.v ? '<span class="mbadge">▶</span>' : ""}</div><div class="ttx"><b>${esc(t.src === "mac" ? (t.t || "Mac の物") : t.n.replace(/^[a-z0-9]+-/, ""))}</b><small>${t.src === "mac" ? `<span class="tst tsrc">${ICB.mac}Mac から</span>` : `<span class="tst ok">${ICB.check}Mac に届きました</span>`}<span class="tleft">あと ${Math.max(0, t.left)}時間</span></small></div><div class="tacts"><button class="tact" data-op="1" aria-label="開く">${ICB.share}</button></div></div></div></div>`]);
+  rows.sort((a, b) => b[0] - a[0]);
   main.innerHTML = `<h1 class="large">トレイ</h1>
-    <button class="tdrop" id="tdz">${ICB.tray}<span>写真・動画を入れる</span></button>
-    <div class="tlist" id="tlist">
-      ${pendTray.map(x => `<div class="tiw"><div><div class="ti2" data-pend="${x.id}"><div class="tth"><div class="mfake">${x.err ? "!" : ""}</div></div><div class="ttx"><b>${esc(x.name)}</b><small>${x.err ? `<span class="tst err">止まりました・押すと続き</span>` : x.p < 1 ? `<span class="tst">${ringSVG(x.p || 0).replace('class="mring"', 'class="mring sm"')}送っています ${Math.round((x.p || 0) * 100)}%</span>` : `<span class="tst">${ICB.mac}Mac 待ち（Mac を最後に見たのは ${macSeen()}）</span>`}</small></div></div></div></div>`).join("")}
-      ${items.map(t => `<div class="tiw"><div><div class="ti2" data-tn="${esc(t.n)}"><div class="tth"><img alt="" data-th="${esc(t.th)}">${t.v ? '<span class="mbadge">▶</span>' : ""}</div><div class="ttx"><b>${esc(t.n.replace(/^[a-z0-9]+-/, ""))}</b><small><span class="tst ok">${ICB.check}Mac に届きました</span><span class="tleft">あと ${Math.max(0, t.left)}時間</span></small></div></div></div></div>`).join("")}
-    </div>
-    ${!pendTray.length && !items.length ? `<div class="tempty">${ICB.tray}<span>トレイは空です</span></div>` : ""}
-    ${items.length >= 60 ? `<p class="trule" style="margin-bottom:0;color:#ff9f0a">Mac のトレイがいっぱいです（60件）。古い物を消すか、24時間待つと空きます</p>` : ""}
-    <p class="trule">Mac のトレイと同じ：入った時刻から24時間で消えます（60件まで）。予定に付けた写真は消えません。</p>`;
+    <div class="tin"><textarea id="ttx" rows="1" maxlength="20000" placeholder="テキスト・URL" autocomplete="off"></textarea>
+      <div class="tinb"><button id="tdz">${ICB.photo}<span>写真・動画</span></button><button id="tpst">${ICB.paste}<span>貼り付け</span></button><button class="tgo" id="tgo" disabled>入れる</button></div></div>
+    <div class="tlist" id="tlist">${rows.map(r => r[1]).join("")}</div>
+    ${!rows.length ? `<div class="tempty">${ICB.tray}<span>トレイは空です</span></div>` : ""}
+    ${files.length >= 60 ? `<p class="trule" style="margin-bottom:0;color:#ff9f0a">トレイがいっぱいです。古い物を消すか、24時間待つと空きます</p>` : ""}
+    <p class="trule">Mac のトレイとつながっています。入った時刻から24時間で消えます。60件まで。</p>`;
   main.querySelectorAll("img[data-th]").forEach(im => api.img(im.dataset.th).then(u => { if (u) im.src = u; }).catch(() => {}));
-  $("#tdz").onclick = async () => {
-    const files = await pickFiles("image/*,video/*", true); if (!files.length) return;
-    $("#tdz").classList.add("hot"); setTimeout(() => $("#tdz") && $("#tdz").classList.remove("hot"), 260);
-    for (const f of files) { const x = {id: rid(), name: f.name, at: Date.now(), p: 0}; pendTray.unshift(x); store.set("pendTray", pendTray); if (view.v === "tray") tray(main);
-      sendFile("tray", f, null, p => { x.p = p; store.set("pendTray", pendTray); const el = $(`[data-pend="${x.id}"] small`); if (el && view.v === "tray") el.innerHTML = p < 1 ? `<span class="tst">${ringSVG(p).replace('class="mring"', 'class="mring sm"')}送っています ${Math.round(p * 100)}%</span>` : `<span class="tst">${ICB.mac}Mac 待ち（Mac を最後に見たのは ${macSeen()}）</span>`; }, x.id)
-        .catch(err => { x.err = true; store.set("pendTray", pendTray); if (view.v === "tray") tray(main); toast(failMsg(err)); }); }
-  };
-  // 左へはらうと削除（指に付いて動き・赤い「削除」が下から見える・80px を越えて離すと消える）
+  const ta = $("#ttx"), go2 = $("#tgo"), fit = () => { ta.style.height = "auto"; ta.style.height = Math.min(180, ta.scrollHeight) + "px"; go2.disabled = !ta.value.trim(); };
+  ta.value = trayDraft; fit();
+  ta.oninput = () => { trayDraft = ta.value; fit(); };
+  ta.onpaste = ev => { const fs = [...((ev.clipboardData && ev.clipboardData.files) || [])].filter(f => /^(image|video)\x2f/.test(f.type)); if (fs.length) { ev.preventDefault(); traySendFiles(fs); } };
+  go2.onclick = () => { const t = ta.value; trayDraft = ""; trayAddText(t); };
+  $("#tpst").onclick = trayPaste;
+  $("#tdz").onclick = async () => { const fl = await pickFiles("image/*,video/*", true); if (fl.length) traySendFiles(fl); };
+  /* 左へはらうと削除（指に付いて動き・赤い「削除」が下から見える・80px を越えて離すと消える）。押すと開く */
   main.querySelectorAll(".tiw").forEach(w => { const t = w.querySelector(".ti2"), box = w.firstElementChild; let x0 = null, dx = 0;
     box.insertAdjacentHTML("afterbegin", '<span class="tdel">削除</span>'); const del = box.querySelector(".tdel");
-    t.onpointerdown = e => { x0 = e.clientX; dx = 0; t.classList.add("drag"); };
+    const id = t.dataset.tx, body = t.querySelector(".tbody");
+    if (id) { t.querySelector("[data-cp]").onclick = async () => { await copyText(map[id]); toast("コピーしました"); };
+      t.querySelector("[data-sh]").onclick = () => shareIt(isURL(map[id]) ? {url: map[id].trim()} : {text: map[id]}); }
+    const open = () => { const f = files.find(y => y.n === t.dataset.tn); if (f) viewTray(f, t.querySelector(".tth img").src); };
+    if (t.dataset.tn) t.querySelector("[data-op]").onclick = open;
+    t.onpointerdown = e => { if (e.target.closest(".tact, a")) return; x0 = e.clientX; dx = 0; t.classList.add("drag"); };
     t.onpointermove = e => { if (x0 === null) return; dx = Math.min(0, e.clientX - x0); if (dx < -6) { t.style.transform = `translateX(${dx < -120 ? -120 + (dx + 120) * .4 : dx}px)`; del.style.width = Math.min(-dx + 14, 180) + "px"; } };
-    t.onpointerup = t.onpointercancel = async () => { if (x0 === null) return; x0 = null; t.classList.remove("drag");
+    t.onpointerup = t.onpointercancel = async e => { if (x0 === null) return; x0 = null; t.classList.remove("drag");
       if (dx < -80) { t.style.transform = "translateX(-110%)"; if (navigator.vibrate) navigator.vibrate(8);
-        const n = t.dataset.tn, pid = t.dataset.pend;
+        const n = t.dataset.tn || t.dataset.tx, pid = t.dataset.pend;
         setTimeout(() => { w.classList.add("gone"); setTimeout(() => w.remove(), 300); }, 160);
         if (pid) { pendTray = pendTray.filter(x => x.id !== pid); store.set("pendTray", pendTray); }
-        if (n) { trayGone[n] = Date.now(); store.set("trayGone", trayGone); try { await api.op({op: "traydel", name: n}); toast("削除しました（Mac のトレイからも）"); } catch (err) { delete trayGone[n]; store.set("trayGone", trayGone); toast(failMsg(err)); } }
-      } else { t.style.transform = ""; del.style.transition = "width .22s cubic-bezier(.22,.61,.36,1)"; del.style.width = "0"; setTimeout(() => del.style.transition = "", 240); }
-      if (Math.abs(dx) < 6 && t.dataset.pend) { const x = pendTray.find(y => y.id === t.dataset.pend); if (x && x.err) toast("もう一度入れてください（写真を選び直す）"); } }; });
+        if (n) { const mine = n.startsWith("txt-") && trayTxt.find(x => "txt-" + x.id === n);
+          trayGone[n] = Date.now(); store.set("trayGone", trayGone);
+          if (mine) { trayTxt = trayTxt.filter(x => x !== mine); store.set("trayTxt", trayTxt); if (!mine.ok) return; }
+          try { await api.op({op: "traydel", name: n}); toast(n.startsWith("mac-") ? "一覧から外しました" : "削除しました"); } catch (err) { delete trayGone[n]; store.set("trayGone", trayGone); toast(failMsg(err)); } }
+        return; }
+      t.style.transform = ""; del.style.transition = "width .22s cubic-bezier(.22,.61,.36,1)"; del.style.width = "0"; setTimeout(() => del.style.transition = "", 240);
+      if (Math.abs(dx) >= 6 || e.type === "pointercancel") return;
+      if (t.dataset.pend) { const x = pendTray.find(y => y.id === t.dataset.pend); if (x && x.err) toast("もう一度入れてください"); }
+      else if (t.dataset.tn) open();
+      else if (id) { const x = id.startsWith("txt-") && trayTxt.find(y => "txt-" + y.id === id); if (x && x.err) trayPush(x); else if (body) body.classList.toggle("open"); } }; });
 }
 
 /* ── 🕘11-09 予定の編集の時刻と日付（Mac 本体の ClockStartEndPicker／CalendarDatePanel をスマホ用に・Docs/jobsite-media-tray-design）──
@@ -1424,7 +1560,7 @@ function addHTML(e, TT, AL, RR) {
     <div class="ashd">
       <label class="apaste">${ICN.spark}<input id="apt" placeholder="文章を貼ると自動で入ります" autocomplete="off" enterkeyhint="done"><button type="button" class="aimg" id="aimg" aria-label="画像から">${ICB.photo}</button></label>
       <button type="button" class="atent" id="atent" aria-pressed="true"><i></i><span>確</span></button>
-      <button type="button" class="ax" id="edc" aria-label="閉じる">✕</button>
+      <button type="button" class="ax" id="edc" aria-label="閉じる"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 2.5l9 9M11.5 2.5l-9 9"/></svg></button>
     </div>
     <div class="aread" id="aread" hidden><span class="mdots"><i></i><i></i><i></i></span><span id="art"></span></div>
     <div class="attl"><button type="button" class="adot" id="acal" style="background:${esc(c0.color || "#ff375f")}" aria-label="カレンダー"></button><textarea name="title" rows="1" maxlength="200" required placeholder="タイトル" autocomplete="off" enterkeyhint="done">${esc(e.title)}</textarea></div>
@@ -1437,7 +1573,7 @@ function addHTML(e, TT, AL, RR) {
     <button type="button" class="aother" id="aother">${ICB.d}<span>ほかの日にも</span></button><div class="amore" id="amore"></div>
     <textarea class="aloc" name="loc" rows="1" maxlength="500" placeholder="場所" autocomplete="off" enterkeyhint="done">${esc(e.loc || "")}</textarea>
     <div class="aph" id="aph"><button type="button" class="aplus" id="aplus" aria-label="写真を付ける">${ICB.plus}</button></div>
-    <div class="alab">メモ</div><textarea class="anotes" name="notes" maxlength="4000">${esc(e.notes || "")}</textarea>
+    <div class="alab">メモ</div><textarea class="anotes" name="notes" maxlength="4000">${esc(nlFix(e.notes || ""))}</textarea>
     <button type="button" class="arep" id="arep">${ICB.rr}<span id="arl">繰り返し</span><svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 4.5l3 3 3-3"/></svg></button>
     ${chip("rr", RR, "none")}
     <button type="button" class="adef" id="adef"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span>この種別の既定にする</span></button>
@@ -1493,13 +1629,13 @@ function addBind(e, i, TT, AL, RR) {
   const fill = it => { if (!it) return; const ti = f.querySelector('[name="title"]'); if (it.title) { ti.value = it.title; ti.dispatchEvent(new Event("input")); }
     if (it.ns) { const s = pd(it.ns), en = pd(it.ne || it.ns); kInit(s, en, !!it.allDay); if (it.allDay) KS.ad = true; kReadout(); }
     if (it.tent && q("#atent").getAttribute("aria-pressed") === "true") q("#atent").click();
-    if (it.loc) { const l = f.querySelector('[name="loc"]'); l.value = it.loc; l.dispatchEvent(new Event("input")); } if (it.brief) { const n = f.querySelector('[name="notes"]'); n.value = n.value ? n.value + "\n" + it.brief : it.brief; }
+    if (it.loc) { const l = f.querySelector('[name="loc"]'); l.value = it.loc; l.dispatchEvent(new Event("input")); } if (it.brief) { const n = f.querySelector('[name="notes"]'), b = nlFix(it.brief); n.value = n.value ? n.value + "\n" + b : b; }
     ["title", "loc", "notes"].forEach(n => f.querySelector(`[name="${n}"]`).animate([{background: "rgba(33,90,189,.25)"}, {background: "transparent"}], {duration: 900})); };
   const wait = async (id, say) => { const r = q("#aread"); r.hidden = false; const t0 = Date.now();
     while (sheetEl && Date.now() - t0 < 15 * 60e3) { let g = null; try { g = await api.res(id); } catch (x) {} if (g) { g = typeof g === "string" ? JSON.parse(g) : g;
         if (g.items && g.items.length) { r.hidden = true; fill(g.items[0]); toast(g.items.length > 1 ? `${g.items.length}件読めました（1件目を入れました）` : "読めました"); }
         else { r.classList.add("err"); q("#art").textContent = g.status === "quota" ? "AI の上限です。Mac が1時間ごとに読み直します" : "予定が見つかりませんでした"; } return; }
-      q("#art").textContent = Date.now() - t0 > 90e3 ? `Mac 待ち（Mac を最後に見たのは ${macSeen()}）` : say; await new Promise(z => setTimeout(z, 3500)); } };
+      q("#art").textContent = Date.now() - t0 > 90e3 ? `Mac 待ち（Mac を最後に見たのは ${macSeen()}）` : say; await new Promise(z => setTimeout(z, Date.now() - t0 < 30e3 ? 1500 : 3500)); } };
   const pt = q("#apt"); let sent = "";
   const read = async () => { const t = pt.value.trim(); if (t.length < 8 || t === sent) return; sent = t; const id = rid();
     try { await api.op({op: "readtext", id, text: t.slice(0, 6000)}); pt.value = ""; pt.placeholder = "読んでいます…"; await wait(id, "読んでいます"); pt.placeholder = "文章を貼ると自動で入ります"; } catch (err) { sent = ""; toast(failMsg(err)); } };
@@ -1548,7 +1684,7 @@ function openPop(i, editing, focusField) {
   const meetRows = link ? `<div class="grp">
       <a class="r" href="${esc(link)}" target="_blank" rel="noopener">${ICO(ICN.video)}<span class="main"><div class="t lk">${svcName(link)}に参加</div><div class="s">${esc(link.replace(/^https:\/{2}/, "").slice(0, 40))}</div></span></a>
       ${e.eid && !e.allDay ? `<button class="r" data-join="1" ${canJoin ? "" : "disabled"}>${ICO(ICN.mac)}<span class="main"><div class="t lk">Mac で参加</div><div class="s">${canJoin ? "カメラ・マイクはオフ" : "開始30分前から"}</div></span></button>` : ""}</div>` : "";
-  const view0 = `<div class="shd"><button class="x glass" aria-label="閉じる"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button>${e.rw && e.eid ? '<button class="ed glass" data-edit="1">編集</button>' : ""}</div>
+  const view0 = `<div class="shd"><button class="x glass" aria-label="閉じる"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button><span class="shr"><button class="ed glass" data-share-ev="${i}">共有</button>${e.rw && e.eid ? '<button class="ed glass" data-edit="1">編集</button>' : ""}</span></div>
     <div class="tt" style="--c:${col}"><h2 data-q="title">${esc(e.title)}</h2><div data-q="a">${when}</div>${e.allDay ? "" : `<div class="rel">${relDay(s)}</div>`}</div>
     ${mini}
     ${meetRows}
@@ -1563,7 +1699,7 @@ function openPop(i, editing, focusField) {
       ${co ? `<button class="r" data-open-co="${esc(co.name)}">${ICO(ICN.co)}<span class="main"><div class="t">${esc(co.name)}${stgPill(co)}</div></span>${CH}</button>` : ""}
       ${m ? `<button class="r" data-open-meet="${m.id}">${ICO(ICN.doc)}<span class="main"><div class="t">議事録</div><div class="s">${esc(m.kind)}</div></span>${CH}</button>` : ""}</div>` : ""}
     ${attHTML(e)}
-    ${e.notes ? `<div class="sec" style="margin-left:4px">メモ</div><div class="grp" data-q="notes"><div class="nt${e.notes.length > 260 ? " fold" : ""}" id="ntx">${linkify(e.notes)}</div>${e.notes.length > 260 ? '<button class="more" id="ntm">すべて表示</button>' : ""}</div>` : ""}
+    ${e.notes ? `<div class="sec" style="margin-left:4px">メモ</div><div class="grp" data-q="notes"><div class="nt${e.notes.length > 260 ? " fold" : ""}" id="ntx">${linkify(nlFix(e.notes))}</div>${e.notes.length > 260 ? '<button class="more" id="ntm">すべて表示</button>' : ""}</div>` : ""}
     ${mails.length ? `<div class="sec" style="margin-left:4px">メール</div><div class="grp">${mails.map(x => `<a class="mail" ${mailHref(x)}><div class="h"><span>${esc(x.from)}</span><span>${pd(x.at).getMonth()+1}/${pd(x.at).getDate()}</span></div><div class="sbj">${esc(x.subject)}</div></a>`).join("")}</div>` : ""}
     <div class="grp"><div class="r" data-q="cal"><span class="main"><div class="t">カレンダー</div></span><span class="dot" style="background:${esc(col)}"></span><span style="color:var(--sub);font-size:15px">${esc(e.cal)}</span>${CH}</div></div>
     ${e.rw && e.eid ? '<button class="delrow" id="evdel">予定を削除</button>' : ""}`;
@@ -1721,6 +1857,8 @@ function showPop(html, anchor) {
 // 🔗11-07 メールは iPhone の Gmail アプリで直接開く（ウェブの mail.google.com は「アプリをダウンロード」の画面になる）。
 //   アプリの番号が無い古いデータはウェブの1通表示へ。
 function mailHref(m) { const u = m.app || m.url; return u ? `href="${esc(u)}" target="_blank" rel="noopener"` : ""; }
+/* 🧪11-10 写真から読んだ結果に「\n」が文字のまま入っていた（バックスラッシュと n）＝本物の改行で見せる */
+function nlFix(t) { return String(t == null ? "" : t).replace(/\\r\\n|\\n|\\r/g, "\n"); }
 function linkify(t) { return esc(t).replace(/https?:\/{2}[^\s<]+/g, u => `<a href="${u}" target="_blank" rel="noopener" style="color:var(--lapis)">${u.replace(/^https?:\/{2}/, "").slice(0, 40)}</a>`); }
 // iPhone は押しただけで数px動く・アドレス欄の伸び縮みでも scroll が来る＝出た直後と小さな動きでは閉じない
 let popY = 0, popAt = 0;
@@ -1750,6 +1888,10 @@ const ICB = {
   check: SF('<path d="M5.5 12.5l4 4 9-9.5"/>', ' stroke-width="2"'),
   wait: SF('<circle cx="12" cy="12" r="8.6"/><path d="M12 7.2V12l3.2 2"/>'),
   mac: SF('<rect x="3.2" y="4.6" width="17.6" height="11.4" rx="2"/><path d="M1.8 19h20.4"/>'),
+  phone: SF('<rect x="7" y="2.8" width="10" height="18.4" rx="2.6"/><path d="M10.6 5.4h2.8"/>'),
+  share: SF('<path d="M12 14.6V3.6M8.2 7.2 12 3.4l3.8 3.8"/><path d="M7.4 10.4H6.6a2 2 0 0 0-2 2v6.2a2 2 0 0 0 2 2h10.8a2 2 0 0 0 2-2v-6.2a2 2 0 0 0-2-2h-.8"/>'),
+  copy: SF('<rect x="8.4" y="8.4" width="11.6" height="11.6" rx="2.6"/><path d="M15.6 8.4V6.6a2.6 2.6 0 0 0-2.6-2.6H6.600a2.6 2.6 0 0 0-2.6 2.6V13a2.6 2.6 0 0 0 2.6 2.6h1.8"/>'),
+  paste: SF('<rect x="5.2" y="4.6" width="13.6" height="16" rx="2.6"/><path d="M9 4.6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v.6a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zM8.6 11h6.8M8.6 14.6h4.6"/>'),
   video: SF('<rect x="2.8" y="6" width="12.6" height="12" rx="2.6"/><path d="M15.4 10.4l5.4-3v9.2l-5.4-3"/>'),
 };
 const ICN = {
@@ -2145,7 +2287,7 @@ function palItems() {
       <button class="pb" data-pal="inbox">${ICN.mail}受け箱${inboxList().length ? ` ${inboxList().length}` : ""}</button>
       <button class="pb" data-pal="newev">${ICB.plus}新しい予定</button>
       <button class="pb" data-pal="photo">${ICB.photo}写真から予定</button>
-      <button class="pb" data-pal="tray">${ICB.tray}トレイ${(D.tray || []).length ? ` ${(D.tray || []).length}` : ""}</button>
+      <button class="pb" data-pal="tray">${ICB.tray}トレイ${trayCount() ? ` ${trayCount()}` : ""}</button>
       <button class="pb" data-pal="search">${ICN.search}検索</button>
       <button class="pb" data-pal="muse">${ICN.spark}Muse</button></div>
     <div class="ph2">表示</div>
@@ -2359,6 +2501,11 @@ function viewPhoto(src) {
   v.addEventListener("touchend", e => { if (y0 !== null && e.changedTouches[0].clientY - y0 > 80) close(); y0 = null; });
 }
 document.addEventListener("click", e => { const im = e.target.closest(".photos img, figure img"); if (im) viewPhoto(im.src); });
+/* 📤予定を共有（題・日時・場所・会議のリンク）。押したその場で iOS の共有シートを出す */
+document.addEventListener("click", ev => { const b = ev.target.closest("[data-share-ev]"); if (!b || !D) return; const e = D.events[+b.dataset.shareEv]; if (!e) return;
+  const s = pd(e.start), en = pd(e.end), d = x => `${x.getMonth() + 1}月${x.getDate()}日(${WD[x.getDay()]})`, link = meetLink(e) || e.url || "";
+  const lines = [e.title, e.allDay ? `${d(s)} 終日` : `${d(s)} ${hm(s)}〜${hm(en)}`]; if (e.loc && e.loc !== link) lines.push(e.loc); if (link) lines.push(link);
+  shareIt({title: e.title, text: lines.join("\n")}); });
 function lazyImgs(root) {
   const io = new IntersectionObserver(es => es.forEach(async e => {
     if (!e.isIntersecting) return; io.unobserve(e.target);
@@ -2372,7 +2519,17 @@ function lazyImgs(root) {
 /* ── 読み込みと即時反映（開いている間は20秒ごと・戻ってきた時にも確かめる） ── */
 // 予定・タスク・企業（Mac が書く index.json）を先に出し、Muse の物（各社の欄・資料・掲示板）は後から足す＝開いてすぐ見える。
 const canRender = () => !drwEl && !palEl && !sheetEl && (view.v === "home" || (view.v === "search" && document.activeElement?.id !== "sq") || ((view.v === "company" || view.v === "tasks") && !["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName)));
+/* ⚡️11-10 送った直後（写真・頼み・テキスト）は90秒だけ3.5秒ごとに確かめる（前は一律20秒＝届いても最大20秒見えなかった） */
+let hotUntil = 0, lastRef = 0, refBusy = false;
+const hot = (ms = 90e3) => { hotUntil = Math.max(hotUntil, Date.now() + ms); };
+{ const op0 = api.op, up0 = api.up; api.op = o => { hot(); return op0(o); }; api.up = u => { hot(); return up0(u); }; }
+const trayIdle = () => view.v === "tray" && document.activeElement?.id !== "ttx" && !sheetEl && !palEl && !drwEl && !document.querySelector(".mview") && !document.querySelector(".ti2.drag");
 async function refresh(first) {
+  if (refBusy && !first) return; refBusy = true; lastRef = Date.now();
+  try { return await refresh0(first); } finally { refBusy = false; lastRef = Date.now(); }
+}
+async function refresh0(first) {
+  if (first || view.v === "tray") loadTrayTxt();
   const m = api.muse(museStamp).then(r => {
     if (!r || r.museStamp === museStamp) return;
     MUSE = r.muse || {}; FILES = r.files || {}; BOARD = r.board || []; MUSEMT = r.museMt || {}; museStamp = r.museStamp;
@@ -2380,7 +2537,7 @@ async function refresh(first) {
   }).catch(() => {});
   try {
     const r = await api.index(stamp);
-    if (r.text) { D = JSON.parse(r.text); stamp = r.stamp; prunePending(); pruneNotes(); applyPendEv(); if (first || canRender()) render(); }
+    if (r.text) { D = JSON.parse(r.text); stamp = r.stamp; prunePending(); pruneNotes(); applyPendEv(); if (first || canRender() || trayIdle()) render(); }
     else if (first) $("#main").innerHTML = '<div class="err">まだ中身がありません。Mac の Aletheia が書くと出ます。</div>';
   } catch (e) {
     if (first || !D) $("#main").innerHTML = `<div class="err">読み込めませんでした：${esc(e && e.message || e)}</div>`;
@@ -2392,7 +2549,7 @@ if (!GAS && !API && /github\.io$/.test(location.hostname)) {
   $("#main").innerHTML = '<div class="err">鍵の付いたリンクで開いてください（Mac の Claude が渡したリンクを、最後の「#k=…」まで全部そのまま開く）。</div>';
 } else refresh(true);
 setTimeout(() => { if (!D && /読み込み中/.test($("#main").textContent)) $("#main").innerHTML = '<div class="err">読み込みに時間がかかっています。開き直してください（Mac の Google ドライブが止まっていないかも確かめます）</div>'; }, 30000);
-setInterval(() => { if (!document.hidden) refresh(false); }, 20000);
+setInterval(() => { if (document.hidden) return; const gap = Date.now() - lastRef; if (gap > (Date.now() < hotUntil ? 3400 : 19500)) refresh(false); }, 1000);
 document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(false); });
 addEventListener("resize", () => { if (D && view.v === "home") { closePop(true); render(); } });
 addEventListener("keydown", e => { if (e.key === "Escape") { closeSheet(); closePop(); } });
