@@ -69,11 +69,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lapis);outline-offs
 .dayhead .n{display:inline-block;width:28px;height:28px;line-height:28px;border-radius:50%;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
 .dayhead .sun .w,.dayhead .sun .n{color:var(--rubysoft)}
 .dayhead .today .n{background:var(--lapis);color:#fff}
-.allday{display:grid;margin-left:44px;gap:2px 0;padding-bottom:4px}
 .chip{font-size:12px;font-weight:600;border-radius:6px;padding:2px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0 2px}
 .grid{position:relative;margin-left:44px;border-top:.5px solid var(--grid)}
-.hour{position:absolute;left:-44px;width:40px;text-align:right;font-size:11px;color:var(--sub);font-variant-numeric:tabular-nums;transform:translateY(-7px)}
-.hline{position:absolute;left:0;right:0;height:.5px;background:var(--grid)}
 .ev{position:absolute;border-radius:8px;padding:3px 5px 3px 12px;overflow:hidden;font-size:12px;line-height:1.25;text-align:left;display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch}
 .ev.short{flex-direction:row;gap:4px;align-items:center;padding-top:0;padding-bottom:0;white-space:nowrap}
 .ev.short::before{display:none}.ev.short::after{top:50%;transform:translateY(-50%)}
@@ -83,8 +80,6 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lapis);outline-offs
 .ev .tm{font-weight:600;font-variant-numeric:tabular-nums}
 .ev .ti{font-weight:700;font-size:13px;word-break:break-all}
 .ev .en{position:absolute;bottom:3px;left:12px;font-weight:600;font-variant-numeric:tabular-nums}
-.nowline{position:absolute;left:0;right:0;height:2px;background:var(--now);z-index:3}
-.nowpill{position:absolute;left:-44px;width:42px;text-align:center;font-size:10.5px;font-weight:700;color:#fff;background:var(--now);border-radius:9px;transform:translateY(-8px);z-index:4;font-variant-numeric:tabular-nums}
 
 /* 企業2列 */
 .cos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
@@ -145,7 +140,6 @@ button:active,a.r:active{transform:scale(.97)}
 @keyframes pageNext{from{transform:translateX(18%)}to{transform:none}}
 @keyframes pagePrev{from{transform:translateX(-18%)}to{transform:none}}
 @keyframes flipIn{from{transform:scale(.94)}to{transform:none}}
-.calbody{overflow:hidden}
 .seg{position:relative}
 .seg .pill{position:absolute;top:2px;bottom:2px;left:2px;border-radius:7px;background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.04);transition:transform .32s var(--ease)}
 .seg button{position:relative;z-index:1}
@@ -218,7 +212,6 @@ button:active,a.r:active{transform:scale(.97)}
 .prio .lb{font-size:13px;color:var(--sub);padding:0 10px 0 8px}
 .prio button{text-align:center;font-size:13px;font-weight:600;padding:6px 0;border-radius:7px;color:var(--sub);position:relative;z-index:1;transition:color .25s}
 .prio button.on{color:var(--label);background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.badge{font-size:11px;font-weight:700;color:var(--lapis);background:color-mix(in srgb,var(--lapis) 14%,transparent);border-radius:5px;padding:1px 5px;white-space:nowrap;flex:none}
 .prog{background:var(--card);border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:6px}
 .prog .top{display:flex;align-items:center;gap:10px}
 .prog .stg{font-size:17px;font-weight:700}
@@ -375,7 +368,6 @@ button:active,a.r:active{transform:scale(.97)}
 .sheet .grp .r{min-height:48px}
 .sheet .mini{position:relative;height:144px;margin:0 0 14px;border-radius:14px;overflow:hidden;background:var(--card)}
 @media all{.sheet .mini{background:#2c2c2e}}
-.coh{font-size:22px;font-weight:700;margin:22px 4px 8px}
 /* Muse の掲示板（タスクの下）：最新の「状況」を1枚の看板に・その下に新着 */
 .bh{display:flex;align-items:center;gap:8px;margin:28px 4px 8px}
 .bh h2{font-size:22px;font-weight:700;margin:0;flex:1}
@@ -533,7 +525,6 @@ mark{background:none;color:var(--label);font-weight:700}
 .edf .tm2 input{flex:1}
 .sheet .save{width:100%;min-height:50px;border-radius:14px;background:var(--lapis);color:#fff;font-size:17px;font-weight:600;text-align:center;margin:4px 0 8px}
 .sheet .cancel{width:100%;min-height:44px;text-align:center;color:var(--lapis);font-size:16px}
-.pendtag{display:inline-block;font-size:11px;font-weight:700;color:var(--topaz);background:color-mix(in srgb,var(--topaz) 16%,transparent);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:2px}
 /* 企業のページ：上に飛び先の帯・状態は1行・日程は1行 */
 .cpage{padding:0 12px}
 .chips{position:sticky;top:44px;z-index:4;display:flex;gap:6px;overflow-x:auto;padding:8px 12px;margin:0 -12px 4px;background:var(--bg);scrollbar-width:none}
@@ -587,7 +578,6 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .nev.dim{opacity:.28}
 .nev.front{z-index:40!important;box-shadow:0 0 0 2px var(--c),0 6px 18px rgba(0,0,0,.5)}
 /* 丸い枠のアイコンから広がる入力（新しい電池表示の作法） */
-.mos{padding:6px 0}
 .mo{position:relative;display:flex;align-items:center;gap:12px;min-height:52px;padding:0 14px}
 .mo + .mo::before{content:"";position:absolute;top:0;left:62px;right:0;height:.5px;background:var(--sep)}
 .mob{width:36px;height:36px;border-radius:18px;display:grid;place-items:center;background:var(--fill);color:var(--lapis);flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);transition:transform .2s var(--ease)}
@@ -2053,33 +2043,11 @@ function weekStrip(st) {
     h += `<button class="d ${cls}" data-day="${kk}" aria-label="${d.getMonth()+1}月${d.getDate()}日"><span>${d.getDate()}</span></button>`; }
   return `<div class="wk7">${h}</div>`;
 }
-function openMenu(anchor) {
-  closePop(true);
-  const r = anchor.getBoundingClientRect();
-  scrimEl = document.createElement("div"); scrimEl.className = "scrim";
-  popEl = document.createElement("div"); popEl.className = "menu glass";
-  popEl.innerHTML = MODES.map(([k, l]) => `<button data-m="${k}"><span class="ck">${k === mode ? "✓" : ""}</span>${ICN[k]}<span>${l}</span></button>`).join("");
-  document.body.append(scrimEl, popEl);
-  popEl.style.top = (r.bottom + 8) + "px"; popEl.style.right = Math.max(12, innerWidth - r.right - 50) + "px";
-  scrimEl.onclick = () => closePop();
-  popEl.querySelectorAll("[data-m]").forEach(b => b.onclick = () => { const m = b.dataset.m; closePop(); if (m !== mode) setMode(m); });
-}
 
 // 次の締切は、済んだ知らせで外れていない物だけ（Mac の締切一覧と同じ判断）
 function liveNext(c) { if (!c.next) return null; const d = pd(c.next.date), k = keyOf(d);
   return (D.deadlines || []).some(x => x.co === c.name && keyOf(pd(x.date)) === k) ? d : null; }
 // 企業の1行：志望の札・社名・次の締切か次の予定（無ければ進み具合と最後の会）・進み具合の点
-function coRow(c) {
-  const n = noteOf(c), t0 = new Date(), md = d => `${d.getMonth()+1}/${d.getDate()}（${WD[d.getDay()]}）`; t0.setHours(0,0,0,0);
-  const nx = liveNext(c);
-  const ev = (c.evs || []).map(i => ({e: D.events[i], s: pd(D.events[i].start)})).filter(x => x.s >= t0).sort((a, b) => a.s - b.s)[0];
-  const lastMeet = (c.meets || []).map(id => D.meets.find(m => m.id === id)).filter(Boolean).sort((a, b) => b.date.localeCompare(a.date))[0];
-  let sub = "";
-  if (nx) sub = `<span class="nx2">${md(nx)} ${esc(c.next.label)}</span>`;
-  else if (ev) sub = `<span>${md(ev.s)} ${esc(ev.e.title.replace(c.name, "").trim() || "予定")}</span>`;
-  else sub = `<span>${esc(c.stageLabel && c.stage !== "interested" ? c.stageLabel : lastMeet ? `${pd(lastMeet.date).getMonth()+1}/${pd(lastMeet.date).getDate()} ${lastMeet.kind}` : "気になる")}</span>`;
-  return `<button class="r" data-co="${esc(c.name)}"><span class="cobadge p${n.prio || 0}">${n.prio || ""}</span><span class="main"><div class="t">${esc(c.name)}${MUSE[c.name] ? SPARK : ""}</div><div class="s">${sub}</div></span>${steps(c.stage)}${CH}</button>`;
-}
 // 志望の順（iPhone で変えた直後の値も含めて）→ その後は書き出しの順
 function sortCos(cos) { return cos.map((c, i) => ({c, i, p: noteOf(c).prio || 9})).sort((a, b) => a.p - b.p || a.i - b.i).map(x => x.c); }
 
