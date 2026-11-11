@@ -725,7 +725,7 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .anotes{width:100%;min-height:150px;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:var(--label);font:inherit;font-size:16px;line-height:1.5;padding:14px 16px;outline:none;resize:none;margin-bottom:14px;display:block;box-sizing:border-box;white-space:pre-wrap;word-break:break-word}
 .arep{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 12px 0 4px;border-radius:12px;color:var(--label);font-size:16px;font-weight:600;margin-bottom:6px}.arep svg:first-child{width:21px;height:21px}
 .adef{display:flex;align-items:center;gap:10px;min-height:44px;color:var(--klapisL);font-size:15px;font-weight:600;margin:4px 4px 14px}
-.afoot{position:sticky;bottom:0;display:flex;justify-content:space-between;align-items:center;margin:0 -14px;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:.5px solid var(--sep)}
+.afoot{position:sticky;bottom:0;display:flex;justify-content:space-between;align-items:center;margin:0 -14px;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));background:#1c1c1e;border-top:.5px solid var(--sep)}
 .acancel{height:44px;padding:0 18px;border-radius:12px;background:rgba(255,255,255,.1);color:var(--label);font-size:17px;font-weight:600}
 .aadd{height:44px;padding:0 22px;border-radius:12px;background:#fff;color:#000;font-size:17px;font-weight:700}.aadd:disabled{opacity:.5}
 /* ── 📷11-09 写真・動画・トレイ ── */
@@ -775,7 +775,7 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .tsrc{display:inline-flex;align-items:center;gap:4px}.tsrc svg{width:13px;height:13px}
 .tth .mlocal{width:100%;height:100%;object-fit:cover;display:block}
 .tempty{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--sub);padding:28px 0 8px;font-size:14px}.tempty svg{width:30px;height:30px}
-.trule{margin:12px 20px 120px;color:var(--sub);font-size:12.5px;line-height:1.55}
+.trule{margin:12px 88px 120px 20px;color:var(--sub);font-size:12.5px;line-height:1.55}
 /* ── 🕘11-09 予定の編集：日付の盤と時計（Mac 本体の部品の写し）。動きは easeOut・300ms 未満・弾み 0.15 以下 ── */
 :root{--klapis:#215abd;--klapisL:#70a3fa;--klapisD:#122e80;--kruby:#c06a78;--kout:cubic-bezier(.22,.61,.36,1);--kspring:cubic-bezier(.3,1.15,.55,1)}
 .ke button{transition:transform .14s var(--kout),opacity .14s var(--kout),background-color .22s var(--kout),color .22s var(--kout)}
@@ -1605,7 +1605,7 @@ function addHTML(e, TT, AL, RR) {
   const chip = (name, opts, cur) => `<div class="kxp" data-ax="${name}"><div><div class="kchs">${opts.map(o => `<button type="button" class="kc${String(o[0]) === String(cur) ? " on" : ""}" data-av="${esc(String(o[0]))}">${o[1]}</button>`).join("")}</div></div></div><input type="hidden" name="${name}" value="${esc(String(cur))}">`;
   return `<form id="edf" class="edf2 ke as">
     <div class="ashd">
-      <label class="apaste">${ICN.spark}<input id="apt" placeholder="文章を貼ると自動で入ります" autocomplete="off" enterkeyhint="done"><button type="button" class="aimg" id="aimg" aria-label="画像から">${ICB.photo}</button></label>
+      <label class="apaste">${ICN.spark}<input id="apt" placeholder="貼ると自動で入ります" autocomplete="off" enterkeyhint="done"><button type="button" class="aimg" id="aimg" aria-label="画像から">${ICB.photo}</button></label>
       <button type="button" class="atent" id="atent" aria-pressed="true"><i></i><span>確</span></button>
       <button type="button" class="ax" id="edc" aria-label="閉じる"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 2.5l9 9M11.5 2.5l-9 9"/></svg></button>
     </div>
@@ -1685,7 +1685,7 @@ function addBind(e, i, TT, AL, RR) {
       q("#art").textContent = Date.now() - t0 > 90e3 ? `Mac 待ち（Mac を最後に見たのは ${macSeen()}）` : say; await new Promise(z => setTimeout(z, Date.now() - t0 < 30e3 ? 1500 : 3500)); } };
   const pt = q("#apt"); let sent = "";
   const read = async () => { const t = pt.value.trim(); if (t.length < 8 || t === sent) return; sent = t; const id = rid();
-    try { await api.op({op: "readtext", id, text: t.slice(0, 6000)}); pt.value = ""; pt.placeholder = "読んでいます…"; await wait(id, "読んでいます"); pt.placeholder = "文章を貼ると自動で入ります"; } catch (err) { sent = ""; toast(failMsg(err)); } };
+    try { await api.op({op: "readtext", id, text: t.slice(0, 6000)}); pt.value = ""; pt.placeholder = "読んでいます…"; await wait(id, "読んでいます"); pt.placeholder = "貼ると自動で入ります"; } catch (err) { sent = ""; toast(failMsg(err)); } };
   pt.addEventListener("paste", () => setTimeout(read, 50)); pt.addEventListener("keydown", ev => { if (ev.key === "Enter") { ev.preventDefault(); read(); } }); pt.addEventListener("blur", read);
   q("#aimg").onclick = async () => { const [fl] = await pickFiles("image/*", false); if (!fl) return; const id = rid(), r = q("#aread"); r.hidden = false; q("#art").textContent = "Drive へ上げています";
     try { await sendFile("up", fl, null, null, id); media.push({id, url: URL.createObjectURL(fl), p: 1}); drawPh(); await wait(id, "読んでいます"); } catch (err) { r.hidden = true; toast(failMsg(err)); } };
