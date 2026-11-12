@@ -1150,7 +1150,7 @@ async function sendFile(kind, file, extra, onProg, id) {
   const isImg = (file.type || "").startsWith("image/"), blob = kind === "up" && isImg ? await shrink(file) : file;
   if (blob.size > MMAX) throw new Error(`200MB までです（${Math.round(blob.size / 1048576)}MB）`);
   const mime = blob.type || file.type || (isImg ? "image/jpeg" : "video/quicktime");
-  if (!/^(image|video)\//.test(mime)) throw new Error("写真か動画だけです");
+  if (!/^(image|video)\x2f/.test(mime)) throw new Error("写真か動画だけです");
   const total = Math.max(1, Math.ceil(blob.size / MCH));
   const name = (kind === "up" && isImg ? (file.name || "photo").replace(/\.\w+$/, "") + ".jpg" : (file.name || (isImg ? "photo.jpg" : "video.mov")));
   for (let p = 0; p < total; p++) {
@@ -2568,7 +2568,7 @@ async function refresh0(first) {
       r = await api.index(stamp);
       if (fell) syncOff = Date.now();
     }
-    if (r.text) { D = JSON.parse(r.text); stamp = r.stamp; prunePending(); pruneNotes(); applyPendEv(); if (first || canRender() || trayIdle()) render(); }
+    if (r.text && (first || !sheetEl)) { D = JSON.parse(r.text); stamp = r.stamp; prunePending(); pruneNotes(); applyPendEv(); if (first || canRender() || trayIdle()) render(); }
     else if (first) $("#main").innerHTML = '<div class="err">まだ中身がありません。Mac の Aletheia が書くと出ます。</div>';
     else if (museNew && D && canRender()) render();
     // 開いている所が分けた2本を使うなら、新しくなった時だけ読み直す
