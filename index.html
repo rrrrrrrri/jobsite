@@ -2137,7 +2137,7 @@ function tasks(main) {
     const sub = [due ? `<span class="due">${due.getMonth()+1}/${due.getDate()}</span>` : "", m ? `<button data-meet="${m.id}" style="color:var(--sub)">${esc(m.company)} ${esc(m.kind)}</button>` : "", wait ? `<span class="q">Mac に届くと反映</span>` : ""].filter(Boolean).join("・");
     return `<div class="task${wait ? " wait" : ""}" ${t.id ? `data-task="${t.id}"` : ""}><button class="ring" aria-label="完了にする" ${wait ? "disabled" : ""} style="${t.color ? `border-color:var(--${t.color})` : ""}">${CHECK}</button><span class="main" style="flex:1;min-width:0"><div class="tx">${esc(t.t)}</div>${sub ? `<div class="s">${sub}</div>` : ""}</span></div>`; };
   const dl = D.deadlines || [], t0 = new Date(); t0.setHours(0,0,0,0);
-  const chips = dl.length ? `<div class="sec">締切（メールから自動で取り込み）</div><div class="dls">${dl.map((x, k) => { const d = pd(x.date), left = Math.round((d - t0) / 864e5);
+  const chips = dl.length ? `<div class="sec">締切</div><div class="dls">${dl.map((x, k) => { const d = pd(x.date), left = Math.round((d - t0) / 864e5);
       return `<button class="dlb${left <= 3 ? " soon" : ""}" data-dl="${k}"><span class="dd">${d.getMonth()+1}/${d.getDate()}（${WD[d.getDay()]}）まで・${left === 0 ? "今日" : left === 1 ? "明日" : `あと${left}日`}</span><span class="dc">${esc(x.co)}</span><span class="dw">${esc(x.label)}${x.what ? "・" + esc(x.what) : ""}</span></button>`; }).join("")}</div>` : "";
   main.innerHTML = `<h1 class="large">タスク</h1>${chips}<div class="group">
     <form class="addrow" id="addf"><span class="plus"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 1.5v9M1.5 6h9"/></svg></span><input id="addi" enterkeyhint="done" placeholder="新しいタスク" autocomplete="off"></form>
