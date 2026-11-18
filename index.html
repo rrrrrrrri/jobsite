@@ -858,7 +858,7 @@ const remoteOp = o => fetch(CONF.u, {method: "POST", headers: {"Content-Type": "
 const api = {
   index: st => GAS ? call("getIndex", st) : API ? remote({fn: "index", st: st || 0}) : fetch("data/index.json", {cache: "no-store"}).then(r => r.text()).then(t => ({stamp: t.length, text: t})),
   muse: ms => GAS ? call("getMuse", ms) : API ? remote({fn: "muse", st: ms || 0}) : Promise.resolve({museStamp: 0}),
-  sync: (st, ms) => GAS ? call("getSync", st, ms) : remote({fn: "sync", st: st || 0, ms: ms || 0}),
+  sync: (st, ms, gs) => GAS ? call("getSync", st, ms, gs) : remote({fn: "sync", st: st || 0, ms: ms || 0, gs: gs || ""}),
   part: (name, st) => GAS ? call("getPart", name, st) : API ? remote({fn: "part", name, st: st || 0}) : fetch(`data/${name}.json`, {cache: "no-store"}).then(r => r.ok ? r.text() : null).then(t => ({stamp: t ? t.length : 0, text: t})),
   meet: id => GAS ? call("getMeet", id) : API ? remote({fn: "meet", id}) : fetch(`data/meet/${id}.json`).then(r => r.ok ? r.text() : null),
   img: n => GAS ? call("getImg", n) : API ? remote({fn: "img", id: n}) : Promise.resolve(`data/img/${n}`),
@@ -2550,6 +2550,18 @@ async function refresh(first) {
 /* ⚡️11-11 普段は窓口を1回だけ呼ぶ（入口と Muse の物をまとめて）。前は20秒ごとに2本。
    開いた直後は今まで通り2本を並べて呼ぶ＝入口が先に出る。窓口が古くてまとめ読みの口が無い時は、10分のあいだ前の2本で読む。 */
 let syncOff = 0;
+/* 🔗11-18 Google の「就活」「就活　仮押さえ」（Muse が Mac を通さずに入れた予定）は窓口が直接読む＝Mac が閉じていても出る。
+   Mac の書き出しに同じ予定（合い札 uid）が載ったらそちらを使い、二重に出さない。ここで足した物は読むだけ（g）。 */
+let GEV = null, gStamp = "";
+const takeG = g => { if (!g || !g.gStamp || g.gStamp === gStamp) return false; GEV = Array.isArray(g.ev) ? g.ev : []; gStamp = g.gStamp; return true; };
+function mergeG() {
+  if (!D || !Array.isArray(D.events)) return;
+  D.events = D.events.filter(e => !e.g);
+  if (!GEV || !GEV.length) return;
+  const nt = t => String(t || "").normalize("NFKC").replace(/\s+/g, "");
+  const uids = new Set(D.events.map(e => e.uid).filter(Boolean)), keys = new Set(D.events.map(e => e.start + "|" + nt(e.title)));
+  for (const e of GEV) if (!uids.has(e.uid) && !keys.has(e.start + "|" + nt(e.title))) D.events.push({...e, g: true});
+}
 async function refresh0(first) {
   if (first || view.v === "tray") loadTrayTxt();
   const takeMuse = r => {
@@ -2559,7 +2571,7 @@ async function refresh0(first) {
   };
   let m = null, r = null, fell = false, museNew = false;
   if (!first && (GAS || API) && Date.now() - syncOff > 6e5) {
-    try { const sy = await api.sync(stamp, museStamp); if (!sy || !sy.index) throw new Error("形が違います"); r = sy.index; museNew = takeMuse(sy.muse); }
+    try { const sy = await api.sync(stamp, museStamp, gStamp); if (!sy || !sy.index) throw new Error("形が違います"); r = sy.index; museNew = takeMuse(sy.muse); if (takeG(sy.g)) { museNew = true; if (!r.text) mergeG(); } }
     catch (e) { r = null; fell = true; }
   }
   try {
@@ -2568,7 +2580,7 @@ async function refresh0(first) {
       r = await api.index(stamp);
       if (fell) syncOff = Date.now();
     }
-    if (r.text && (first || !sheetEl)) { D = JSON.parse(r.text); stamp = r.stamp; prunePending(); pruneNotes(); applyPendEv(); if (first || canRender() || trayIdle()) render(); }
+    if (r.text && (first || !sheetEl)) { D = JSON.parse(r.text); stamp = r.stamp; mergeG(); prunePending(); pruneNotes(); applyPendEv(); if (first || canRender() || trayIdle()) render(); }
     else if (first) $("#main").innerHTML = '<div class="err">まだ中身がありません。Mac の Aletheia が書くと出ます。</div>';
     else if (museNew && D && canRender()) render();
     // 開いている所が分けた2本を使うなら、新しくなった時だけ読み直す
