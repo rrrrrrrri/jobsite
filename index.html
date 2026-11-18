@@ -858,12 +858,20 @@ const remoteOp = o => fetch(CONF.u, {method: "POST", headers: {"Content-Type": "
 const api = {
   index: st => GAS ? call("getIndex", st) : API ? remote({fn: "index", st: st || 0}) : fetch("data/index.json", {cache: "no-store"}).then(r => r.text()).then(t => ({stamp: t.length, text: t})),
   muse: ms => GAS ? call("getMuse", ms) : API ? remote({fn: "muse", st: ms || 0}) : Promise.resolve({museStamp: 0}),
-  sync: (st, ms, gs) => GAS ? call("getSync", st, ms, gs) : remote({fn: "sync", st: st || 0, ms: ms || 0, gs: gs || ""}),
+  sync: (st, ms, gs, ts) => GAS ? call("getSync", st, ms, gs, ts) : remote({fn: "sync", st: st || 0, ms: ms || 0, gs: gs || "", ts: ts || ""}),
   part: (name, st) => GAS ? call("getPart", name, st) : API ? remote({fn: "part", name, st: st || 0}) : fetch(`data/${name}.json`, {cache: "no-store"}).then(r => r.ok ? r.text() : null).then(t => ({stamp: t ? t.length : 0, text: t})),
   meet: id => GAS ? call("getMeet", id) : API ? remote({fn: "meet", id}) : fetch(`data/meet/${id}.json`).then(r => r.ok ? r.text() : null),
   img: n => GAS ? call("getImg", n) : API ? remote({fn: "img", id: n}) : Promise.resolve(`data/img/${n}`),
   op: o => GAS ? call("addOp", o) : API ? remoteOp(o) : Promise.resolve(true),
 };
+/* 🔗11-18 Google Tasks のタスク（gid あり）の完了・戻すは窓口がその場で Google へ当てる。Mac も知っているタスクなら Mac にも頼む */
+{ const op1 = api.op; api.op = o => {
+  if ((o.op === "done" || o.op === "undone") && typeof D !== "undefined" && D && D.tasks) {
+    const t = D.tasks.find(x => x.id === o.id);
+    if (t && t.gid) { const g = op1({op: o.op === "done" ? "gtdone" : "gtundone", gid: t.gid}); if (t.g) return g; g.catch(() => {}); }
+  }
+  return op1(o);
+}; }
 
 /* iPhone で押した頼み（Mac が反映するまでの間もそう見せる）。端末に覚えるので閉じても消えない */
 const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
@@ -2552,7 +2560,16 @@ async function refresh(first) {
 let syncOff = 0;
 /* 🔗11-18 Google の「就活」「就活　仮押さえ」（Muse が Mac を通さずに入れた予定）は窓口が直接読む＝Mac が閉じていても出る。
    Mac の書き出しに同じ予定（合い札 uid）が載ったらそちらを使い、二重に出さない。ここで足した物は読むだけ（g）。 */
-let GEV = null, gStamp = "";
+let GEV = null, gStamp = "", GTK = null, tStamp = "";
+/* 🔗11-18 Google Tasks の「Aletheia」（Muse がネットから足したタスク）も窓口から直接。Mac の書き出しに同じ gid があればそちらを使う */
+const takeT = t => { if (!t || !t.tStamp || t.tStamp === tStamp) return false; GTK = Array.isArray(t.items) ? t.items : []; tStamp = t.tStamp; return true; };
+function mergeT() {
+  if (!D || !Array.isArray(D.tasks)) return;
+  D.tasks = D.tasks.filter(t => !t.g);
+  if (!GTK || !GTK.length) return;
+  const gids = new Set(D.tasks.map(t => t.gid).filter(Boolean));
+  for (const t of GTK) if (!gids.has(t.gid)) D.tasks.push({...t, g: true});
+}
 const takeG = g => { if (!g || !g.gStamp || g.gStamp === gStamp) return false; GEV = Array.isArray(g.ev) ? g.ev : []; gStamp = g.gStamp; return true; };
 function mergeG() {
   if (!D || !Array.isArray(D.events)) return;
@@ -2571,7 +2588,7 @@ async function refresh0(first) {
   };
   let m = null, r = null, fell = false, museNew = false;
   if (!first && (GAS || API) && Date.now() - syncOff > 6e5) {
-    try { const sy = await api.sync(stamp, museStamp, gStamp); if (!sy || !sy.index) throw new Error("形が違います"); r = sy.index; museNew = takeMuse(sy.muse); if (takeG(sy.g)) { museNew = true; if (!r.text) mergeG(); } }
+    try { const sy = await api.sync(stamp, museStamp, gStamp, tStamp); if (!sy || !sy.index) throw new Error("形が違います"); r = sy.index; museNew = takeMuse(sy.muse); if (takeG(sy.g)) { museNew = true; if (!r.text) mergeG(); } if (takeT(sy.t)) { museNew = true; if (!r.text) mergeT(); } }
     catch (e) { r = null; fell = true; }
   }
   try {
@@ -2580,7 +2597,7 @@ async function refresh0(first) {
       r = await api.index(stamp);
       if (fell) syncOff = Date.now();
     }
-    if (r.text && (first || !sheetEl)) { D = JSON.parse(r.text); stamp = r.stamp; mergeG(); prunePending(); pruneNotes(); applyPendEv(); if (first || canRender() || trayIdle()) render(); }
+    if (r.text && (first || !sheetEl)) { D = JSON.parse(r.text); stamp = r.stamp; mergeG(); mergeT(); prunePending(); pruneNotes(); applyPendEv(); if (first || canRender() || trayIdle()) render(); }
     else if (first) $("#main").innerHTML = '<div class="err">まだ中身がありません。Mac の Aletheia が書くと出ます。</div>';
     else if (museNew && D && canRender()) render();
     // 開いている所が分けた2本を使うなら、新しくなった時だけ読み直す
