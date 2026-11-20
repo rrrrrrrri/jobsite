@@ -2504,7 +2504,7 @@ function company(main) {
   const ms = (c.meets || []).map(id => D.meets.find(m => m.id === id)).filter(Boolean).sort((a, b) => b.date.localeCompare(a.date));
   const muse = museOf(c), files = filesOf(c);
   const t0 = new Date(); t0.setHours(0,0,0,0);
-  const evs = (c.evs || []).map(i => ({...D.events[i], i, s: pd(D.events[i].start), en: pd(D.events[i].end)})).filter(e => !e.deleted && e.s.getFullYear() > 1970);
+  const evs = (c.evs || []).filter(i => D.events[i]).map(i => ({...D.events[i], i, s: pd(D.events[i].start), en: pd(D.events[i].end)})).filter(e => !e.deleted && e.s.getFullYear() > 1970);
   const up = evs.filter(e => e.en >= t0).sort((a, b) => a.s - b.s), past = evs.filter(e => e.en < t0).sort((a, b) => b.s - a.s);
   // 日程は1行：日付の札・社名を外した題・時刻と場所・あと何日
   const evRow = (e, old) => { const left = Math.round((new Date(e.s).setHours(0,0,0,0) - t0) / 864e5);
