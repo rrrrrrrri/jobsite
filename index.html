@@ -830,13 +830,176 @@ svg.spark{width:14px;height:14px;flex:none;color:#8e6bd8;vertical-align:-1px;mar
 .kph{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:0 0 10px}.kph .kt{aspect-ratio:1;border-radius:10px;overflow:hidden;background:#3a3a3c}.kph img{width:100%;height:100%;object-fit:cover;display:block}
 @media (prefers-reduced-motion: reduce){.ke *,.ke *::before{animation:none!important;transition-property:opacity,background-color,color!important;transition-duration:.12s!important}.khand{transition:none!important}.ke button:active:not(:disabled){transform:none}}
 @media (max-width:340px){.ktm{padding:0 8px}.kdp{padding:2px 6px 12px}.kdch button{font-size:12px}}
-@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+/* ── 11-21 Muse V4 UX・2pxロードバー・スケルトン・階層カード・未確定区分 ── */
+:root{--muse:#8e9cf8;--tent:#ff7043;--grid:rgba(235,235,245,.08);--card2:#2c2c2e;--spring4:cubic-bezier(.22,1,.36,1)}
+.loadbar{
+  position:fixed;top:env(safe-area-inset-top,0px);left:0;height:2px;width:0;z-index:45;pointer-events:none;opacity:0;
+  background:linear-gradient(90deg,var(--lapis),var(--muse),var(--lapis));background-size:200% 100%;
+  box-shadow:0 0 8px rgba(112,163,250,.55);transition:width .35s var(--spring4),opacity .25s ease;
+}
+.loadbar.on{opacity:1;animation:barSweep 1.2s linear infinite}
+@keyframes barSweep{0%{background-position:0% 0}100%{background-position:200% 0}}
+.sk{position:relative;overflow:hidden;background:#202023;border-radius:8px}
+.sk::after{
+  content:"";position:absolute;inset:0;transform:translateX(-100%);
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.065) 50%,transparent 100%);
+  animation:skShimmer 1.3s var(--ease) infinite;
+}
+@keyframes skShimmer{100%{transform:translateX(100%)}}
+.sk-ev{position:absolute;left:3px;right:3px;border-radius:7px;background:#242428;border-left:2.5px solid rgba(112,163,250,.35)}
+.reveal{animation:floatIn .42s var(--spring4) calc(var(--stagger,0) * 32ms) both}
+@keyframes floatIn{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:none}}
+/* Sleek stacked typographic .dd2 (12月 / 3 / 木) */
+.dd2{width:40px;flex:none;text-align:center;line-height:1.05;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;align-items:center;gap:1px}
+.dd2 .m{font-size:10px;font-weight:600;color:var(--faint)}
+.dd2 b{display:block;font-size:18px;font-weight:700;letter-spacing:-.02em}
+.dd2 .w{font-size:10.5px;font-weight:600;color:var(--sub)}
+.dd2.we .w,.dd2.we b,.er .dd2.we b,.er .dd2.we span{color:var(--rubysoft)}
+.dd2.due b{color:var(--ruby)}
+/* Tentative (仕分け箱・未確定 / 仮押さえ) distinction */
+.nev.tentative{
+  border-top:1px dashed var(--tent)!important;border-right:1px dashed var(--tent)!important;border-bottom:1px dashed var(--tent)!important;
+  background-image:repeating-linear-gradient(-45deg,rgba(255,112,67,.2) 0 4px,rgba(255,112,67,.06) 4px 8px)!important;
+}
+.nev .tbadge{font-size:9px;font-weight:700;padding:0 4px;border-radius:4px;background:rgba(255,112,67,.28);color:#ffb9a2;margin-left:auto}
+.nlist .it.tentative,.mle.tentative{border:1px dashed rgba(255,112,67,.5)}
+/* Sticky .chips with Muse pill */
+.chips{border-bottom:.5px solid rgba(255,255,255,.06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(0,0,0,.9)}
+.chips button,.chips a{border:.5px solid rgba(255,255,255,.06)}
+.chips button.muse-chip svg{color:var(--muse)}
+.chips button.on{background:rgba(112,163,250,.18);border-color:rgba(112,163,250,.4);color:#fff}
+.chips button.muse-chip.on{background:rgba(142,156,248,.22);border-color:rgba(142,156,248,.48)}
+.cpage .sec{scroll-margin-top:104px}
+svg.spark{color:var(--muse)}
+/* ID Bar */
+.id-bar{margin:10px 0 6px;background:var(--card);border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;border:.5px solid var(--sep)}
+.id-bar .id-meta{flex:1;min-width:0}
+.id-top{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--sub)}
+.id-badge{font-size:11px;font-weight:600;padding:1px 6px;border-radius:99px}
+.id-badge.ok{background:rgba(79,184,148,.16);color:var(--emerald)}
+.id-badge.guess{background:rgba(214,171,94,.18);color:var(--topaz)}
+.id-val{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.id-btns{display:flex;gap:6px;flex:none}
+.ic-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 11px;border-radius:10px;background:var(--card2);color:var(--lapis);font-size:13px;font-weight:600}
+.ic-btn svg{width:14px;height:14px;flex:none}
+.ic-btn.pri{background:var(--lapis);color:#fff}
+/* Section Headers & 整理 / 従来 toggle */
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:20px 4px 8px}
+.sec-head .sec{margin:0;display:inline-flex;align-items:center;gap:6px}
+.sec-head .sec svg{width:15px;height:15px;color:var(--sub);flex:none}
+.seg-sm{display:inline-flex;background:var(--fill);padding:2px;border-radius:8px;gap:2px}
+.seg-sm button{font-size:12px;font-weight:600;padding:4px 9px;border-radius:6px;color:var(--sub)}
+.seg-sm button.on{background:var(--card);color:var(--label)}
+/* Default-Collapsed Accordion Muse Cards */
+.ev-list{display:flex;flex-direction:column;gap:10px}
+.mcard{background:var(--card);border-radius:16px;padding:13px 14px;width:100%;border:.5px solid var(--sep);display:flex;flex-direction:column;gap:9px}
+.mcard.is-hold{opacity:.72;border-color:rgba(214,171,94,.38);background:#161618}
+.mcard.is-closed{opacity:.68}
+.mcard-hd{cursor:pointer;display:flex;flex-direction:column;gap:5px}
+.mcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.mcard-title{font-size:16px;font-weight:700;line-height:1.3;margin:0}
+.mcard-summary{font-size:13px;color:var(--sub);line-height:1.4}
+.mcard-tags{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:12px;color:var(--faint)}
+.mcard-tags span{display:inline-flex;align-items:center;gap:4px}
+.mcard-tags svg{width:12px;height:12px;flex:none}
+.badges-r{display:flex;align-items:center;gap:5px;flex:none}
+.slot-cnt{font-size:11.5px;font-weight:600;color:var(--sub);background:var(--fill);padding:3px 7px;border-radius:99px;font-variant-numeric:tabular-nums}
+.feas{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap;flex:none}
+.feas.ok{background:rgba(79,184,148,.18);color:var(--emerald)}
+.feas.tight{background:rgba(214,171,94,.2);color:var(--topaz)}
+.feas.conflict{background:rgba(242,87,112,.18);color:var(--ruby)}
+.feas.hold{background:rgba(214,171,94,.16);color:var(--topaz);border:.5px solid rgba(214,171,94,.35)}
+.feas.closed{background:var(--fill);color:var(--sub)}
+.mcard-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:8px;border-top:.5px solid rgba(255,255,255,.06)}
+.exp-btn{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:var(--lapis);padding:5px 2px}
+.exp-btn svg{width:13px;height:13px;transition:transform .22s var(--ease)}
+.mcard.open .exp-btn svg{transform:rotate(180deg)}
+.quick-acts{display:flex;gap:6px;flex:none}
+.qbtn{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:9px;background:var(--card2);color:var(--sub)}
+.qbtn svg{width:12px;height:12px;flex:none}
+.qbtn.hold.on{background:rgba(214,171,94,.22);color:var(--topaz);border:.5px solid rgba(214,171,94,.4)}
+.qbtn.drop{color:var(--rubysoft)}
+/* Expanded Slots + 2-track 07:00–23:00 DayBar */
+.slot-list{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+.slot-box{background:rgba(255,255,255,.03);border-radius:12px;padding:10px;border:.5px solid rgba(255,255,255,.07);display:flex;flex-direction:column;gap:6px;cursor:pointer}
+.slot-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.slot-dt{display:inline-flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.slot-dt .d{font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+.slot-dt .wd{font-size:11px;font-weight:600;padding:1px 6px;border-radius:6px;background:var(--fill);color:var(--sub)}
+.slot-dt .wd.we{color:var(--rubysoft);background:rgba(242,87,112,.14)}
+.slot-dt .tm{font-size:13px;font-weight:500;color:var(--ink)}
+.slot-cue{font-size:12px;color:var(--sub)}
+.slot-cue.tent{color:#ff9b7a;font-weight:600}
+.daybar-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--faint);font-variant-numeric:tabular-nums;margin-bottom:2px}
+.daybar{position:relative;height:28px;border-radius:6px;background:#121214;border:.5px solid var(--grid);overflow:hidden}
+.daybar .blk{position:absolute;top:2px;height:11px;border-radius:4px;font-size:8.5px;font-weight:600;line-height:1;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;padding:0 3px}
+.daybar .blk.cand{top:14px;height:11px;font-size:9px}
+.blk.tentative{border-style:dashed!important;background-image:repeating-linear-gradient(-45deg,rgba(255,112,67,.24) 0 4px,rgba(255,112,67,.08) 4px 8px)!important}
+.blk.cand-ok{background:rgba(79,184,148,.34);color:#d7fff0;border:1px solid var(--emerald)}
+.blk.cand-tight{background:rgba(214,171,94,.36);color:#fff2d6;border:1px solid var(--topaz)}
+.blk.cand-conflict{background:rgba(242,87,112,.38);color:#ffe0e5;border:1px solid var(--ruby)}
+.blk.cand-closed{background:rgba(142,142,147,.25);color:var(--sub);border:.5px dashed var(--faint)}
+.slot-foot{display:flex;align-items:center;justify-content:space-between;padding-top:2px}
+.slot-detail-hint{font-size:11.5px;color:var(--faint)}
+.join-pill{font-size:12px;font-weight:700;padding:4px 11px;border-radius:99px;background:rgba(112,163,250,.18);color:var(--lapis);border:.5px solid rgba(112,163,250,.35)}
+/* Compact Muse Request Hub & Collapsed 原文 */
+.hub{background:var(--card);border-radius:14px;padding:12px;border:.5px solid var(--sep);margin-top:10px}
+.preset-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px}
+.preset{padding:6px 10px;border-radius:9px;background:rgba(142,156,248,.13);color:#cdd3ff;font-size:12.5px;font-weight:600;border:.5px solid rgba(142,156,248,.28)}
+.hub-form{display:flex;gap:8px;align-items:center}
+.hub-form input{flex:1;min-width:0;height:38px;border-radius:10px;background:#111113;color:var(--label);border:.5px solid var(--sep);padding:0 11px;font:inherit;font-size:14px;outline:none}
+.hub-send{width:38px;height:38px;border-radius:10px;background:var(--muse);color:#111;display:grid;place-items:center;flex:none}
+.hub-send svg{width:17px;height:17px}
+.req-log{margin-top:9px;display:flex;flex-direction:column;gap:6px}
+.req-item{font-size:12.5px;padding:7px 10px;border-radius:9px;background:#121214;border:.5px solid var(--sep);display:flex;justify-content:space-between;gap:8px}
+.req-item b{color:var(--muse);font-weight:600}
+details.raw-muse{margin-top:10px;background:var(--card);border-radius:12px;border:.5px solid var(--sep);overflow:hidden}
+details.raw-muse summary{padding:11px 14px;font-size:13px;font-weight:600;color:var(--sub);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.raw-muse summary::-webkit-details-marker{display:none}
+details.raw-muse summary svg{width:14px;height:14px;transition:transform .2s var(--ease)}
+details.raw-muse[open] summary svg{transform:rotate(180deg)}
+details.raw-muse pre{margin:0;padding:0 14px 12px;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--sub);line-height:1.55}
+/* Detail Sheet Day Timeline */
+.timeline-card{background:#242426;border-radius:14px;padding:12px 14px;border:.5px solid var(--sep);margin:10px 0 12px}
+.tl-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.tl-slot-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+.tl-tab{padding:5px 10px;border-radius:9px;font-size:12px;font-weight:600;background:var(--fill);color:var(--sub);font-variant-numeric:tabular-nums}
+.tl-tab.on{background:var(--lapis);color:#fff}
+.dtl{position:relative;margin-left:44px;border-left:.5px solid var(--sep);padding-left:10px;display:flex;flex-direction:column;gap:6px}
+.dtl-row{position:relative;border-radius:10px;padding:8px 10px;background:#121214;border:.5px solid var(--grid);border-left-width:3px}
+.dtl-row.tentative{border-style:dashed!important;border-left-width:3px!important;background-image:repeating-linear-gradient(-45deg,rgba(255,112,67,.16) 0 5px,rgba(255,112,67,.05) 5px 10px)!important}
+.dtl-row.cand{border-width:1.5px;border-left-width:3px}
+.dtl-row.cand.ok{background:rgba(79,184,148,.14);border-color:var(--emerald)}
+.dtl-row.cand.tight{background:rgba(214,171,94,.16);border-color:var(--topaz)}
+.dtl-row.cand.conflict{background:rgba(242,87,112,.16);border-color:var(--ruby)}
+.dtl-row.cand.closed{background:rgba(142,142,147,.16);border-color:var(--faint)}
+.dtl-row.free{background:transparent;border:.5px dashed var(--grid);color:var(--sub);font-size:12px;padding:5px 10px}
+.dtl-tm{position:absolute;left:-52px;top:8px;width:38px;text-align:right;font-size:11px;color:var(--sub);font-variant-numeric:tabular-nums}
+.dtl-ttl{font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.cat-tag{font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:99px}
+.cat-tag.tent{background:rgba(255,112,67,.22);color:#ffae95;border:.5px dashed rgba(255,112,67,.6)}
+.dtl-meta{font-size:12px;color:var(--sub);margin-top:2px;font-variant-numeric:tabular-nums}
+.sheet .acts.muse-acts{grid-template-columns:repeat(2,minmax(0,1fr));margin:12px 0 4px}
+.sheet .acts.muse-acts .ab{flex-direction:row;min-height:46px;border-radius:13px;font-size:13.5px;gap:6px;padding:8px 10px;color:var(--label)}
+.sheet .acts.muse-acts .ab svg{width:15px;height:15px}
+.sheet .acts.muse-acts .ab.pri{background:var(--muse);color:#111;font-weight:700}
+.sheet .acts.muse-acts .ab.cal{background:rgba(112,163,250,.18);color:var(--lapis)}
+.sheet .acts.muse-acts .ab.hold.on{background:rgba(214,171,94,.24);color:var(--topaz);border:1px solid var(--topaz)}
+.sheet .acts.muse-acts .ab.skip{color:var(--rubysoft)}
+.sec-note{border-radius:12px;padding:9px 12px;background:rgba(214,171,94,.14);border:.5px solid rgba(214,171,94,.42);color:#ffe3a8;font-size:12.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-note svg{width:15px;height:15px;flex:none;color:var(--topaz)}
+.fld-grp{background:#2c2c2e;border-radius:14px;padding:10px 14px;margin-bottom:10px;border:.5px solid var(--sep)}
+.fld-grp label{display:block;font-size:11.5px;color:var(--sub);margin-bottom:4px}
+.fld-grp input,.fld-grp textarea{width:100%;background:#111113;color:var(--label);border:.5px solid var(--sep);border-radius:10px;padding:8px 10px;font:inherit;font-size:14.5px;outline:none}
+.sheet .save.muse{background:var(--muse);color:#111;font-weight:700}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.sk::after,.loadbar.on,.reveal{animation:none!important}}
 </style>
 </head>
 <body>
+<div class="loadbar on" id="loadbar" style="width:32%"></div>
 <div class="wrap">
   <header class="nav" id="nav" hidden><div><button class="back" id="back">‹ <span id="backl">戻る</span></button></div><div class="mid" id="mid"></div><div></div></header>
-  <main id="main"><p class="empty">読み込み中</p></main>
+  <main id="main"><div class="ncal" style="padding:10px 8px 12px"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">読み込み中</span><div class="sk" style="height:40px;border-radius:20px;margin:2px 4px 10px"></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;height:380px;margin-left:40px"><div style="position:relative;border-left:.5px solid var(--grid)"><div class="sk sk-ev" style="top:40px;height:70px"></div><div class="sk sk-ev" style="top:180px;height:90px"></div></div><div style="position:relative;border-left:.5px solid var(--grid)"><div class="sk sk-ev" style="top:95px;height:75px"></div><div class="sk sk-ev" style="top:240px;height:80px"></div></div><div style="position:relative;border-left:.5px solid var(--grid)"><div class="sk sk-ev" style="top:60px;height:65px"></div><div class="sk sk-ev" style="top:200px;height:85px"></div></div></div></div><div class="cos" style="margin-top:12px"><div class="co"><div class="sk" style="height:16px;width:70%"></div><div class="sk" style="height:12px;width:45%;margin-top:8px"></div></div><div class="co"><div class="sk" style="height:16px;width:62%"></div><div class="sk" style="height:12px;width:52%;margin-top:8px"></div></div></div></main>
 </div>
 <script>
 /* 11-08 どこかで落ちたら「読み込み中」のまま黙らせない＝理由を画面に出す */
@@ -963,21 +1126,101 @@ function partArrived(k) {
   const res = document.getElementById("sres");
   if (res && view.v === "search" && (view.q || "").trim()) { res.innerHTML = searchResults(view.q); bind(res); }
 }
+let lbTimer = 0;
+function setLoadbar(on) {
+  const el = document.getElementById("loadbar");
+  if (!el) return;
+  clearTimeout(lbTimer);
+  if (on) { el.classList.add("on"); el.style.width = "64%"; }
+  else { el.style.width = "100%"; lbTimer = setTimeout(() => { el.classList.remove("on"); el.style.width = "0"; }, 280); }
+}
+function dd2HTML(d, isDue) {
+  const mo = d.getMonth() + 1, da = d.getDate(), w = WD[d.getDay()], we = [0, 6].includes(d.getDay());
+  return `<span class="dd2${we ? " we" : ""}${isDue ? " due" : ""}"><span class="m">${mo}月</span><b>${da}</b><span class="w">${w}</span></span>`;
+}
+function cleanSnipJS(s) {
+  let x = String(s || "").replace(/\s+/g, " ").trim();
+  x = x.replace(/^(?:[^\s。！]{1,12}[ 　]*){1,3}(?:様|さま|さん)[ 　]*(?:こんにちは|いつもお世話になっております|お世話になっております|はじめまして|お疲れ様(?:です)?)?[。！!,、 　]*/, "");
+  x = x.replace(/^(?:いつもお世話になっております|お世話になっております|こんにちは|はじめまして)[。！!,、 　]*/, "");
+  x = x.replace(/^[^\s。！]{1,28}(?:新卒採用(?:グループ|事務局)?|採用担当|採用事務局|人事部)(?:です|でございます)[。！!,、 　]*/, "");
+  return x || String(s || "").trim();
+}
+function unifiedCoMails(c) {
+  const rawMails = mailsOf(c), notes = c.notes || [];
+  const normK = s => String(s || "").normalize("NFKC").replace(/\s+/g, "").toLowerCase();
+  const byKey = new Map();
+  for (const m of rawMails) {
+    const k = normK(m.subject) + "|" + String(m.at || "").slice(0, 10);
+    if (!byKey.has(k)) byKey.set(k, m);
+  }
+  const list = [];
+  const used = new Set();
+  for (const n of notes) {
+    const k = normK(n.subject) + "|" + String(n.at || "").slice(0, 10);
+    const gm = byKey.get(k);
+    if (gm) used.add(gm);
+    const rawSnip = gm ? gm.snippet : "";
+    list.push({
+      at: n.at, due: n.due || "", title: n.what || n.subject, rawWhat: n.what || "",
+      subject: n.subject, from: gm ? gm.from : c.name, body: cleanSnipJS(rawSnip), rawBody: rawSnip,
+      app: gm ? gm.app : "", url: gm ? gm.url : ""
+    });
+  }
+  for (const m of rawMails) {
+    if (used.has(m)) continue;
+    list.push({
+      at: m.at, due: "", title: cleanSubjectClient(m.subject), rawWhat: m.subject,
+      subject: m.subject, from: m.from || c.name, body: cleanSnipJS(m.snippet), rawBody: m.snippet || "",
+      app: m.app || "", url: m.url || ""
+    });
+  }
+  return list.sort((a, b) => String(b.at || "").localeCompare(String(a.at || "")));
+}
+function cleanSubjectClient(s) {
+  return String(s || "").replace(/^[\s【\[「『]*(?:重要|※|リマインド|再送)?[\s】\]」』]*(?:【[^】]{1,28}】\s*)*/, "").trim() || String(s || "");
+}
+function openMailSheet(c, m) {
+  const d = pd(m.at);
+  const el = openPlain(`
+    <div class="shd"><h3>メール本文</h3><button type="button" class="x" aria-label="閉じる">${ICN.close}</button></div>
+    <div class="fld-grp">
+      <div style="font-size:12px;color:var(--sub)">${esc(m.from || c.name)} ・ ${d.getMonth()+1}/${d.getDate()}（${WD[d.getDay()]}）</div>
+      <div style="font-size:15.5px;font-weight:700;margin-top:4px">${esc(m.subject || m.title)}</div>
+      ${m.due ? `<div style="margin-top:6px"><span class="duec" style="margin-left:0">${esc(m.due)}</span></div>` : ""}
+      <div style="font-size:14px;color:var(--ink);line-height:1.6;margin-top:10px;white-space:pre-wrap">${esc(m.body || m.rawBody || "本文の抜粋はありません")}</div>
+    </div>
+    ${m.app || m.url ? `<a class="save" style="display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none" ${mailHref(m)}>${ICN.mail}<span>Gmail で開く</span></a>` : ""}
+    ${c.url ? `<a class="cancel" style="display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none" href="${esc(c.url)}" target="_blank" rel="noopener">${ICN.link}<span>マイページを開く</span></a>` : ""}`);
+  el.querySelector(".x").onclick = () => closeSheet();
+}
 function evMailsHTML(co) {
   const mails = mailsOf(co).slice(0, 2);
   return mails.length ? `<div class="sec" style="margin-left:4px">メール</div><div class="grp">${mails.map(x => `<a class="mail" ${mailHref(x)}><div class="h"><span>${esc(x.from)}</span><span>${pd(x.at).getMonth()+1}/${pd(x.at).getDate()}</span></div><div class="sbj">${esc(x.subject)}</div></a>`).join("")}</div>` : "";
 }
-/* 企業のページの「関連のメール」。読めるまでは静かな1行（メールが在ると分かっている会社だけ） */
+/* 企業のページの統一「メール」（整理／従来切替・タップで詳細シート） */
 function coMailsHTML(c) {
-  const mails = mailsOf(c), notes = c.notes || [], showAll = view.allMail, md = d => `${d.getMonth()+1}/${d.getDate()}`;
-  const more = !showAll && (mails.length > 3 || notes.length > 6) ? '<button class="more" id="allm">すべて表示</button>' : "";
-  if (!mails.length) {
-    const wait = c.lastMail && partSplit("mails") && !PART.mails.data ? `<div class="upd"${notes.length ? "" : ' id="sx-ml"'} style="margin:10px 0">${PART.mails.fail ? "関連のメールを読めませんでした" : "関連のメールを読み込み中"}</div>` : "";
-    return wait + (more ? `<div class="group">${more}</div>` : "");
-  }
-  return `<div class="sec"${notes.length ? "" : ' id="sx-ml"'}>関連のメール</div><div class="group">${mails.slice(0, showAll ? 15 : 3).map(m => `<a class="mail" ${mailHref(m)}><div class="h"><span>${esc(m.from)}</span><span>${md(pd(m.at))}</span></div><div class="sbj">${esc(m.subject)}</div><div class="sn">${esc(m.snippet)}</div></a>${m.app && m.url ? `<a class="mweb" href="${esc(m.url)}" target="_blank" rel="noopener">Safari で開く</a>` : ""}`).join("")}${more}</div>`;
+  const items = unifiedCoMails(c), showAll = !!view.allMail, mm = store.get("mailMode", "after");
+  const skelRows = c.lastMail && partSplit("mails") && !PART.mails.data && !PART.mails.fail
+    ? [0, 1].map(() => `<div class="r"><div class="sk" style="width:36px;height:36px;border-radius:8px;flex:none"></div><div class="main"><div class="sk" style="height:14px;width:58%"></div><div class="sk" style="height:11px;width:82%;margin-top:6px"></div></div></div>`).join("")
+    : "";
+  if (!items.length && !skelRows) return "";
+  const shown = items.slice(0, showAll ? 30 : 4);
+  const more = !showAll && items.length > 4 ? `<button type="button" class="more" id="allm">すべて表示（${items.length}通）</button>` : "";
+  const rowsHTML = shown.map((m, idx) => {
+    const d = pd(m.at);
+    return mm === "after"
+      ? `<button type="button" class="r" data-um="${idx}">${dd2HTML(d, false)}<div class="main"><div class="t">${esc(m.title)}${m.due ? `<span class="duec">${esc(m.due)}</span>` : ""}</div><div class="s">${esc(m.body || m.subject)}</div></div><span class="chev" style="width:14px;height:14px;color:var(--faint);flex:none">${ICN.chevRight}</span></button>`
+      : `<div class="r" style="align-items:flex-start">${dd2HTML(d, false)}<div class="main"><div class="t">${esc(m.rawWhat || m.title)}</div><div class="s" style="white-space:normal">${esc(m.subject)}</div>${m.rawBody ? `<div class="s" style="white-space:normal;margin-top:4px">${esc(m.rawBody)}</div>` : ""}${m.app || m.url ? `<div style="margin-top:4px"><a ${mailHref(m)} style="color:var(--lapis);font-size:12.5px">開く</a></div>` : ""}</div></div>`;
+  }).join("");
+  return `<div class="group">${rowsHTML || skelRows}${more}</div>`;
 }
-function bindCoMails() { if ($("#allm")) $("#allm").onclick = () => { view = {...view, allMail: true}; render(); }; }
+function bindCoMails(coOpt) {
+  const c = coOpt || (view.v === "company" && findCo(view.c));
+  const items = c ? unifiedCoMails(c) : [];
+  if ($("#allm")) $("#allm").onclick = () => { view = {...view, allMail: true}; const slot = $("#mlslot"); if (slot && c) { slot.innerHTML = coMailsHTML(c); bindCoMails(c); } };
+  document.querySelectorAll("[data-mm]").forEach(b => b.onclick = () => { store.set("mailMode", b.dataset.mm); document.querySelectorAll("[data-mm]").forEach(x => x.classList.toggle("on", x === b)); const slot = $("#mlslot"); if (slot && c) { slot.innerHTML = coMailsHTML(c); bindCoMails(c); } });
+  document.querySelectorAll("[data-um]").forEach(b => b.onclick = () => { const m = items[+b.dataset.um]; if (c && m) openMailSheet(c, m); });
+}
 
 const ORDER = ["entry","document","test","interview1","interview2","finalInterview","offer"];
 let BOARD = [], MUSEMT = {}, FILES = {}, D = null, MUSE = {}, stamp = 0, museStamp = 0, stack = [], view = {v: "home"}, offset = 0, mode = store.get("calMode", "multi"), monthOff = 0, anim = "";
@@ -991,7 +1234,7 @@ const WD = "日月火水木金土";
 const mmss = t => { t = Math.max(0, t|0); const h = t/3600|0, m = (t%3600)/60|0, s = t%60; return (h ? h + ":" + String(m).padStart(2,"0") : m) + ":" + String(s).padStart(2,"0"); };
 const dur = s => { const m = Math.round(s/60); return m >= 60 ? Math.floor(m/60) + "時間" + (m%60 ? m%60 + "分" : "") : m + "分"; };
 const CH = '<svg class="chev" viewBox="0 0 8 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 1.5l5 5-5 5"/></svg>';
-const SPARK = '<svg class="spark" viewBox="0 0 26 26" fill="currentColor"><path d="M13 2c.5 5.8 5.2 10.5 11 11-5.8.5-10.5 5.2-11 11-.5-5.8-5.2-10.5-11-11 5.8-.5 10.5-5.2 11-11z"/></svg>';
+const SPARK = '<svg class="spark" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="15" height="15" rx="4.2"/><path d="M7.2 14.5V7.8l3.8 4.4 3.8-4.4v6.7"/></svg>';
 const tint = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; };
 const dark = () => true;   // いつも暗い表示（11-02）
 
@@ -2068,7 +2311,15 @@ const ICN = {
   today: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="16" height="15" rx="3"/><path d="M3 8.5h16M7.5 2.5v3M14.5 2.5v3" stroke-linecap="round"/><circle cx="11" cy="13.5" r="2.2" fill="currentColor" stroke="none"/></svg>',
   plus: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4v14M4 11h14"/></svg>',
   flag: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M5 20V3.5M5 4h11l-2.5 4 2.5 4H5"/></svg>',
-  spark: '<svg viewBox="0 0 26 26" fill="currentColor"><path d="M13 2c.5 5.8 5.2 10.5 11 11-5.8.5-10.5 5.2-11 11-.5-5.8-5.2-10.5-11-11 5.8-.5 10.5-5.2 11-11z"/></svg>',
+  spark: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="15" height="15" rx="4.2"/><path d="M7.2 14.5V7.8l3.8 4.4 3.8-4.4v6.7"/></svg>',
+  chevDown: '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.2L7 8.8l3.5-3.6"/></svg>',
+  chevRight: '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.2 3.5L8.8 7l-3.6 3.5"/></svg>',
+  close: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M5.5 5.5l11 11M16.5 5.5l-11 11"/></svg>',
+  pause: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6.5" y="4.5" width="3" height="13" rx="1"/><rect x="12.5" y="4.5" width="3" height="13" rx="1"/></svg>',
+  lock: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="9.5" width="13" height="9" rx="2.2"/><path d="M7.5 9.5V7a3.5 3.5 0 0 1 7 0v2.5"/></svg>',
+  send: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11l15-7-4 15-3.5-5.5z"/><path d="M11 13.5l7.5-9.5"/></svg>',
+  copy: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="8.2" y="8.2" width="10.8" height="10.8" rx="2.4"/><path d="M15 8.2V6.4A2.4 2.4 0 0 0 12.6 4H6.4A2.4 2.4 0 0 0 4 6.4v6.2A2.4 2.4 0 0 0 6.4 15h1.8"/></svg>',
+  refresh: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 11a7.5 7.5 0 1 1-2.2-5.3L18.5 8"/><path d="M18.5 3.5V8H14"/></svg>',
   video: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="2.5" y="5.5" width="12" height="11" rx="2.5"/><path d="M14.5 9.5l5-3v9l-5-3"/></svg>',
   mac: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="4" width="16" height="11" rx="2"/><path d="M1.5 18.5h19" stroke-linecap="round"/></svg>',
   edit: '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M14.5 4.5l3 3L8 17l-4 1 1-4z"/></svg>',
@@ -2120,6 +2371,7 @@ function home(main) {
   dragPager(main.querySelector(".pager"));
   if (main.querySelector(".wk7")) dragWeek(main.querySelector(".wk7"));
   bind(main);
+  requestAnimationFrame(() => { justLoaded = false; });
 }
 // Mac からの更新が止まっていたら知らせる（11-02 実例：Mac の Google ドライブが止まり、古い予定のまま半日出ていた）
 function staleNote() {
@@ -2128,9 +2380,9 @@ function staleNote() {
   const t = h < 24 ? `${Math.floor(h)}時間` : `${Math.floor(h / 24)}日`;
   return `<div class="stale" role="status">Mac からの更新が${t}止まっています（${u.getMonth()+1}/${u.getDate()} ${hm(u)} の内容）</div>`;
 }
-function setMode(m, a) { mode = m; store.set("calMode", m); anim = a || "in-flip"; render(); }
+function setMode(m, a) { mode = m; store.set("calMode", m); anim = a || "in-flip"; justLoaded = true; render(); }
 // 前後へ：はらった方向へ流れて入れ替わる
-function slide(dir) { closePop(true); anim = dir > 0 ? "in-next" : "in-prev"; render(); }
+function slide(dir) { closePop(true); anim = dir > 0 ? "in-next" : "in-prev"; justLoaded = true; render(); }
 function stepBy(dir) {
   if (mode === "month") { monthOff += dir; const t = new Date(); monSel = monthOff === 0 ? keyOf(t) : keyOf(new Date(t.getFullYear(), t.getMonth() + monthOff, 1)); }
   else if (mode === "list") offset += dir * 7; else offset += dir * days();
@@ -2179,6 +2431,7 @@ function liveNext(c) { if (!c.next) return null; const d = pd(c.next.date), k = 
 // 志望の順（iPhone で変えた直後の値も含めて）→ その後は書き出しの順
 function sortCos(cos) { return cos.map((c, i) => ({c, i, p: noteOf(c).prio || 9})).sort((a, b) => a.p - b.p || a.i - b.i).map(x => x.c); }
 
+let justLoaded = true;
 function daysView(evAll) {
   const N = days(), start = startDay();
   const ds = [...Array(N)].map((_, i) => { const d = new Date(start); d.setDate(start.getDate() + i); return d; });
@@ -2193,6 +2446,8 @@ function daysView(evAll) {
   // 純正：今の時刻の札と重なる時刻の字は隠す
   for (let h = H0; h <= H1; h++) g += `<div class="hl" style="top:${(h-H0)*PX}px"></div>${showNow && Math.abs(nowH - h) < .3 ? "" : `<div class="hr" style="top:${(h-H0)*PX}px">${h}:00</div>`}`;
   for (let c = 1; c < N; c++) g += `<div class="vl" style="left:${c*100/N}%"></div>`;
+  const isTent = e => !!(e.tent || /仮押さえ|仕分け箱|暫定/.test(e.cal || ""));
+  let stag = 0;
   ds.forEach((d, c) => {
     const dayS = d, dayE = new Date(d); dayE.setDate(d.getDate() + 1);
     const items = timed.filter(e => e.e > dayS && e.s < dayE).sort((a, b) => a.s - b.s);
@@ -2205,13 +2460,14 @@ function daysView(evAll) {
       const lanes = []; cl.list.forEach(e => { let k = lanes.findIndex(l => l <= e.s); if (k < 0) { k = lanes.length; lanes.push(0); } lanes[k] = e.e; e.lane = k; });
       const L = Math.max(1, lanes.length), cascade = L > 1 && colPx / L < 64;
       cl.list.forEach(e => {
+        stag += 1;
         const s = e.s < dayS ? dayS : e.s, en = e.e > dayE ? dayE : e.e;
         let top = yDay(s, dayS), hgt = Math.max(20, yDay(en, dayS) - top - 1);
         if (top > H - 20) top = H - 20;
-        const col = e.color || "#2159bd", w = 100 / N, lw = w / L, sh = hgt < 34, ind = Math.min(e.lane * 14, colPx * .45);
+        const tent = isTent(e), col = tent ? "#ff7043" : (e.color || "#2159bd"), w = 100 / N, lw = w / L, sh = hgt < 34, ind = Math.min(e.lane * 14, colPx * .45);
         const pos = cascade ? `left:calc(${c*w}% + ${1 + ind}px);width:calc(${w}% - ${2 + ind}px);z-index:${1 + e.lane};background:color-mix(in srgb,${col} 34%,#121214)`
-                            : `left:calc(${c*w + e.lane*lw}% + 1px);width:calc(${lw}% - 2px);background:${tint(col, dark() ? .3 : .16)}`;
-        g += `<button class="nev${sh ? " sh" : ""}${cascade ? " cas" : ""}" data-ev="${e.i}" style="--c:${col};--lines:${Math.max(1, Math.floor((hgt - 18) / 15))};top:${top}px;height:${hgt}px;${pos}"><span class="ti">${esc(e.title)}</span><span class="tm">${CLK}${hm(e.s)}${sh ? "" : "–" + hm(e.e)}</span></button>`;
+                            : `left:calc(${c*w + e.lane*lw}% + 1px);width:calc(${lw}% - 2px);background:${tint(col, tent ? .16 : (dark() ? .3 : .16))}`;
+        g += `<button class="nev${sh ? " sh" : ""}${cascade ? " cas" : ""}${tent ? " tentative" : ""}${justLoaded ? " reveal" : ""}" data-ev="${e.i}" style="--c:${col};--lines:${Math.max(1, Math.floor((hgt - 18) / 15))};--stagger:${Math.min(stag, 12)};top:${top}px;height:${hgt}px;${pos}"><span class="ti">${esc(e.title)}</span><span class="tm">${CLK}${hm(e.s)}${sh ? "" : "–" + hm(e.e)}${tent && !sh ? '<span class="tbadge">未確定</span>' : ""}</span></button>`;
       });
     });
   });
@@ -2222,7 +2478,7 @@ function daysView(evAll) {
       const a = Math.max(0, Math.round((new Date(e.s.getFullYear(), e.s.getMonth(), e.s.getDate()) - start) / 864e5));
       const b = Math.min(N, Math.round((e.e - start) / 864e5) || a + 1), col = e.color || "#8e6bd8";
       return `<button class="adc" data-ev="${e.i}" style="--c:${col};grid-column:${a+1}/${Math.max(a+2, b+1)};background:${tint(col, dark() ? .3 : .18)};color:${col}">${esc(e.title)}</button>`; }).join("")}</div>` : "";
-  return `<div class="dh" style="grid-template-columns:${cols}">${ds.map(d => `<div class="${keyOf(d) === today ? "t" : ""}">${N === 1 ? `${d.getFullYear()}年` : ""}${d.getMonth()+1}月${d.getDate()}日・${WD[d.getDay()]}${N === 1 ? "曜日" : ""}</div>`).join("")}</div>
+  return `<div class="dh" style="grid-template-columns:${cols}">${ds.map(d => `<div class="${keyOf(d) === today ? "t" : ""}">${d.getMonth()+1}/${d.getDate()} ${WD[d.getDay()]}</div>`).join("")}</div>
     ${allRow}<div class="tg" style="height:${H}px;margin-top:10px;margin-bottom:12px">${g}</div>`;
 }
 
@@ -2231,8 +2487,9 @@ function listView(evAll) {
   const evs = evAll.filter(e => e.e > st && e.s < end).sort((a, b) => a.s - b.s);
   let out = "", cur = "";
   for (const e of evs) { const d = e.s < st ? st : e.s, k = keyOf(d);
-    if (k !== cur) { cur = k; out += `<div class="dh2">${d.getMonth()+1}月${d.getDate()}日・${"日月火水木金土"[d.getDay()]}曜日</div>`; }
-    out += `<button class="it" data-ev="${e.i}" style="--c:${e.color || "#2159bd"}"><span class="m"><div class="ti">${esc(e.title)}</div>${e.loc ? `<div class="lo">${esc(e.loc)}</div>` : ""}</span><span class="tt">${e.allDay ? "終日" : `${hm(e.s)}<small>${hm(e.e)}</small>`}</span></button>`; }
+    if (k !== cur) { cur = k; out += `<div class="dh2">${d.getMonth()+1}/${d.getDate()}（${WD[d.getDay()]}）</div>`; }
+    const tent = !!(e.tent || /仮押さえ|仕分け箱|暫定/.test(e.cal || ""));
+    out += `<button class="it${tent ? " tentative" : ""}" data-ev="${e.i}" style="--c:${tent ? "#ff7043" : (e.color || "#2159bd")}"><span class="m"><div class="ti">${esc(e.title)}</div>${e.loc ? `<div class="lo">${esc(e.loc)}</div>` : ""}</span><span class="tt">${e.allDay ? "終日" : `${hm(e.s)}<small>${hm(e.e)}</small>`}</span></button>`; }
   return `<div class="nlist">${out || '<p class="empty">この3週間の予定はありません</p>'}</div>`;
 }
 
@@ -2433,7 +2690,7 @@ function closePal(now) {
 function palItems() {
   if (view.v === "company") {
     const c = findCo(view.c) || {};
-    const secs = [["sx-ev", "日程", ICN.today], ["sx-dl", "締切", ICN.flag], ["sx-ml", "メール", ICN.mail], ["sx-mt", "議事録", ICN.doc], ["sx-fl", "資料", ICN.folder], ["sx-memo", "メモ", ICN.memo]]
+    const secs = [["sx-muse", "Muse", ICN.spark], ["sx-ev", "日程", ICN.today], ["sx-dl", "締切", ICN.flag], ["sx-ml", "メール", ICN.mail], ["sx-mt", "議事録", ICN.doc], ["sx-fl", "資料", ICN.folder], ["sx-memo", "メモ", ICN.memo]]
       .filter(([id]) => document.getElementById(id));
     return `<div class="pg">${secs.map(([id, l, ic]) => `<button class="pb" data-jump="${id}">${ic}${l}</button>`).join("")}</div>
       <div class="ph2">${esc(c.name || "")}</div>
@@ -2497,52 +2754,614 @@ function shortTitle(t, name) {
 
 /* ── 企業 ── */
 const museHTML = md => mdHTML(md);
+const CAL_COLORS = {"就活":"#e22400","就活　仮押さえ":"#ff7043","仕分け箱":"#ff7043","ホテルバイト":"#26c6da","アオキバイト":"#0056d6","授業":"#76bb40","移動":"#99244f","TODO":"#7e57c2"};
+const hexRGBA = (hex, alpha) => {
+  let h = String(hex || "#70a3fa").replace("#", "");
+  if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+  const n = parseInt(h.slice(0, 6), 16) || 0x70a3fa;
+  return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${alpha})`;
+};
+const mToHM = m => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+let museHolds = store.get("museHolds", {}), museDrop = store.get("museDrop", {}), museReqs = store.get("museReqs", {}), museOpen = {};
+
+function parseMuseMD(md, refYear) {
+  const raw = String(md || "").replace(/\r\n?/g, "\n").trim();
+  if (!raw) return { updatedAt: "", loginID: "", url: "", events: [] };
+  const dateHdrRx = /\b(20\d\d)[-/.年](\d{1,2})[-/.月](\d{1,2})/;
+  const allSecDates = [...raw.matchAll(/^#{1,4}\s*(20\d\d)[-/.年](\d{1,2})[-/.月](\d{1,2})/gm)];
+  const now = new Date();
+  const leadM = allSecDates[0] || raw.match(dateHdrRx);
+  const baseY = refYear || (leadM ? +leadM[1] : now.getFullYear());
+  const latestSecD = leadM ? new Date(+leadM[1], +leadM[2] - 1, +leadM[3]) : new Date(baseY, now.getMonth(), now.getDate());
+  const today0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const cutoffD = new Date((refYear ? +latestSecD : Math.max(+today0, +latestSecD)) - 864e5);
+  const urlM = raw.match(/https?:\/{2}[^\s<>」』）)]+/);
+  const url = urlM ? urlM[0].replace(/[。、.,]+$/, "") : "";
+  let loginID = "";
+  for (const ln of raw.split("\n")) {
+    if (/(?:パスワード|ﾊﾟｽﾜｰﾄﾞ|\bPW\b|暗証)/i.test(ln)) continue;
+    const im = ln.match(/(?:応募者|個人|ログイン|会員|登録)?\s*(?:ID|ＩＤ)\s*[:：]\s*([A-Za-z0-9._@-]{3,48})/);
+    if (im) { loginID = im[1].replace(/[。、.,)）」』]+$/, ""); break; }
+  }
+
+  // Extract first title colon (: / ：) not flanked by digits (14:00) and not http(s):
+  const firstTitleColon = s => {
+    for (let i = 0; i < s.length; i++) {
+      const ch = s[i];
+      if (ch !== "：" && ch !== ":") continue;
+      if (i > 0 && /\d/.test(s[i - 1]) && /\d/.test(s[i + 1] || "")) continue;
+      if (/https?$/i.test(s.slice(Math.max(0, i - 5), i))) continue;
+      return i;
+    }
+    return -1;
+  };
+  const normKey = s => norm(s).replace(/[【】\[\]「」『』（）()\s・:：\-〜~！!？?。、.,]/g, "");
+
+  // Group lines into reverse-chronological log sections (## YYYY-MM-DD ...) + entries
+  const genHeadRx = /^(?:概要|メモ|確認結果|リンク|基本情報|出典|選考情報|イベント|日程|スケジュール|マイページ(?:情報)?|直近.*|最新.*)$/;
+  const lines = raw.split("\n"), entries = [];
+  let curSec = { y: baseY, m: latestSecD.getMonth() + 1, title: "", refD: latestSecD };
+  let curH = null;
+  for (let idx = 0; idx < lines.length; idx++) {
+    const l = lines[idx].trim();
+    if (!l || /^\|[\s:|-]+\|$/.test(l)) continue;
+    if (/^#\s+[^\n]*Museメモ/.test(l)) continue;
+    const hm2 = l.match(/^(#{1,4})\s+(.+)$/);
+    if (hm2) {
+      if (curH) { entries.push(curH); curH = null; }
+      const ht = hm2[2].replace(/\*\*/g, "").trim();
+      const dm = ht.match(/^(20\d\d)[-/.年](\d{1,2})[-/.月](\d{1,2})(?:\s+(.*))?$/);
+      if (dm) {
+        const sd = new Date(+dm[1], +dm[2] - 1, +dm[3]);
+        const st = (dm[4] || "").replace(/[（(]出典[:：][\s\S]*$/, "").trim();
+        curSec = { y: +dm[1], m: +dm[2], title: st, refD: sd };
+      } else if (!genHeadRx.test(ht)) {
+        curH = { title: ht, lines: [], sec: curSec };
+      }
+      continue;
+    }
+    const cleanL = l.startsWith("|") ? l.replace(/^\||\|$/g, "").split("|").map(x => x.trim()).join(" ") : l;
+    const noB = cleanL.replace(/^(?:[-*・]|\d+[.)])\s*/, "");
+    const cIdx = firstTitleColon(noB);
+    const isSubAttr = /^(?:概要|場所|会場|形式|日時|日程|締切|期限|対象|定員|URL|申込|備考)\s*[:：]/.test(noB) || !/^[-*・\d]/.test(cleanL);
+    if (curH && (isSubAttr || cIdx < 0)) { curH.lines.push(cleanL); continue; }
+    if (curH) { entries.push(curH); curH = null; }
+    entries.push({ title: "", lines: [cleanL], sec: curSec });
+  }
+  if (curH) entries.push(curH);
+
+  const rawCards = [];
+  const skipBulletRx = /^(?:注意|経緯|備考|参考|出典|補足)\s*[：:]|^(?:予約|申込|申し込み|エントリー|視聴)はマイページ|選考フロー.*現時点でなし|Message Box|テストセンター側からは/;
+  const pastDoneRx = /開催済み|参加済み|回答済み|提出済み|受検済み|失効済み|送信済み|経過済み|キャンセルを受け付けた|参加に対するお礼|御礼メール|参加御礼|ログインURLのご案内|システム障害|動画を最新版に更新|アーカイブ動画|緊急メンテナンスは終了/;
+  const genericFldRx = /^(?:日時|日程|開催日程|開催|予約日程|回答期限|事前予約期限|応募締切|申込締切|参加URL|内容|詳細|大阪|東京|20\d\d[-/.年]\d{1,2}[-/.月]\d{1,2}.*)$/;
+
+  for (let ei = 0; ei < entries.length; ei++) {
+    const ent = entries[ei], sec = ent.sec || curSec;
+    const secY = sec.y || baseY, secMon = sec.m || (now.getMonth() + 1), secRefD = sec.refD || latestSecD;
+    const joined = ent.lines.join(" ").replace(/https?:\/{2}[^\s<>」』）)]+/g, " ");
+    const txt = (ent.title ? ent.title + "：" + joined : joined).replace(/\*\*/g, "").trim();
+    const noBul = txt.replace(/^(?:[-*・]|\d+[.)])\s*/, "").trim();
+    if (!noBul || noBul.length < 4) continue;
+    if (skipBulletRx.test(noBul)) continue;
+    if (/^(?:20\d\d年新卒マイページ|マイページの新規登録|応募者ID|個人ID|ログインID)/.test(noBul) && !/(イベント|説明会|座談会|仕事体験|インターン|面接|面談|適性検査|テスト|〆)/.test(noBul)) continue;
+    if (pastDoneRx.test(noBul) || pastDoneRx.test(sec.title || "")) continue;
+
+    // Determine clean title & body slice without clobbering HH:MM
+    const firstSentEnd = noBul.search(/[。\n]/);
+    const s1 = firstSentEnd > 0 ? noBul.slice(0, firstSentEnd) : noBul;
+    const colInAll = firstTitleColon(noBul);
+    let title = ent.title, body = "";
+    const evQ = noBul.match(/^イベント\s*[「『]([^」』]{2,46})[」』](?:\s*[（(]([^）)]{2,36})[)）])?\s*[：:]?\s*([\s\S]*)$/);
+    if (!title && evQ) {
+      title = evQ[1].trim();
+      body = (evQ[2] ? `（${evQ[2]}） ` : "") + (evQ[3] || "");
+    } else if (!title && colInAll > 1 && colInAll <= 40 && (firstSentEnd < 0 || colInAll < firstSentEnd)) {
+      const candT = noBul.slice(0, colInAll).trim();
+      if (genericFldRx.test(candT) && sec.title) {
+        title = sec.title.replace(/（[^）]*）|\([^)]*\)/g, "").trim() || candT;
+        body = noBul;
+      } else {
+        title = candT;
+        body = noBul.slice(colInAll + 1).trim();
+      }
+    } else if (!title) {
+      if (s1.length <= 38) title = s1.replace(/(?:の?(?:開催|日程|案内|受付|予約|募集).{0,10}|が.*|を.*|は.*)$/, "").trim() || s1;
+      else {
+        const subjM = s1.match(/^(.{3,28}?)(?:の(?:受検|応募|提出|予約|開催)|[（(].{0,16}[)）]|について|は)/);
+        title = (subjM ? subjM[1] : s1.slice(0, 28)).trim();
+      }
+      if (genericFldRx.test(title) && sec.title) title = sec.title.replace(/（[^）]*）|\([^)]*\)/g, "").trim() || title;
+      body = noBul;
+    } else {
+      body = joined;
+    }
+    title = title.replace(/^イベント\s*/, "").replace(/[「『」』]+/g, "").replace(/\s*[（(][^（()）]{2,26}[)）]$/, "")
+      .replace(/】+$/, m0 => title.includes("【") ? "】" : "").trim();
+    if (!title || title.length < 2) continue;
+
+    // Extract parenthetical summary from title line before stripping
+    const parenM = noBul.slice(0, 90).match(/[「』】]\s*[（(]([^（()）\n]{3,42})[)）]/);
+    let summary = parenM && !/^[日月火水木金土]$/.test(parenM[1]) ? parenM[1].replace(/[、,]/g, "・") : "";
+
+    // Preprocess body for clean date/slot parsing:
+    // 1. Strip mail receipt/reply timestamps (11/10 15:43着, 2026-11-10 09:26着)
+    let work = body
+      .replace(/(?:20\d\d[-/.])?\d{1,2}[月\/\-]\d{1,2}日?(?:\s*[（(][日月火水木金土][)）])?\s*\d{1,2}[:：]\d{2}\s*(?:着|に(?:確認|返信|届|送信|受信))[^\s。、]*/g, " ")
+      // 2. Strip pre-extension arrow dates (11/25→)
+      .replace(/(?:20\d\d[-/.年])?\d{1,2}[月\/\-]\d{1,2}日?(?:\s*[（(][日月火水木金土][)）])?\s*[→⇒]\s*/g, "")
+      // 3. Strip parenthetical notes for seminar date ranges and clock-less notes
+      .replace(/[（(][^（）()]*開催分は[^（）()]*[)）]/g, " ")
+      .replace(/画面上に[「『][^」』]*[」』][^。\n]*[。]?/g, " ");
+
+    let booking = "", periodEndD = null, periodEndShort = "";
+    work = work.replace(/(?:申込期間|受付期間|応募期間|予約期間|エントリー期間|実施期間)[は:：\s]*([^。\n]+)/g, (full, p) => {
+      const ds = [...p.matchAll(/(?:(20\d\d)[年\/\-])?(\d{1,2})[月\/\-](\d{1,2})/g)];
+      if (ds.length >= 2) {
+        const a = ds[0], e = ds[ds.length - 1];
+        const eY = e[1] ? +e[1] : (secY + ((+e[2] - secMon < -3) ? 1 : 0));
+        periodEndD = new Date(eY, +e[2] - 1, +e[3]);
+        periodEndShort = `${e[1] ? e[1] + "/" : ""}${e[2]}/${e[3]}`;
+        booking = /実施期間/.test(full) ? `〜${periodEndShort}` : `申込 ${a[2]}/${a[3]}〜${e[2]}/${e[3]}`;
+      } else booking = p.slice(0, 24).trim();
+      return " ";
+    });
+
+    const isClosed = /申し込み可能な日程なし|受付終了|募集終了|満席|締め?切りました|日程なし/.test(txt);
+    const hasEventDates = /(?:開催日程|開催[：:]|日程は|イベント|座談会|交流会|セミナー|見学会|仕事体験)/.test(noBul);
+    // When explicit event dates exist, move deadline clause to booking so it does not appear as a slot
+    if (hasEventDates) {
+      work = work.replace(/(?:応募締切|予約締切|申込締切|回答期限|申込期限|提出期限)[は:：\s]*((?:20\d\d[-/.年])?\d{1,2}[月\/\-]\d{1,2}日?(?:\s*[（(][日月火水木金土][)）])?(?:\s*\d{1,2}[:：]\d{2})?)/g, (_, dTxt) => {
+        const dm = dTxt.match(/(?:20\d\d[-/.年])?(\d{1,2})[月\/\-](\d{1,2})[^\d]*(?:(\d{1,2}[:：]\d{2}))?/);
+        if (!booking && dm) booking = `〆 ${dm[1]}/${dm[2]}${dm[3] ? " " + dm[3] : ""}`;
+        return " ";
+      });
+      work = work.replace(/申込は開催日[^\s。、]*まで/g, m0 => { if (!booking) booking = m0; return " "; });
+    }
+
+    const hasDue = /〆|締切|締め切り|期限/.test(txt);
+    let status = isClosed ? "終了" : hasDue && !/予約受付|先着|募集中/.test(txt) ? "締切迫る" : /募集前|開始前|受付前/.test(txt) ? "募集前" : /受付|予約|先着|募集中|開始/.test(txt) ? "受付中" : "";
+    if (!status && /^申込\s*(\d{1,2})\/(\d{1,2})/.test(booking)) {
+      const bm = booking.match(/^申込\s*(\d{1,2})\/(\d{1,2})/);
+      const sd = new Date(secY + ((+bm[1] - secMon < -3) ? 1 : 0), +bm[1] - 1, +bm[2]);
+      status = sd > cutoffD ? "募集前" : "受付中";
+    }
+    if (!booking && status) booking = status === "受付中" && /先着/.test(txt) ? "先着予約受付中" : status;
+    const locM = txt.match(/(?:場所|会場|形式)\s*[：:]\s*([^\s。、\n]{2,20})/);
+    const loc = /テストセンター/.test(txt) ? "テストセンター" : /対面/.test(txt) ? "対面" : /オンライン|Web|Zoom|Teams|WEB/i.test(txt) ? "オンライン" : (locM ? locM[1] : "");
+
+    // Collect valid date tokens and parse shared or per-date time slots
+    const dateRx = /(?:(20\d\d)[年\/\-])?(\d{1,2})([月\/\-])(\d{1,2})日?(?:\s*[（(]([日月火水木金土])[)）])?/g;
+    const rawMatches = [...work.matchAll(dateRx)].filter(m => {
+      const mo = +m[2], dd = +m[4];
+      if (mo < 1 || mo > 12 || dd < 1 || dd > 31) return false;
+      if (m[3] === "-" && !m[1] && !m[5]) return false;
+      return true;
+    });
+
+    let curY = secY, explicitY = false;
+    const dateTokens = rawMatches.map((m, i) => {
+      const nxtI = i + 1 < rawMatches.length ? rawMatches[i + 1].index : work.length;
+      const optY = m[1] ? +m[1] : 0, mo = +m[2], dd = +m[4];
+      if (optY) { curY = optY; explicitY = true; }
+      else if (!explicitY && mo - secMon < -3) curY = secY + 1;
+      const dObj = new Date(curY, mo - 1, dd);
+      const tail = work.slice(m.index + m[0].length, nxtI);
+      const preCtx = work.slice(Math.max(0, m.index - 24), m.index);
+      const isDueLine = hasDue && /(?:締切|締め切り|〆|期限|延長|正午まで)[はのへ：:\s]*$/.test(preCtx + " " + tail.slice(0, 20));
+      const tmMatches = [...tail.matchAll(/(\d{1,2})[:：](\d{2})(?:\s*[〜~\-–−]\s*(\d{1,2})[:：](\d{2}))?/g)];
+      const times = [];
+      for (const tm of tmMatches) {
+        const sMin = +tm[1] * 60 + +tm[2];
+        const afterTm = tail.slice(tm.index + tm[0].length, tm.index + tm[0].length + 10);
+        const beforeTm = tail.slice(Math.max(0, tm.index - 18), tm.index);
+        const isDeadline = !tm[3] && (sMin >= 23 * 60 + 30 || /^[\s]*(?:まで|〆|締切|期限|へ延長)/.test(afterTm) || /(?:締切|締め切り|期限|〆)/.test(beforeTm));
+        if (isDeadline) {
+          times.push({ start: null, end: null, dueOnly: true, dueTime: mToHM(sMin), time: `${mToHM(sMin)}〆` });
+        } else {
+          const eMin = tm[3] != null ? (+tm[3] * 60 + +tm[4]) : Math.min(23 * 60 + 55, sMin + 60);
+          if (eMin > sMin) times.push({ start: sMin, end: eMin, dueOnly: false, time: `${mToHM(sMin)}–${mToHM(eMin)}` });
+        }
+      }
+      return { dObj, dateISO: keyOf(dObj), wd: WD[dObj.getDay()], dShort: `${mo}/${dd}`, tail, times, isDueLine };
+    });
+
+    // Propagate shared times across contiguous date lists (e.g. 11/20・11/24・11/27の各11:00〜12:00・15:00〜16:00)
+    for (let i = 0; i < dateTokens.length; i++) {
+      if (dateTokens[i].times.length) continue;
+      if (!/^[\s・、／,とおよび各の]*$/.test(dateTokens[i].tail)) continue;
+      for (let j = i + 1; j < dateTokens.length; j++) {
+        if (dateTokens[j].times.length) { dateTokens[i].times = dateTokens[j].times.map(t => ({...t})); break; }
+        if (!/^[\s・、／,とおよび各の]*$/.test(dateTokens[j].tail)) break;
+      }
+    }
+
+    const totalDateTokens = dateTokens.length;
+    const slots = [];
+    for (const dt of dateTokens) {
+      if (dt.dObj < cutoffD && !isClosed) continue;
+      if (dt.times.length) {
+        for (const t of dt.times) slots.push({ date: dt.dateISO, dShort: dt.dShort, wd: dt.wd, ...t, closed: isClosed });
+      } else {
+        slots.push({ date: dt.dateISO, dShort: dt.dShort, wd: dt.wd, time: isClosed ? "受付終了" : dt.isDueLine ? "期限日" : "時間未定", start: null, end: null, dueOnly: dt.isDueLine, closed: isClosed });
+      }
+    }
+    if (isClosed && (!slots.length || (periodEndD && periodEndD >= cutoffD))) {
+      slots.length = 0;
+      slots.push({ date: keyOf(periodEndD || secRefD), dShort: periodEndShort || "受付終了", wd: "—", time: "受付終了", start: null, end: null, closed: true, cue: "空き枠なし・巡回で再確認可" });
+    }
+    if (totalDateTokens > 0 && !slots.length) continue;
+    if (!slots.length && !/(イベント|説明会|座談会|仕事体験|インターン|セミナー|面接|面談|適性検査|テスト)/.test(title)) continue;
+
+    if (!summary) {
+      let rest = work.replace(/申込期間[^。]+。?|実施期間[^。]+。?/g, " ")
+        .replace(/(?:20\d\d[年\/\-])?\d{1,2}[月\/\-]\d{1,2}日?(?:\s*[（(][日月火水木金土][)）])?/g, " ")
+        .replace(/\d{1,2}[:：]\d{2}(?:\s*[〜~\-–−]\s*\d{1,2}[:：]\d{2})?/g, " ")
+        .replace(/先着予約受付中|予約受付開始|申し込み可能な日程なし|受付終了|現時点は募集前で予約不可|予約はマイページから[。]?|申込はマイページから[。]?|メンテ延長で|へ延長|の?受検締切[はの]?|〆|締切|締め切り/g, " ")
+        .replace(/(?:^|[・。\s])[はがをへ](?=[・。\s→⇒]|$)/g, " ")
+        .replace(/[・／、。\s→⇒]{2,}/g, "・")
+        .replace(/^[\s・／、。〜~\-–()（）：:→⇒はがを]+|[\s・／、。〜~\-–()（）：:→⇒はがを]+$/g, "");
+      if (rest.length >= 4 && !/^\d/.test(rest)) summary = rest.slice(0, 48);
+    }
+    const coreKey = normKey(title);
+    const topicKey = /適性検査|能力検査/.test(title) ? "topic_test"
+      : /本社見学会/.test(title) ? "topic_onsite_visit"
+      : /11月WEB|WEBセミナー/.test(title) ? "topic_11web"
+      : /社員座談会/.test(title) ? "topic_talk"
+      : coreKey;
+    rawCards.push({ id: "ev_" + coreKey.slice(0, 24) + "_" + ei, coreKey, topicKey, title, summary, booking, loc, status, slots });
+  }
+
+  // Deduplicate keeping newest section first
+  const seenKeys = new Set(), events = [];
+  for (const ev of rawCards) {
+    if (seenKeys.has(ev.coreKey) || seenKeys.has(ev.topicKey)) continue;
+    seenKeys.add(ev.coreKey);
+    seenKeys.add(ev.topicKey);
+    events.push({ id: ev.id, title: ev.title, summary: ev.summary, booking: ev.booking, loc: ev.loc, status: ev.status, slots: ev.slots });
+  }
+  return { updatedAt: `${latestSecD.getFullYear()}/${latestSecD.getMonth() + 1}/${latestSecD.getDate()}`, loginID, url, events };
+}
+
+function daySchedulesFor(dateStr) {
+  if (!D || !dateStr) return [];
+  const d0 = pd(dateStr + "T00:00"), d1 = new Date(d0); d1.setDate(d0.getDate() + 1);
+  const out = [], seen = new Set();
+  for (const e of (D.events || [])) {
+    if (e.deleted || e.allDay) continue;
+    const s = pd(e.start), en = pd(e.end);
+    if (s.getFullYear() <= 1970 || en <= d0 || s >= d1) continue;
+    const sm = s <= d0 ? 0 : s.getHours() * 60 + s.getMinutes();
+    const em = en >= d1 ? 1440 : en.getHours() * 60 + en.getMinutes();
+    const tent = !!(e.tent || /仮押さえ|仕分け箱|暫定/.test(e.cal || ""));
+    const k = norm(e.title) + "|" + e.start.slice(0, 16);
+    seen.add(k);
+    out.push({ start: sm, end: em, title: e.title, cal: e.cal || "予定", color: tent ? "#ff7043" : (e.color || CAL_COLORS[e.cal] || "#70a3fa"), tentative: tent });
+  }
+  for (const x of inboxList()) {
+    if (x.allDay) continue;
+    const s = pd(x.ns), en = pd(x.ne);
+    if (en <= d0 || s >= d1) continue;
+    const k = norm(x.title) + "|" + String(x.ns || "").slice(0, 16);
+    if (seen.has(k)) continue;
+    const sm = s <= d0 ? 0 : s.getHours() * 60 + s.getMinutes();
+    const em = en >= d1 ? 1440 : en.getHours() * 60 + en.getMinutes();
+    out.push({ start: sm, end: em, title: x.title, cal: "仕分け箱", color: "#ff7043", tentative: true });
+  }
+  return out.sort((a, b) => a.start - b.start);
+}
+
+function evalSlotFeasibility(slot, coName) {
+  if (slot.closed) return { tier: "closed", badge: "終了", cue: slot.cue || "空き枠なし・巡回で再確認可" };
+  const busy = daySchedulesFor(slot.date);
+  if (slot.start == null || slot.end == null) {
+    if (!busy.length) return { tier: "ok", badge: "参加可", cue: slot.dueTime ? `${slot.dueTime}〆・終日空き` : "終日空き・余裕あり" };
+    return { tier: "ok", badge: "調整可", cue: `${mToHM(busy[0].start)} ${shortTitle(busy[0].title, coName)}${busy.length > 1 ? ` ほか${busy.length - 1}件` : ""}` };
+  }
+  const ov = busy.find(x => Math.max(slot.start, x.start) < Math.min(slot.end, x.end) && !x.tentative)
+    || busy.find(x => Math.max(slot.start, x.start) < Math.min(slot.end, x.end));
+  if (ov) {
+    if (ov.tentative) return { tier: "tight", badge: "注意", tentativeHit: true, cue: `${mToHM(ov.start)} ${shortTitle(ov.title, coName)}（仕分け箱・未確定）` };
+    return { tier: "conflict", badge: "重複", cue: `${mToHM(ov.start)}–${mToHM(ov.end)} ${shortTitle(ov.title, coName)}と重複` };
+  }
+  const prev = busy.filter(x => x.end <= slot.start).at(-1), next = busy.find(x => x.start >= slot.end);
+  const gP = prev ? slot.start - prev.end : 999, gN = next ? next.start - slot.end : 999;
+  const near = gP <= gN ? (prev ? { e: prev, gap: gP } : null) : (next ? { e: next, gap: gN } : null);
+  if (near && near.gap < 45) {
+    return { tier: "tight", badge: "注意", tentativeHit: !!near.e.tentative, cue: `${mToHM(near.e.start)} ${shortTitle(near.e.title, coName)}・間隔${near.gap}分${near.e.tentative ? "（未確定）" : ""}` };
+  }
+  if (near) return { tier: "ok", badge: "参加可", cue: `${mToHM(near.e.start)} ${shortTitle(near.e.title, coName)}まで余裕あり` };
+  return { tier: "ok", badge: "参加可", cue: "終日空き・余裕あり" };
+}
+
+function dayBarHTML(slot, evEval) {
+  const MIN = 7 * 60, SPAN = 16 * 60;
+  const pct = m => Math.max(0, Math.min(100, ((m - MIN) / SPAN) * 100)).toFixed(2);
+  const wPct = (s, e) => Math.max(4, Math.min(100, ((e - s) / SPAN) * 100)).toFixed(2);
+  const busy = daySchedulesFor(slot.date).filter(x => x.end > MIN && x.start < 23 * 60);
+  return `<div class="daybar-scale"><span>07:00</span><span>12:00</span><span>17:00</span><span>23:00</span></div>
+    <div class="daybar">${busy.map(b => {
+      const col = b.color || CAL_COLORS[b.cal] || "#70a3fa";
+      return `<div class="blk${b.tentative ? " tentative" : ""}" style="left:${pct(b.start)}%;width:${wPct(b.start, b.end)}%;background:${hexRGBA(col, b.tentative ? .18 : .28)};color:#f5f5f7;border:1px ${b.tentative ? "dashed" : "solid"} ${hexRGBA(col, .8)}">${esc(b.title.slice(0, 6))}</div>`;
+    }).join("")}${slot.start != null && slot.end != null ? `<div class="blk cand cand-${evEval.tier}" style="left:${pct(slot.start)}%;width:${wPct(slot.start, slot.end)}%">候補</div>` : ""}</div>`;
+}
+
+function enqueueMuseReq(c, title, customBody) {
+  const text = customBody || `[Muse依頼] ${c.name}: ${title}`;
+  const now = new Date();
+  const q = museReqs[c.name] = museReqs[c.name] || [];
+  q.unshift({ title, at: hm(now) });
+  store.set("museReqs", museReqs);
+  toast(`${title} を Muse に送りました`);
+  if (view.v === "company") company($("#main"));
+  api.op({ op: "trayadd", id: rid(), text }).catch(err => toast(failMsg(err)));
+}
+
+function openMuseDetailSheet(c, parsed, evId, initialIdx) {
+  const ev = parsed.events.find(x => x.id === evId);
+  if (!ev) return;
+  let slotIdx = initialIdx || 0;
+  const draw = animateSkel => {
+    const sl = ev.slots[slotIdx] || ev.slots[0], evEval = evalSlotFeasibility(sl, c.name);
+    const isHold = !!(museHolds[c.name] && museHolds[c.name][ev.id]);
+    const busy = daySchedulesFor(sl.date);
+    const items = busy.map(x => ({...x, isCand: false}));
+    if (sl.start != null && sl.end != null) items.push({ start: sl.start, end: sl.end, title: `${c.name} ${ev.title}`, cue: evEval.cue, isCand: true, tier: evEval.tier, badge: evEval.badge });
+    items.sort((a, b) => a.start - b.start);
+    const rows = []; let cursor = 7 * 60;
+    for (const it of items) {
+      if (it.start - cursor >= 60) rows.push({ free: true, start: cursor, end: it.start, title: `空き ${mToHM(cursor)}–${mToHM(it.start)}` });
+      rows.push(it); cursor = Math.max(cursor, it.end);
+    }
+    if (23 * 60 - cursor >= 60) rows.push({ free: true, start: cursor, end: 23 * 60, title: `空き ${mToHM(cursor)}–23:00` });
+
+    const skelTL = `<div class="dtl">${[0,1,2].map(() => `<div class="dtl-row"><div class="sk" style="height:14px;width:55%"></div><div class="sk" style="height:10px;width:35%;margin-top:6px"></div></div>`).join("")}</div>`;
+    const liveTL = `<div class="dtl">${sl.dueOnly ? `<div class="dtl-row cand ${evEval.tier} reveal"><span class="dtl-tm">${esc(sl.dShort)}</span><div class="dtl-ttl"><span>${esc(c.name)} ${esc(ev.title)}</span><span class="feas ${evEval.tier}">${esc(sl.time)}</span></div></div>` : ""}${rows.map((it, k) => {
+      if (it.free) return `<div class="dtl-row free reveal" style="--stagger:${k}"><span class="dtl-tm">${mToHM(it.start)}</span>${esc(it.title)}</div>`;
+      if (it.isCand) return `<div class="dtl-row cand ${it.tier} reveal" style="--stagger:${k}"><span class="dtl-tm">${mToHM(it.start)}</span><div class="dtl-ttl"><span>${esc(it.title)}</span><span class="feas ${it.tier}">${esc(it.badge)}</span></div><div class="dtl-meta">${mToHM(it.start)}–${mToHM(it.end)} ・ ${esc(it.cue)}</div></div>`;
+      const col = it.color || CAL_COLORS[it.cal] || "#70a3fa";
+      return `<div class="dtl-row${it.tentative ? " tentative" : ""} reveal" style="--stagger:${k};background:${hexRGBA(col, it.tentative ? .1 : .15)};border-color:${hexRGBA(col, .45)};border-left-color:${col}"><span class="dtl-tm">${mToHM(it.start)}</span><div class="dtl-ttl"><span>${esc(it.title)}</span><span class="cat-tag${it.tentative ? " tent" : ""}" style="${it.tentative ? "" : `background:${hexRGBA(col, .22)};color:#f5f5f7`}">${it.tentative ? "仕分け箱・未確定" : esc(it.cal)}</span></div><div class="dtl-meta">${mToHM(it.start)}–${mToHM(it.end)}</div></div>`;
+    }).join("")}</div>`;
+
+    const el = openPlain(`
+      <div class="shd"><h3>${esc(c.name)}</h3><button type="button" class="x" id="mdClose" aria-label="閉じる">${ICN.close}</button></div>
+      <div class="tt" style="--c:var(--lapis)"><h2 style="font-size:20px">${esc(ev.title)}</h2><div style="font-size:13px;color:var(--sub)">${esc([ev.loc, ev.booking].filter(Boolean).join(" ・ "))}</div></div>
+      <div class="timeline-card">
+        <div class="tl-head"><b style="font-size:14px">1日のスケジュール</b><span class="feas ${evEval.tier}">${esc(evEval.badge)}</span></div>
+        ${ev.slots.length > 1 ? `<div class="tl-slot-tabs">${ev.slots.map((s, k) => `<button type="button" class="tl-tab${k === slotIdx ? " on" : ""}" data-sidx="${k}">${esc(s.dShort)} ${esc(s.wd)} ${esc(s.time)}</button>`).join("")}</div>` : ""}
+        <div id="dtlMount">${animateSkel ? skelTL : liveTL}</div>
+      </div>
+      <div class="acts muse-acts">
+        <button type="button" class="ab pri" id="actApply">${ICN.spark}<span>申し込む</span></button>
+        <button type="button" class="ab cal" id="actCal">${ICN.today}<span>予定に追加</span></button>
+        <button type="button" class="ab hold${isHold ? " on" : ""}" id="actHold">${ICN.pause}<span>${isHold ? "保留中" : "保留"}</span></button>
+        <button type="button" class="ab skip" id="actSkip">${ICN.close}<span>不参加</span></button>
+      </div>`);
+    if (animateSkel) setTimeout(() => { const m = el.querySelector("#dtlMount"); if (m && m.isConnected) m.innerHTML = liveTL; }, 180);
+    el.querySelector("#mdClose").onclick = () => closeSheet();
+    el.querySelectorAll("[data-sidx]").forEach(b => b.onclick = () => { slotIdx = +b.dataset.sidx; draw(false); });
+    el.querySelector("#actHold").onclick = () => {
+      const mh = museHolds[c.name] = museHolds[c.name] || {};
+      mh[ev.id] = !mh[ev.id]; store.set("museHolds", museHolds);
+      toast(mh[ev.id] ? "保留にして最下部へ移しました" : "保留を解除しました");
+      closeSheet(); if (view.v === "company") company($("#main"));
+    };
+    el.querySelector("#actSkip").onclick = () => {
+      const md2 = museDrop[c.name] = museDrop[c.name] || {};
+      md2[ev.id] = true; store.set("museDrop", museDrop);
+      closeSheet(); if (view.v === "company") company($("#main"));
+      toast(`${ev.title} を不参加にしました`, "元に戻す", () => { delete md2[ev.id]; store.set("museDrop", museDrop); if (view.v === "company") company($("#main")); });
+    };
+    el.querySelector("#actApply").onclick = () => openMuseApplySheet(c, parsed, ev, sl);
+    el.querySelector("#actCal").onclick = () => {
+      const stStr = sl.start != null ? `${sl.date}T${mToHM(sl.start)}` : `${sl.date}T10:00`;
+      const enStr = sl.end != null ? `${sl.date}T${mToHM(sl.end)}` : `${sl.date}T11:00`;
+      const tentCal = (D.cals || []).find(x => /仮押さえ/.test(x.title));
+      newEvent({
+        title: `${c.name} ${ev.title}`, ns: stStr, ne: enStr, allDay: !!sl.dueOnly,
+        loc: ev.loc || "", notes: [ev.summary, ev.booking, c.url].filter(Boolean).join("\n"),
+        cal: ev.status === "募集前" && tentCal ? tentCal.id : "", tent: ev.status === "募集前"
+      });
+    };
+  };
+  draw(true);
+}
+
+function openMuseApplySheet(c, parsed, ev, sl) {
+  const url = c.url || parsed.url || "", lid = c.loginID || parsed.loginID || "";
+  const el = openPlain(`
+    <div class="shd"><h3>Muse で申し込む</h3><button type="button" class="x" id="apClose" aria-label="閉じる">${ICN.close}</button></div>
+    <div class="sec-note">${ICN.lock}<span>パスワードは保存されず、ログイン時に手入力します</span></div>
+    ${url ? `<div class="fld-grp"><label>URL</label><input type="text" readonly value="${esc(url)}"></div>` : ""}
+    <div class="fld-grp"><label>ID</label><input type="text" id="apId" value="${esc(lid)}" placeholder="マイページログインID（任意）"></div>
+    <div class="fld-grp"><label>指示</label><textarea id="apInstr" rows="3">${esc(c.name)} ${esc(ev.title)}（${esc(sl.dShort)} ${esc(sl.wd)} ${esc(sl.time)}）の予約欄まで進める</textarea></div>
+    <button type="button" class="save muse" id="apSend">Muse に送る</button>
+    <button type="button" class="cancel" id="apBack">戻る</button>`);
+  el.querySelector("#apClose").onclick = () => closeSheet();
+  el.querySelector("#apBack").onclick = () => openMuseDetailSheet(c, parsed, ev.id, ev.slots.indexOf(sl));
+  el.querySelector("#apSend").onclick = () => {
+    const idVal = el.querySelector("#apId").value.trim();
+    const instr = el.querySelector("#apInstr").value.trim();
+    const payload = `[Muse申込依頼] ${c.name}\n${url ? "URL: " + url + "\n" : ""}${idVal ? "ID: " + idVal + "\n" : ""}内容: ${instr}`;
+    closeSheet();
+    enqueueMuseReq(c, `${ev.title} ${sl.dShort} 申込`, payload);
+  };
+}
+
+let coSpyBound = false;
+if (!coSpyBound) {
+  coSpyBound = true;
+  let spyTick = false;
+  addEventListener("scroll", () => {
+    if (view.v !== "company" || spyTick) return;
+    spyTick = true;
+    requestAnimationFrame(() => {
+      spyTick = false;
+      const btns = [...document.querySelectorAll(".chips [data-jump]")];
+      if (!btns.length) return;
+      let cur = btns[0];
+      for (const b of btns) {
+        const el = document.getElementById(b.dataset.jump);
+        if (el && el.getBoundingClientRect().top <= 136) cur = b;
+      }
+      if (cur) btns.forEach(x => x.classList.toggle("on", x === cur));
+    });
+  }, { passive: true });
+}
+
 function company(main) {
   const c = findCo(view.c) || {name: view.c, meets: []};
   bar(c.name, backName());
   const n = noteOf(c), md = d => `${d.getMonth()+1}/${d.getDate()}`;
   const ms = (c.meets || []).map(id => D.meets.find(m => m.id === id)).filter(Boolean).sort((a, b) => b.date.localeCompare(a.date));
-  const muse = museOf(c), files = filesOf(c);
+  const muse = museOf(c), parsed = parseMuseMD(muse), files = filesOf(c);
   const t0 = new Date(); t0.setHours(0,0,0,0);
   const evs = (c.evs || []).filter(i => D.events[i]).map(i => ({...D.events[i], i, s: pd(D.events[i].start), en: pd(D.events[i].end)})).filter(e => !e.deleted && e.s.getFullYear() > 1970);
   const up = evs.filter(e => e.en >= t0).sort((a, b) => a.s - b.s), past = evs.filter(e => e.en < t0).sort((a, b) => b.s - a.s);
-  // 日程は1行：日付の札・社名を外した題・時刻と場所・あと何日
   const evRow = (e, old) => { const left = Math.round((new Date(e.s).setHours(0,0,0,0) - t0) / 864e5);
-    return `<button class="er${old ? " past" : ""}" data-ev="${e.i}"><span class="bar3" style="--c:${esc(e.color || "#2159bd")}"></span><span class="dd2${[0,6].includes(e.s.getDay()) ? " we" : ""}"><b>${md(e.s)}</b><span>${WD[e.s.getDay()]}曜</span></span><span class="main"><div class="t">${esc(shortTitle(e.title, c.name))}</div><div class="s">${e.allDay ? "終日" : hm(e.s) + "〜" + hm(e.en)}${e.loc ? "・" + esc(e.loc.replace(/https?:\/{2}\S+/g, "").trim() || svcName(e.loc)) : ""}</div></span>${old ? "" : `<span class="lf">${left === 0 ? "今日" : left === 1 ? "明日" : left > 0 ? `${left}日後` : "開催中"}</span>`}</button>`; };
-  const nx = liveNext(c);
-  const dls = (D.deadlines || []).filter(x => x.co === c.name);
+    return `<button class="er${old ? " past" : ""}" data-ev="${e.i}"><span class="bar3" style="--c:${esc(e.color || "#2159bd")}"></span>${dd2HTML(e.s, false)}<span class="main"><div class="t">${esc(shortTitle(e.title, c.name))}</div><div class="s">${e.allDay ? "終日" : hm(e.s) + "〜" + hm(e.en)}${e.loc ? "・" + esc(e.loc.replace(/https?:\/{2}\S+/g, "").trim() || svcName(e.loc)) : ""}</div></span>${old ? "" : `<span class="lf">${left === 0 ? "今日" : left === 1 ? "明日" : left > 0 ? `${left}日後` : "開催中"}</span>`}</button>`; };
+  const nx = liveNext(c), dls = (D.deadlines || []).filter(x => x.co === c.name);
   needPart("mails");
-  const mails = mailsOf(c), notes = c.notes || [], showAll = view.allMail, showPast = view.allPast;
-  const chips = [["sx-ev", "日程", ICN.today, up.length || past.length], ["sx-dl", "締切", ICN.flag, dls.length], ["sx-ml", "メール", ICN.mail, mails.length || notes.length || (c.lastMail && partPending("mails"))], ["sx-mt", "議事録", ICN.doc, ms.length], ["sx-fl", "資料", ICN.folder, files.length], ["sx-memo", "メモ", ICN.memo, 1]]
-    .filter(x => x[3]);
-  // 状態は1行：次の締切・次の予定・マイページの知らせ・ログイン切れ・最後のメール
+  const mails = mailsOf(c), notes = c.notes || [], showPast = view.allPast, mm = store.get("mailMode", "after");
+  const loginID = c.loginID || parsed.loginID || "", loginConf = c.loginID ? !!c.loginIDConfirmed : !!parsed.loginID;
+  const pageURL = c.url || parsed.url || "";
+  const holds = museHolds[c.name] || {}, drops = museDrop[c.name] || {}, reqs = museReqs[c.name] || [];
+  const openMap = museOpen[c.name] = museOpen[c.name] || {};
+  const visEvents = parsed.events.filter(ev => !drops[ev.id]).sort((a, b) => (holds[a.id] ? 1 : 0) - (holds[b.id] ? 1 : 0));
+  const bestEval = ev => {
+    const evals = ev.slots.map(sl => ({ sl, evEval: evalSlotFeasibility(sl, c.name) }));
+    return evals.find(x => x.evEval.tier === "ok") || evals.find(x => x.evEval.tier === "tight") || evals[0];
+  };
+
+  const chips = [
+    ["sx-muse", "Muse", ICN.spark, 1],
+    ["sx-ev", "日程", ICN.today, up.length || past.length],
+    ["sx-dl", "締切", ICN.flag, dls.length],
+    ["sx-ml", "メール", ICN.mail, mails.length || notes.length || (c.lastMail && partPending("mails"))],
+    ["sx-mt", "議事録", ICN.doc, ms.length],
+    ["sx-fl", "資料", ICN.folder, files.length],
+    ["sx-memo", "メモ", ICN.memo, 1]
+  ].filter(x => x[3]);
+
   const nextEv = up[0];
-  const stat = [nx ? `<span class="nx">${md(nx)}（${WD[nx.getDay()]}）まで ${esc(c.next.label)}</span>` : "",
+  const stat = [
+    nx ? `<span class="nx">${md(nx)}（${WD[nx.getDay()]}）${esc(c.next.label)}</span>` : "",
     nextEv ? `<span>次 ${md(nextEv.s)} ${esc(shortTitle(nextEv.title, c.name))}</span>` : "",
-    c.patrol ? `<span>マイページ：${esc(c.patrol)}</span>` : "",
-    c.login ? `<span class="bad">ログインが切れています</span>` : "",
-    c.lastMail ? `<span>最後のメール ${md(pd(c.lastMail))}</span>` : ""].filter(Boolean).join("");
+    c.patrol ? `<span>${esc(c.patrol)}</span>` : "",
+    c.login ? `<span class="bad">要再ログイン</span>` : "",
+    c.lastMail ? `<span>メール ${md(pd(c.lastMail))}</span>` : ""
+  ].filter(Boolean).join("");
+
+  const museCardsHTML = visEvents.length ? visEvents.map(ev => {
+    const hold = !!holds[ev.id], open = !!openMap[ev.id], lead = bestEval(ev);
+    const tier = hold ? "hold" : lead.evEval.tier, badge = hold ? "保留中" : lead.evEval.badge;
+    const isClosed = ev.slots.every(x => x.closed);
+    return `<article class="mcard${hold ? " is-hold" : ""}${isClosed ? " is-closed" : ""}${open ? " open" : ""}">
+      <div class="mcard-hd" data-toggle-ev="${esc(ev.id)}">
+        <div class="mcard-top">
+          <h3 class="mcard-title">${esc(ev.title)}</h3>
+          <div class="badges-r">${ev.slots.length > 1 ? `<span class="slot-cnt">${ev.slots.length}枠</span>` : ""}<span class="feas ${tier}">${esc(badge)}</span></div>
+        </div>
+        ${ev.summary ? `<div class="mcard-summary">${esc(ev.summary)}</div>` : ""}
+        <div class="mcard-tags">${ev.booking ? `<span>${ICN.clock2}${esc(ev.booking)}</span>` : ""}${ev.loc ? `<span>${ICN.pin}${esc(ev.loc)}</span>` : ""}</div>
+      </div>
+      ${open ? `<div class="slot-list">${ev.slots.map((sl, si) => {
+        const sEval = evalSlotFeasibility(sl, c.name), sTier = hold ? "hold" : sEval.tier, sBadge = hold ? "保留中" : sEval.badge;
+        const isWe = sl.wd === "土" || sl.wd === "日";
+        return `<div class="slot-box" data-slot-card="${esc(ev.id)}" data-slot-idx="${si}">
+          <div class="slot-head">
+            <span class="slot-dt"><span class="d">${esc(sl.dShort)}</span><span class="wd${isWe ? " we" : ""}">${esc(sl.wd)}</span><span class="tm">${esc(sl.time)}</span></span>
+            <span class="feas ${sTier}">${esc(sBadge)}</span>
+          </div>
+          <div class="slot-cue${sEval.tentativeHit ? " tent" : ""}">${esc(sEval.cue)}</div>
+          ${sl.closed ? "" : dayBarHTML(sl, sEval)}
+          <div class="slot-foot">
+            <span class="slot-detail-hint">1日の詳細</span>
+            ${!sl.closed ? `<button type="button" class="join-pill" data-join-ev="${esc(ev.id)}" data-join-idx="${si}">参加する</button>` : ""}
+          </div>
+        </div>`;
+      }).join("")}</div>` : ""}
+      <div class="mcard-bar">
+        <button type="button" class="exp-btn" data-toggle-ev="${esc(ev.id)}"><span>${open ? "閉じる" : "日程を展開"}</span>${ICN.chevDown}</button>
+        <div class="quick-acts">
+          <button type="button" class="qbtn hold${hold ? " on" : ""}" data-hold-ev="${esc(ev.id)}">${ICN.pause}<span>${hold ? "保留中" : "保留"}</span></button>
+          <button type="button" class="qbtn drop" data-drop-ev="${esc(ev.id)}">${ICN.close}<span>不参加</span></button>
+        </div>
+      </div>
+    </article>`;
+  }).join("") : (muse && !parsed.events.length ? `<div class="group" style="padding:12px 14px"><div class="muse" style="margin:0;padding:0;background:none">${museHTML(muse)}</div></div>` : `<div class="group"><div class="r"><div class="main"><div class="s">${parsed.events.length ? "表示中の候補はありません" : "Muse のメモはまだありません"}</div></div></div></div>`);
+
   main.innerHTML = `<div class="cpage"><h1 class="large">${esc(c.name)}${muse ? SPARK : ""}</h1>${stgPill(c) ? `<div style="margin:-4px 4px 8px">${stgPill(c).replace('class="stg', 'style="font-size:13px;padding:4px 10px;margin:0" class="stg')}</div>` : ""}
     ${stat ? `<div class="stat">${stat}</div>` : ""}
-    <div class="chips" role="navigation" aria-label="この会社の中">${chips.map(([id, l, ic]) => `<button data-jump="${id}">${ic}${l}</button>`).join("")}${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${ICN.link}マイページ</a>` : ""}</div>
-    ${up.length || past.length ? `<div class="sec sh" id="sx-ev">${ICN.today}日程</div><div class="group">${up.map(e => evRow(e)).join("") || '<div class="r"><span class="main"><div class="s">これからの予定はありません</div></span></div>'}
+    <div class="chips" role="navigation" aria-label="この会社の中">${chips.map(([id, l, ic], k) => `<button class="${id === "sx-muse" ? "muse-chip on" : ""}" data-jump="${id}">${ic}${l}</button>`).join("")}${pageURL ? `<a href="${esc(pageURL)}" target="_blank" rel="noopener">${ICN.link}マイページ</a>` : ""}</div>
+    ${loginID ? `<div class="id-bar">
+      <div class="id-meta">
+        <div class="id-top"><span>マイページ ID</span><span class="id-badge ${loginConf ? "ok" : "guess"}">${loginConf ? "確定" : "推測"}</span></div>
+        <div class="id-val">${esc(loginID)}</div>
+      </div>
+      <div class="id-btns">
+        <button type="button" class="ic-btn" id="copyIdBtn">${ICN.copy}<span>コピー</span></button>
+        ${pageURL ? `<a class="ic-btn" href="${esc(pageURL)}" target="_blank" rel="noopener">${ICN.link}<span>開く</span></a>` : ""}
+        <button type="button" class="ic-btn pri" id="goHubBtn">${ICN.spark}<span>Muse</span></button>
+      </div>
+    </div>` : ""}
+    <div class="sec-head" id="sx-muse"><h2 class="sec">${ICN.spark}Muse</h2>${parsed.updatedAt ? `<span style="font-size:12px;color:var(--faint)">${esc(parsed.updatedAt)}</span>` : ""}</div>
+    <div class="ev-list">${museCardsHTML}</div>
+    <section class="hub" id="museHubSec">
+      <div class="preset-grid">
+        <button type="button" class="preset" data-preset="選考フロー調査">選考フロー調査</button>
+        <button type="button" class="preset" data-preset="空き枠再確認">空き枠再確認</button>
+        <button type="button" class="preset" data-preset="ES設問収集">ES設問収集</button>
+      </div>
+      <div class="hub-form"><input type="text" id="hubInput" placeholder="Muse に追加調査を指示"><button type="button" class="hub-send" id="hubSend" aria-label="Muse に送る">${ICN.send}</button></div>
+      ${reqs.length ? `<div class="req-log">${reqs.slice(0, 4).map(r => `<div class="req-item"><b>${esc(r.title)}</b><span style="color:var(--sub)">${esc(r.at)} 送信</span></div>`).join("")}</div>` : ""}
+    </section>
+    ${muse ? `<details class="raw-muse"><summary><span>原文</span>${ICN.chevDown}</summary><pre>${esc(muse)}</pre></details>` : ""}
+    ${up.length || past.length ? `<div class="sec-head" id="sx-ev"><h2 class="sec">${ICN.today}日程</h2></div><div class="group">${up.map(e => evRow(e)).join("") || '<div class="r"><span class="main"><div class="s">これからの予定はありません</div></span></div>'}
       ${past.length ? (showPast ? past.map(e => evRow(e, true)).join("") : `<button class="more" id="allp">終わった予定 ${past.length}件</button>`) : ""}</div>` : ""}
-    ${dls.length ? `<div class="sec sh" id="sx-dl">${ICN.flag}締切</div><div class="group">${dls.map(x => { const d = pd(x.date), d0 = new Date(d); d0.setHours(0,0,0,0); const left = Math.round((d0 - t0) / 864e5);
-        return `<div class="er"><span class="dd2"><b style="color:var(--ruby)">${md(d)}</b><span>${WD[d.getDay()]}曜</span></span><span class="main"><div class="t">${esc(x.label)}</div><div class="s">${esc(x.what || x.subject || "")}</div></span><span class="lf" style="color:var(--ruby)">${left < 0 ? "期限切れ" : left === 0 ? "今日" : left === 1 ? "明日" : `あと${left}日`}</span></div>`; }).join("")}</div>` : ""}
-    ${notes.length ? `<div class="sec sh" id="sx-ml">${ICN.mail}メールの要点</div><div class="group tl">${notes.slice(0, showAll ? 30 : 6).map(x => `<div class="li"><span class="d">${md(pd(x.at))}</span><span style="flex:1;min-width:0"><div class="w">${esc(x.what)}${x.due ? `<span class="duec">${esc(x.due)}</span>` : ""}</div><div class="sj">${esc(x.subject)}</div></span></div>`).join("")}</div>` : ""}
-    <div id="mlslot">${coMailsHTML(c)}</div>
-    ${ms.length ? `<div class="sec sh" id="sx-mt">${ICN.doc}議事録</div><div class="group">${ms.map(m => { const d = pd(m.date); return `<button class="er" data-meet="${m.id}"><span class="dd2${[0,6].includes(d.getDay()) ? " we" : ""}"><b>${md(d)}</b><span>${WD[d.getDay()]}曜</span></span><span class="main"><div class="t">${esc(m.kind)}</div><div class="s">${esc(m.title)}</div></span>${CH}</button>`; }).join("")}</div>` : ""}
-    ${files.length ? `<div class="sec sh" id="sx-fl">${ICN.folder}資料</div><div class="group files">${files.map(f => `<a class="r" href="${esc(f.u)}" target="_blank" rel="noopener"><span class="main"><div class="t">${esc(f.n)}</div><div class="s">${f.muse ? "Muse・" : ""}${md(new Date(f.t))}</div></span>${CH}</a>`).join("")}</div>` : ""}
-    <div class="sec sh" id="sx-memo">${ICN.memo}メモ</div>
+    ${dls.length ? `<div class="sec-head" id="sx-dl"><h2 class="sec">${ICN.flag}締切</h2></div><div class="group">${dls.map(x => { const d = pd(x.date), d0 = new Date(d); d0.setHours(0,0,0,0); const left = Math.round((d0 - t0) / 864e5);
+        return `<div class="er">${dd2HTML(d, true)}<span class="main"><div class="t">${esc(x.label)}</div><div class="s">${esc(x.what || x.subject || "")}</div></span><span class="lf" style="color:var(--ruby)">${left < 0 ? "期限切れ" : left === 0 ? "今日" : left === 1 ? "明日" : `あと${left}日`}</span></div>`; }).join("")}</div>` : ""}
+    ${mails.length || notes.length || (c.lastMail && partPending("mails")) ? `<div class="sec-head" id="sx-ml"><h2 class="sec">${ICN.mail}メール</h2><div class="seg-sm"><button type="button" class="${mm === "after" ? "on" : ""}" data-mm="after">整理</button><button type="button" class="${mm === "before" ? "on" : ""}" data-mm="before">従来</button></div></div><div id="mlslot">${coMailsHTML(c)}</div>` : `<div id="mlslot"></div>`}
+    ${ms.length ? `<div class="sec-head" id="sx-mt"><h2 class="sec">${ICN.doc}議事録</h2></div><div class="group">${ms.map(m => { const d = pd(m.date); return `<button class="er" data-meet="${m.id}">${dd2HTML(d, false)}<span class="main"><div class="t">${esc(m.kind)}</div><div class="s">${esc(m.title)}</div></span>${CH}</button>`; }).join("")}</div>` : ""}
+    ${files.length ? `<div class="sec-head" id="sx-fl"><h2 class="sec">${ICN.folder}資料</h2></div><div class="group files">${files.map(f => `<a class="r" href="${esc(f.u)}" target="_blank" rel="noopener"><span class="main"><div class="t">${esc(f.n)}</div><div class="s">${f.muse ? "Muse・" : ""}${md(new Date(f.t))}</div></span>${CH}</a>`).join("")}</div>` : ""}
+    <div class="sec-head" id="sx-memo"><h2 class="sec">${ICN.memo}メモ</h2></div>
     <div class="memo"><textarea id="memo" placeholder="メモ">${esc(n.memo)}</textarea><div class="st2" id="memost">${c.memoAt ? md(pd(c.memoAt)) + " 保存" : ""}</div></div>
-    ${muse ? `<div class="sec">Muse</div><div class="muse">${museHTML(muse)}</div>` : ""}
     <div class="upd" style="margin-bottom:90px">${D.checkedAt ? `メールの確認 ${esc(D.checkedAt.replace("T", " "))}` : ""}</div></div>`;
-  main.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => { const el = document.getElementById(b.dataset.jump); if (el) el.scrollIntoView({behavior: "smooth", block: "start"}); });
+
+  main.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => {
+    const el = document.getElementById(b.dataset.jump);
+    if (el) el.scrollIntoView({behavior: "smooth", block: "start"});
+    main.querySelectorAll(".chips [data-jump]").forEach(x => x.classList.toggle("on", x === b));
+  });
+  if ($("#copyIdBtn")) $("#copyIdBtn").onclick = async () => { try { await navigator.clipboard.writeText(loginID); } catch (_) {} toast(`ID ${loginID} をコピーしました`); };
+  if ($("#goHubBtn")) $("#goHubBtn").onclick = () => { const h = $("#museHubSec"); if (h) h.scrollIntoView({ behavior: "smooth", block: "center" }); setTimeout(() => { const inp = $("#hubInput"); if (inp) inp.focus(); }, 260); };
+  main.querySelectorAll("[data-toggle-ev]").forEach(el => el.onclick = e => {
+    e.stopPropagation(); const id = el.dataset.toggleEv; openMap[id] = !openMap[id]; company(main);
+  });
+  main.querySelectorAll("[data-hold-ev]").forEach(b => b.onclick = e => {
+    e.stopPropagation(); const id = b.dataset.holdEv, mh = museHolds[c.name] = museHolds[c.name] || {};
+    mh[id] = !mh[id]; store.set("museHolds", museHolds); toast(mh[id] ? "保留にして最下部へ移しました" : "保留を解除しました"); company(main);
+  });
+  main.querySelectorAll("[data-drop-ev]").forEach(b => b.onclick = e => {
+    e.stopPropagation(); const id = b.dataset.dropEv, ev = parsed.events.find(x => x.id === id);
+    const md2 = museDrop[c.name] = museDrop[c.name] || {}; md2[id] = true; store.set("museDrop", museDrop);
+    toast(`${ev ? ev.title : "項目"} を不参加にしました`, "元に戻す", () => { delete md2[id]; store.set("museDrop", museDrop); if (view.v === "company") company($("#main")); });
+    company(main);
+  });
+  main.querySelectorAll("[data-join-ev]").forEach(b => b.onclick = e => {
+    e.stopPropagation(); const ev = parsed.events.find(x => x.id === b.dataset.joinEv);
+    if (ev) openMuseApplySheet(c, parsed, ev, ev.slots[+b.dataset.joinIdx] || ev.slots[0]);
+  });
+  main.querySelectorAll("[data-slot-card]").forEach(b => b.onclick = () => {
+    openMuseDetailSheet(c, parsed, b.dataset.slotCard, +b.dataset.slotIdx);
+  });
+  main.querySelectorAll("[data-preset]").forEach(b => b.onclick = () => enqueueMuseReq(c, b.dataset.preset));
+  if ($("#hubSend")) $("#hubSend").onclick = () => { const i = $("#hubInput"), v = i && i.value.trim(); if (!v) return; i.value = ""; enqueueMuseReq(c, v); };
+  if ($("#hubInput")) $("#hubInput").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); $("#hubSend").click(); } };
+
   if ($("#allp")) $("#allp").onclick = () => { view = {...view, allPast: true}; const y = scrollY; render(); scrollTo(0, y); };
   const setNote = (k, v) => { pendNote[c.name] = {...(pendNote[c.name] || {}), [k]: v, at: Date.now()}; store.set("pendNote", pendNote); };
   main.querySelectorAll("[data-prio]").forEach(b => b.onclick = async () => {
     const k = +b.dataset.prio; if (k === noteOf(c).prio) return;
-    // 同じ順位の別の会社は「なし」へ（第1志望は1社）
     const other = D.companies.find(x => x.name !== c.name && noteOf(x).prio === k && k);
     setNote("prio", k); if (other) { pendNote[other.name] = {...(pendNote[other.name] || {}), prio: 0, at: Date.now()}; store.set("pendNote", pendNote); }
     main.querySelectorAll("[data-prio]").forEach(x => { const on = +x.dataset.prio === k; x.classList.toggle("on", on); x.setAttribute("aria-checked", on); });
@@ -2555,7 +3374,7 @@ function company(main) {
     try { await api.op({op: "memo", co: c.name, text: v}); if (stEl && stEl.isConnected) stEl.textContent = "保存しました"; } catch (e) { if (stEl && stEl.isConnected) stEl.textContent = "送れませんでした"; last = null; } };
   ta.oninput = () => { fit(); clearTimeout(tm); flushMemo = save; tm = setTimeout(save, 1500); };
   ta.onblur = save;
-  bindCoMails();
+  bindCoMails(c);
   bind(main);
 }
 
@@ -2590,7 +3409,8 @@ function searchResults(q) {
   const bd = BOARD.filter(b => hit(b.n + " " + b.text, terms)).map(b => `<a class="r" href="${esc(b.u)}" target="_blank" rel="noopener"><span class="main"><div class="t">${snip(b.n.replace(/^\d{4}-\d{2}-\d{2}_/, ""), terms)}</div><div class="s">${snip(b.text, terms)}</div></span>${CH}</a>`);
   const out = sec("企業", cos) + sec("会・議事録", mts) + sec("予定", evs) + sec("タスク", tks) + sec("メール", mls) + sec("Muse", bd);
   // 分けた2本がまだ届いていない間は「ありません」と言い切らない
-  const wait = partPending("mails") || partPending("search") ? '<div class="upd" style="margin:14px 0">メールと議事録の本文を読み込み中</div>' : "";
+  const wait = partPending("mails") || partPending("search")
+    ? `<div class="group" style="margin-top:12px">${[0,1].map(() => `<div class="r"><div class="main"><div class="sk" style="height:15px;width:54%"></div><div class="sk" style="height:12px;width:76%;margin-top:6px"></div></div></div>`).join("")}</div>` : "";
   return out ? out + wait : wait || `<p class="empty">「${esc(q)}」に当たる物はありません</p>`;
 }
 function search(main) {
@@ -2627,10 +3447,12 @@ function event(main) {
 /* ── 会 ── */
 async function meet(main) {
   const sum = D.meets.find(m => m.id === view.id); bar(sum ? sum.company : "議事録", backName());
-  main.innerHTML = '<p class="empty">読み込み中</p>';
+  main.innerHTML = `<div style="padding:12px 0"><div class="sk" style="height:28px;width:62%;margin-bottom:8px"></div><div class="sk" style="height:14px;width:44%;margin-bottom:18px"></div><div class="group">${[0,1,2].map(() => `<div class="r"><div class="main"><div class="sk" style="height:15px;width:72%"></div><div class="sk" style="height:12px;width:48%;margin-top:7px"></div></div></div>`).join("")}</div></div>`;
+  setLoadbar(true);
   let m = meetCache[view.id];
   if (m && sum && sum.has && !m.summary && !(m.topics && m.topics.length)) { delete meetCache[view.id]; m = null; }
   if (!m) { try { const t = await api.meet(view.id); m = t && JSON.parse(t); if (m) meetCache[view.id] = m; } catch (e) {} }
+  setLoadbar(false);
   if (!m) { main.innerHTML = '<div class="err">この会はまだドライブに上がっていません。少し待って開き直してください。</div>'; return; }
   if (view.v !== "meet" || view.id !== m.id) return;
   const tab = view.tab || "key", d = pd(m.date);
@@ -2725,6 +3547,7 @@ function mergeG() {
   for (const e of GEV) if (!uids.has(e.uid) && !keys.has(e.start + "|" + nt(e.title))) D.events.push({...e, g: true});
 }
 async function refresh0(first) {
+  if (first) setLoadbar(true);
   if (first || view.v === "tray") loadTrayTxt();
   const normMapKeys = o => { const out = {}; for (const [k, v] of Object.entries(o || {})) out[nfc(k)] = v; return out; };
   const takeMuse = r => {
@@ -2764,6 +3587,8 @@ async function refresh0(first) {
     if (D && view.v === "search") { needPart("mails"); needPart("search"); }
   } catch (e) {
     if (first || !D) $("#main").innerHTML = `<div class="err">読み込めませんでした：${esc(e && e.message || e)}</div>`;
+  } finally {
+    if (first) setLoadbar(false);
   }
   return m;
 }
